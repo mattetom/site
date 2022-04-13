@@ -4,14 +4,17 @@ topTitle: My Skills
 content: >
   ## Why hire me for your next project?
 
-  My goal is to build a strong supportive professional network among all freelancers and startups in order to improve their performance.
+  My goal is to be the solution to your next problem.
+  I'll help you find the right solutionin the right way for your projects.
 
 image: images/skill/skill_image.jpg
 
 skill:
-  - title: HTML
-    percent: 69
-  - title: CSS
-    percent: 60
-  - title: Javascript
-    percent: 85
+  - title: C#
+    percent: 95
+  - title: HTML, CSS, Javascript 
+    percent: 80
+  - title: Flutter
+    percent: 55
+  - title: Java
+    percent: 70
