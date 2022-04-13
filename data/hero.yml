@@ -2,9 +2,9 @@
 enable: true
 topTitle: Hello, I am Matteo
 content: >
-  # Software engineer, technology and innovation passionate
+  # Passionate about technology and innovation
 
-  I love to continually test myself with new frameworks and programming paradigms
+  As software engineer, I love to continually test myself with new frameworks and programming paradigms
 buttonName: Contact me
 buttonURL: contact
 image: images/hero/2960351.jpg
