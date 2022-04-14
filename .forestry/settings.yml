@@ -19,9 +19,9 @@ sections:
 - type: document
   path: data/skillSection.yml
   label: Skills
-- type: document
-  path: data/testimonialSection.yml
-  label: Testimonials
+#- type: document
+#  path: data/testimonialSection.yml
+#  label: Testimonials
 - type: document
   path: data/blogSection.yml
   label: Blog Section
