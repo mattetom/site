@@ -27,6 +27,6 @@ service:
   - content: >
       #### Analysis
 
-      My studies in computer engineering allow me to have analytical and synthetic skills
+      My studies in computer engineering allow me to have analytical skills
       to analyze even complex problems and find ingenious solutions in the IT field
     image: images/service/web.svg
