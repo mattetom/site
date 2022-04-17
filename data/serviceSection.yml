@@ -7,32 +7,26 @@ title: >
   Web, mobile and wearable applications analysis, architecture and development.
 service:
   - content: >
-      #### Functional analysis 
-
-      Lorem ipsum dolor sit amet conset sadipscing elitr, sed diam nonumy eirmod
-      tempor invidunt ut labore et dolore magna aliquyam erat.
-    image: images/service/functional-analysis.svg
-  - content: >
-      #### Technical analysis
-
-      Lorem ipsum dolor sit amet conset sadipscing elitr, sed diam nonumy eirmod
-      tempor invidunt ut labore et dolore magna aliquyam erat.
-    image: images/service/web.svg
-  - content: >
       #### Web development 
 
-      Lorem ipsum dolor sit amet conset sadipscing elitr, sed diam nonumy eirmod
-      tempor invidunt ut labore et dolore magna aliquyam erat.
+      Main field of work, expert in .NET technologies from classic MVC websites to 
+      client app with microservices, passionate about Hugo static sites
     image: images/service/creative.svg
   - content: >
       #### Mobile
 
-      Lorem ipsum dolor sit amet conset sadipscing elitr, sed diam nonumy eirmod
-      tempor invidunt ut labore et dolore magna aliquyam erat.
+      I have knowledge in the development of Android and iOs applications,
+      but it is with the advent of Flutter that my interests in this area have awakened
     image: images/service/branding.svg
   - content: >
       #### Wearable
 
-      Lorem ipsum dolor sit amet conset sadipscing elitr, sed diam nonumy eirmod
-      tempor invidunt ut labore et dolore magna aliquyam erat.
+      Lover of wearables, I have always appreciated their immediacy and pervasiveness.
+      I have developed applications and watchfaces for WearOS
     image: images/service/ui-ux.svg
+  - content: >
+      #### Analysis
+
+      My studies in computer engineering allow me to have analytical and synthetic skills
+      to analyze even complex problems and find ingenious solutions in the IT field
+    image: images/service/web.svg
