@@ -9,7 +9,7 @@ service:
   - content: >
       #### Web development 
 
-      Main field of work, expert in .NET technologies from classic MVC websites to 
+      Web application, is my main field of work. Expert in .NET technologies from classic MVC websites to 
       client app with microservices, passionate about Hugo static sites
     image: images/service/creative.svg
   - content: >
