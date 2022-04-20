@@ -1,7 +1,7 @@
 baseURL = "https://mattetom.github.io/site/"
 languageCode = "en-us"
 paginate = 6
-theme = "portio"
+theme = "mattetom"
 title = "Matteo Tomasini"
 # Main Menu
 [[menu.main]]
