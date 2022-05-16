@@ -1,9 +1,9 @@
 ---
-enable: false
+enable: true
 topTitle: Blog
 title: >
   ## Recent Article
 
-  Enjoy team diversity and increase their networks among others people in various fields by provided.
+  Articles written as a reminder and knowledge base of various daily experiences as chief software developer.
 
 buttonTarget: blog
