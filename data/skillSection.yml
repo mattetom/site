@@ -7,7 +7,7 @@ content: >
   My goal is to be the solution to your next problem.
   I'll help you find the right solution in the right way for your projects.
 
-image: images/skill/skill_image.jpg
+image: images/skill/skill_image.webp
 
 skill:
   - title: C#
