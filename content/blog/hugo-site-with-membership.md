@@ -35,9 +35,10 @@ This site of mine is an example, but my goal is the remaking of my wife's site c
 
 Her site is currently created in WordPress and hosted on Aruba.it;  undoubtedly presents 2 problems, even considering that to date it has not yet become a source of income (which we hope will soon become):
 
-The first problem is related to performance: in my opinion WordPress is a platform that requires too many resources.  And if we talk about small sites with few daily visits, it is absurd to think of having to spend a hundred euros a year between hosting and SQL to avoid that a page loading takes several seconds.
+* The first problem is related to performance: in my opinion WordPress is a platform that requires too many resources.  And if we talk about small sites with few daily visits, it is absurd to think of having to spend a hundred euros a year between hosting and SQL to avoid that a page loading takes several seconds.
 
- The second problem is precisely linked to the cost of hosting.  For a hobby-level site like both mine and my wife's currently are, it is expected to take up virtually no resources and therefore can be easily hosted by mostly free services.  We take care that as a developer I am mostly against the concept that software and internet must be mostly free (we all have to bring bread at home,) but we must make sure to consume an adequate amount of resources with respect to the type of project and therefore for small sites with few daily visits it is useless to have to deploy enormous computing powers.
+
+* The second problem is linked to the cost of hosting.  For a hobby-level site like both mine and my wife's, it is expected to take up virtually no resources and therefore can be easily hosted by mostly free services.  ake care that as a developer I am mostly against the concept that software and internet must be mostly free (we all have to bring bread at home,) but we must make sure to consume an adequate amount of resources with respect to the type of project and therefore for small sites with few daily visits it is useless to have to deploy enormous computing powers.
 
  I then stumbled upon static site engines including Hugo.
 
