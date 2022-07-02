@@ -13,4 +13,4 @@ Questo mio sito ne è un esempio, ma il mio obiettivo è il rifacimento del sito
 Il suo sito è attualmente realizzato in WordPress e hostato su Aruba.it; presenta indubbiamente 2 problemi, anche considerando che ad oggi non è ancora diventato una fonte di reddito (cosa che ci auguriamo divenga presto):
 
 * Il primo problema è legato alle performance: a mio parere WordPress è una piattaforma che necessita di troppe risorse. E se parliamo di piccoli siti con poche visite giornaliere, è assurdo pensare di dover spendere un centinaio di euro all'anno tra hosting e SQL per evitare che il caricamento di una pagina impieghi diversi secondi.
-* Il secondo problema è legato 
+* Il secondo problema è legato appunto al costo dell'hosting. Per un sito a livello hobbistico come è attualmente sia il mio che quello di mia moglie, ci si aspetta che non occupi praticamente risorse e quindi possa essere facilmente hostato da servizi per lo più gratuiti. Badiamo bene che come sviluppatore sono per lo più contrario al concetto che il software ed internet debbano essere 
