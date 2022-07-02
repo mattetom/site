@@ -44,7 +44,7 @@ At first I created this site simply using one of the themes available directly f
 
 For my wife one, I decided to buy an HTML template (I am not a graphic designer and therefore I will gladly pay some help from someone more experienced) and then I adapted it to become a Hugo template.
 
-The last step is the desire to introduce a membership concept within the site to start creating a community around the contents made by my wife and why not also to enhance her efforts by asking for a small monthly fee to those who want more personal help. for his part.
+The last step is the desire to introduce a membership concept within the site to start creating a community around the contents made by my wife and why not also to enhance her efforts by asking for a small monthly fee to those who want more personal help.
 
 With WordPress, surely all of this would have been easier but enjoying the programming challenges, I am looking forward to finding a way to achieve the same result using Hugo.
 
