@@ -16,3 +16,11 @@ Il suo sito è attualmente realizzato in WordPress e hostato su Aruba.it; presen
 * Il secondo problema è legato appunto al costo dell'hosting. Per un sito a livello hobbistico come è attualmente sia il mio che quello di mia moglie, ci si aspetta che non occupi praticamente risorse e quindi possa essere facilmente hostato da servizi per lo più gratuiti. Badiamo bene che come sviluppatore sono per lo più contrario al concetto che il software ed internet debbano essere per lo più gratuiti (il pane a casa lo dobbiamo portare tutti,) però dobbiamo fare in modo di consumare una quantità di risorse adeguate rispetto al tipo di progetto e quindi per piccoli siti con poche visite giornaliere è inutile dover mettere in campo potenze di calcolo enormi.
 
 Sono quindi incappato nei motori di siti statici tra cui Hugo.
+
+Dapprima ho creato questo sito semplicemente utilizzando uno dei temi disponibili direttamente dal sito Hugo, e da poco mi sto occupando del rifacimento di computersenzapensieri.com.
+
+Per questo sito ho deciso di acquistare un template HTML (non sono un grafico e quindi un po' di aiuto da qualcuno più esperto lo pago volentieri) e poi lo ho riadattato in modo che diventasse un template Hugo.
+
+Ultimo step è la volontà di introdurre all'interno del sito un concetto di membership per iniziare a creare una community intorno ai contenuti realizzati da mia moglie e perché no anche di valorizzare i suoi sforzi chiedendo una piccola fee mensile a coloro che vogliono più aiuto personale da parte sua.
+
+Con WordPress sicuramente tutto questo sarebbe stato più semplice ma piacendomi le sfide a livello di programmazione, 
