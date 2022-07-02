@@ -23,4 +23,8 @@ Per questo sito ho deciso di acquistare un template HTML (non sono un grafico e 
 
 Ultimo step è la volontà di introdurre all'interno del sito un concetto di membership per iniziare a creare una community intorno ai contenuti realizzati da mia moglie e perché no anche di valorizzare i suoi sforzi chiedendo una piccola fee mensile a coloro che vogliono più aiuto personale da parte sua.
 
-Con WordPress sicuramente tutto questo sarebbe stato più semplice ma piacendomi le sfide a livello di programmazione, 
+Con WordPress sicuramente tutto questo sarebbe stato più semplice ma piacendomi le sfide a livello di programmazione, sto cercando con piacere il modo per raggiungere lo stesso risultato utilizzando Hugo.
+
+Mi sono quindi imbattuto in questo interessante articolo https://www.netlify.com/blog/2020/07/13/manage-subscriptions-and-protect-content-with-stripe/ di Jason Lengstorf in cui viene realizzato un sito con membership utilizzando Netlify identity e Shopify.
+
+Ho quindi iniziato la sua implementazione in Hugo e vi terrò aggiornati sullo stato di avanzamento nei prossimi post.
