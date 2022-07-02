@@ -40,7 +40,7 @@ Her site is currently created in WordPress and hosted on Aruba.it;  undoubtedly 
 
 I then stumbled upon static site engines including Hugo.
 
-At first I created this site simply using one of the themes available directly from the Hugo site, and recently I have been working on the remaking of computersenzapensieri.com.
+At first I created this site simply using one of the themes available directly from the Hugo site (https://themes.gohugo.io/themes/portio-hugo/), and recently I have been working on the remaking of https://computersenzapensieri.com.
 
 For this site I decided to buy an HTML template (I am not a graphic designer and therefore I will gladly pay some help from someone more experienced) and then I adapted it to become a Hugo template.
 
