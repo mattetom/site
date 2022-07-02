@@ -14,3 +14,5 @@ fields:
 - type: file
   name: postImage
   label: postImage
+pages:
+- content/blog/hugo-site-with-membership.md
