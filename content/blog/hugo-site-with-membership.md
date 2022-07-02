@@ -46,8 +46,8 @@ For my wife one, I decided to buy an HTML template (I am not a graphic designer 
 
 The last step is the desire to introduce a membership concept within the site to start creating a community around the contents made by my wife and why not also to enhance her efforts by asking for a small monthly fee to those who want more personal help.
 
-With WordPress, surely all of this would have been easier but enjoying the programming challenges, I am looking forward to finding a way to achieve the same result using Hugo.
+With WordPress, surely all of this would have been easier but enjoying programming challenges, I am looking forward to finding a way to achieve the same result using Hugo.
 
-So I came across this interesting article https://www.netlify.com/blog/2020/07/13/manage-subscriptions-and-protect-content-with-stripe/ by Jason Lengstorf in which a site is created with membership using Netlify identity and Shopify.
+So I came across this interesting article https://www.netlify.com/blog/2020/07/13/manage-subscriptions-and-protect-content-with-stripe/ by Jason Lengstorf in which a site is created with membership using Netlify Identity and Shopify.
 
 I then started its implementation in Hugo and will keep you updated on the progress in the next posts.
