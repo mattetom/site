@@ -1,7 +1,7 @@
 +++
 date = 2022-07-04T22:00:00Z
 featureImage = "/images/hugosite_with_membership.jpg"
-postImage = ""
+postImage = "/images/hugo-logo-wide.jpg"
 title = "Hugo site with membership "
 
 +++
