@@ -16,4 +16,5 @@ fields:
   label: postImage
 pages:
 - content/blog/hugo-site-with-membership.md
+- content/blog/saml.md
 - content/blog/single-responsibility-principle.md
