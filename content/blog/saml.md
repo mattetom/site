@@ -14,6 +14,6 @@ SP Metadata creation tool: [https://www.samltool.com/sp_metadata.php](https://ww
 
 SAML Test: [https://samltest.id/](https://samltest.id/ "https://samltest.id/")
 
-Workflow:
+Implementation sample: [https://developers.onelogin.com/saml/c-and-aspnet](https://developers.onelogin.com/saml/c-and-aspnet "https://developers.onelogin.com/saml/c-and-aspnet")
 
-In the case of service-provider-initiated SAML, the service provider creates a SAML authentication request and sends it to the identity provider (IdP)
+Library for implementation: [https://www.itfoxtec.com/identitysaml2](https://www.itfoxtec.com/identitysaml2 "https://www.itfoxtec.com/identitysaml2")
