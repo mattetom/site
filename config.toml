@@ -28,10 +28,6 @@ name = "Contact"
 url = "#contact"
 weight = 8
 [[menu.sitemap]]
-name = "Privacy "
-url = "privacy"
-weight = nil
-[[menu.sitemap]]
 name = "About me"
 url = "#about"
 weight = 1
@@ -43,6 +39,10 @@ weight = 3
 name = "Contact me"
 url = "contact"
 weight = 4
+[[menu.sitemap]]
+name = "Privacy "
+url = "privacy"
+weight = nil
 [params]
 blogPageURL = "blog"
 contactLink = "contact"
