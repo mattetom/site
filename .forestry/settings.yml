@@ -7,7 +7,6 @@ sections:
 - type: document
   path: content/privacy/*
   label: Privacy policy
-  match: "**/*"
 - type: document
   path: data/hero.yml
   label: Hero

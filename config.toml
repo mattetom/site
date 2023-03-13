@@ -3,7 +3,6 @@ languageCode = "en-us"
 paginate = 6
 theme = "mattetom"
 title = "Matteo Tomasini"
-# Main Menu
 [[menu.main]]
 name = "Home"
 url = "#home"
@@ -16,14 +15,6 @@ weight = 2
 name = "Service"
 url = "#service"
 weight = 3
-#[[menu.main]]
-#name = "Work"
-#url = "#portfolio"
-#weight = 4
-#[[menu.main]]
-#name = "Resume"
-#url = "#resume"
-#weight = 5
 [[menu.main]]
 name = "Skills"
 url = "#skills"
@@ -36,20 +27,14 @@ weight = 7
 name = "Contact"
 url = "#contact"
 weight = 8
-
-# Sitemap Menu
+[[menu.sitemap]]
+name = "Privacy "
+url = "privacy"
+weight = nil
 [[menu.sitemap]]
 name = "About me"
 url = "#about"
 weight = 1
-#[[menu.sitemap]]
-#name = "Service"
-#url = "#service"
-#weight = 2
-#[[menu.sitemap]]
-#name = "Skills"
-#url = "#skills"
-#weight = 3
 [[menu.sitemap]]
 name = "Blog"
 url = "blog"
@@ -58,30 +43,25 @@ weight = 3
 name = "Contact me"
 url = "contact"
 weight = 4
-
 [params]
 blogPageURL = "blog"
 contactLink = "contact"
 copyright = "All right reserved copyright © matteotomasini.com 2022"
 footerLogo = "images/contact/widget-logo.png"
 formspreeURL = "YOUR FORMSPREE URL"
-useNetlifyForm = true
 googleAnalytics = "YOUR GOOGLE ANALYTICS CODE"
 logo = "images/site-navigation/logo.png"
-
+useNetlifyForm = true
 [params.address]
-#address = "23 Khan Niketon, Grand Street, NYK."
+address = ""
 email = "matteo.tomasini@gmail.com"
-#openingHours = "Open from 10am to 6pm (close at 5pm Sundays)"
-#phone = "+(448) 833 5272 332"
-
-#[params.map]
-#APIkey = "YOUR GOOGLE MAP API"
-#latitude = "23.7783741"
-#longitude = "90.3746808"
-#pinImage = "images/pin.png"
-
-# Social icons
+openingHours = ""
+phone = ""
+[params.map]
+APIkey = ""
+latitude = ""
+longitude = ""
+pinImage = ""
 [[params.social]]
 icon = "fa-facebook-official"
 url = "https://www.facebook.com/mattetom"
@@ -90,10 +70,6 @@ weight = 1
 icon = "fa-linkedin-square"
 url = "https://www.linkedin.com/in/matteotomasini"
 weight = 2
-#[[params.social]]
-#icon = "fa-pinterest-square"
-#url = "https://www.pinterest.com/"
-#weight = 3
 [[params.social]]
 icon = "fa-twitter-square"
 url = "https://twitter.com/MatteoTomasini7"
