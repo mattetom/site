@@ -5,6 +5,10 @@ admin_path: "/static/admin"
 webhook_url: 
 sections:
 - type: document
+  path: content/privacy/*
+  label: Privacy policy
+  match: "**/*"
+- type: document
   path: data/hero.yml
   label: Hero
 - type: document
