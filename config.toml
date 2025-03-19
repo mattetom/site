@@ -1,6 +1,6 @@
 baseURL = "https://matteotomasini.com"
 languageCode = "en-us"
-paginate = 6
+pagination.pagerSize = 6
 theme = "mattetom"
 title = "Matteo Tomasini"
 [[menu.main]]
@@ -42,7 +42,7 @@ weight = 4
 [params]
 blogPageURL = "blog"
 contactLink = "contact"
-copyright = "All right reserved copyright © matteotomasini.com 2022"
+copyright = "All right reserved copyright © matteotomasini.com 2025"
 footerLogo = "images/contact/widget-logo.png"
 formspreeURL = "YOUR FORMSPREE URL"
 googleAnalytics = "YOUR GOOGLE ANALYTICS CODE"
