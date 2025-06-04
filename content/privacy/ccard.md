@@ -1,3 +1,9 @@
+---
+title: "Privacy Policy CCard"
+date: 2025-06-04T12:13:59+01:00
+draft: false
+---
+
 # Privacy Policy
 
 Ultimo aggiornamento: 04 giugno 2025
