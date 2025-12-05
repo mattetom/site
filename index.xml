@@ -1,89 +1,89 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title/><link>https://matteotomasini.com/</link><description>Recent content on</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 04 Jun 2025 12:13:59 +0100</lastBuildDate><atom:link href="https://matteotomasini.com/index.xml" rel="self" type="application/rss+xml"/><item><title>CCard Delete Account</title><link>https://matteotomasini.com/ccard/delete_account/</link><pubDate>Wed, 04 Jun 2025 12:13:59 +0100</pubDate><guid>https://matteotomasini.com/ccard/delete_account/</guid><description>&lt;h1 id="richiesta-di-cancellazione-account">Richiesta di Cancellazione Account&lt;/h1>
-&lt;p>Se desideri rimuovere il tuo account e tutti i dati ad esso associati, segui le istruzioni qui di seguito.&lt;br>
-La cancellazione non può essere annullata, quindi prima di procedere assicurati di aver salvato eventuali informazioni di tuo interesse.&lt;/p>
-&lt;hr>
-&lt;h2 id="1-invia-una-mail">1. Invia una mail&lt;/h2>
-&lt;p>Scrivi una email vuota o con oggetto “Richiesta Cancellazione” e inviala al seguente indirizzo:&lt;/p>
-&lt;p>&lt;a href="mailto:mattetom.dev?subject=Richiesta%20Cancellazione%20Account">invia una mail a &lt;strong>mattetom.dev&lt;/strong>&lt;/a>&lt;/p>
-&lt;p>&lt;em>(Puoi cliccare sul link qui sopra: si aprirà il tuo client di posta elettronica.)&lt;/em>&lt;/p></description></item><item><title>Privacy Policy CCard</title><link>https://matteotomasini.com/privacy/ccard/</link><pubDate>Wed, 04 Jun 2025 12:13:59 +0100</pubDate><guid>https://matteotomasini.com/privacy/ccard/</guid><description>&lt;h1 id="privacy-policy">Privacy Policy&lt;/h1>
-&lt;p>Ultimo aggiornamento: 04 giugno 2025&lt;/p>
-&lt;p>La presente Informativa sulla Privacy descrive come &lt;strong>CCard&lt;/strong> (&amp;ldquo;noi&amp;rdquo;, &amp;ldquo;ci&amp;rdquo; o &amp;ldquo;la nostra App&amp;rdquo;) raccoglie, utilizza e protegge i tuoi dati personali in conformità al Regolamento (UE) 2016/679 (GDPR) e ad altre normative applicabili.&lt;/p>
-&lt;h2 id="1-titolare-del-trattamento">1. Titolare del trattamento&lt;/h2>
-&lt;p>&lt;strong>Matteo Tomasini&lt;/strong>&lt;br>
-Email: &lt;strong>&lt;a href="mailto:matteotom.dev@gmail.com">matteotom.dev@gmail.com&lt;/a>&lt;/strong>&lt;/p>
-&lt;h2 id="2-tipi-di-dati-raccolti">2. Tipi di dati raccolti&lt;/h2>
-&lt;h3 id="a-dati-forniti-dallutente">a. &lt;strong>Dati forniti dall’utente&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>Nome, indirizzo email (tramite &lt;strong>Firebase Authentication&lt;/strong>)&lt;/li>
-&lt;li>Dati delle fidelity card (nome negozio, punti, descrizione, immagini)&lt;/li>
-&lt;/ul>
-&lt;h3 id="b-dati-generati-dalluso-dellapp">b. &lt;strong>Dati generati dall’uso dell’app&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>Log di utilizzo, statistiche anonime&lt;/li>
-&lt;li>ID dispositivo, sistema operativo e versione app&lt;/li>
-&lt;/ul>
-&lt;h3 id="c-dati-relativi-agli-acquisti">c. &lt;strong>Dati relativi agli acquisti&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>Gestiti tramite &lt;strong>RevenueCat&lt;/strong>: nessun dato sensibile viene raccolto direttamente da noi&lt;/li>
-&lt;/ul>
-&lt;h3 id="d-dati-sincronizzati">d. &lt;strong>Dati sincronizzati&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>Gli utenti Premium possono attivare il &lt;strong>backup cloud delle fidelity card&lt;/strong>&lt;/li>
-&lt;li>La sincronizzazione può comportare il &lt;strong>merge tra dati locali (Drift)&lt;/strong> e quelli su &lt;strong>Firebase&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;h2 id="3-finalità-e-basi-giuridiche-del-trattamento">3. Finalità e basi giuridiche del trattamento&lt;/h2>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>Finalità&lt;/th>
- &lt;th>Base giuridica&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>Fornire e gestire l&amp;rsquo;app&lt;/td>
- &lt;td>Esecuzione del contratto&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Gestione accessi e autenticazione (Firebase)&lt;/td>
- &lt;td>Esecuzione del contratto&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Backup cloud (Premium)&lt;/td>
- &lt;td>Consenso esplicito&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Miglioramento dell&amp;rsquo;app e analisi d’uso&lt;/td>
- &lt;td>Legittimo interesse&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Gestione acquisti in-app (RevenueCat)&lt;/td>
- &lt;td>Esecuzione del contratto&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>Risposta a richieste dell’utente o autorità&lt;/td>
- &lt;td>Obbligo legale&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;h2 id="4-conservazione-dei-dati">4. Conservazione dei dati&lt;/h2>
-&lt;ul>
-&lt;li>I dati locali vengono salvati su &lt;strong>Drift&lt;/strong>&lt;/li>
-&lt;li>I dati cloud vengono conservati su &lt;strong>Firebase&lt;/strong> finché l’utente non richiede la cancellazione&lt;/li>
-&lt;li>I dati relativi agli acquisti sono gestiti da &lt;strong>RevenueCat&lt;/strong>, secondo le loro policy&lt;/li>
-&lt;/ul>
-&lt;h2 id="5-condivisione-dei-dati">5. Condivisione dei dati&lt;/h2>
-&lt;p>Non condividiamo i tuoi dati con terze parti salvo:&lt;/p></description></item><item><title>Privacy Policy</title><link>https://matteotomasini.com/privacy/chatgpt_image_generator/</link><pubDate>Tue, 14 Mar 2023 12:13:59 +0100</pubDate><guid>https://matteotomasini.com/privacy/chatgpt_image_generator/</guid><description>&lt;p>Matteo built the ChatGPT Image Generator app as a Free app. This SERVICE is provided by Matteo at no cost and is intended for use as is.&lt;/p>
-&lt;p>This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.&lt;/p>
-&lt;p>If you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy.&lt;/p></description></item><item><title>Hugo site with membership</title><link>https://matteotomasini.com/blog/hugo-site-with-membership/</link><pubDate>Mon, 04 Jul 2022 22:00:00 +0000</pubDate><guid>https://matteotomasini.com/blog/hugo-site-with-membership/</guid><description>&lt;p>Lately I&amp;rsquo;ve been getting interested in building sites with Hugo.&lt;/p>
-&lt;p>This site of mine is an example, but my goal is the remaking of my wife&amp;rsquo;s site computersenzapensieri.com.&lt;/p>
-&lt;p>Her site is currently created in WordPress and hosted on Aruba.it; undoubtedly presents two problems, even considering that to date it has not yet become a source of income (which we hope will soon become):&lt;/p>
-&lt;ul>
-&lt;li>The first problem is related to performance: in my opinion WordPress is a platform that requires too many resources. And if we talk about small sites with few daily visits, it is absurd to think of having to spend a hundred euros a year between hosting and SQL to avoid that a page loading takes several seconds.&lt;/li>
-&lt;li>The second problem is linked to the cost of hosting. For a hobby-level site like both mine and my wife&amp;rsquo;s, it is expected to take up virtually no resources and therefore can be easily hosted by mostly free services. Be sure that as a developer I am mostly against the concept that software and internet must be mostly free (we all must bring bread at home) but we must make sure to consume an adequate number of resources with respect to the type of project and therefore for small sites with few daily visits it is useless to have to deploy enormous computing powers.&lt;/li>
-&lt;/ul>
-&lt;p>I then stumbled upon static site engines including Hugo.&lt;/p></description></item><item><title>Add budget to Microsoft Azure service</title><link>https://matteotomasini.com/blog/add-budget-to-azure-service/</link><pubDate>Fri, 13 May 2022 12:49:27 +0200</pubDate><guid>https://matteotomasini.com/blog/add-budget-to-azure-service/</guid><description>&lt;p>Have you ever received an unexpected Microsoft Azure billing?&lt;/p>
-&lt;p>Sometimes you are sure that the resources you are using on Microsoft Azure are the usual ones every month.
-It was not noticed, for example, that for a few days there were a series of events for which the logs increased dramatically.&lt;/p>
-&lt;p>This is what happened to me last month:
-quiet of using the classic resources, I found myself an invoice of almost double compared to the previous months.&lt;/p></description></item><item><title>Recipe App Ux Study</title><link>https://matteotomasini.com/portfolio/recipe-app-ux-study/</link><pubDate>Wed, 12 Aug 2020 18:19:35 +0600</pubDate><guid>https://matteotomasini.com/portfolio/recipe-app-ux-study/</guid><description>&lt;p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p></description></item><item><title>UX Case Study for Agriculture App</title><link>https://matteotomasini.com/portfolio/ux-case-study-for-agriculture-app/</link><pubDate>Wed, 12 Aug 2020 12:13:40 +0000</pubDate><guid>https://matteotomasini.com/portfolio/ux-case-study-for-agriculture-app/</guid><description>&lt;p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p></description></item><item><title>Event App Case Study</title><link>https://matteotomasini.com/portfolio/event-app-case-study/</link><pubDate>Wed, 12 Aug 2020 18:07:16 +0600</pubDate><guid>https://matteotomasini.com/portfolio/event-app-case-study/</guid><description>&lt;p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p></description></item><item><title>Case Study One</title><link>https://matteotomasini.com/portfolio/case-study-one/</link><pubDate>Mon, 13 Jul 2020 12:49:27 +0600</pubDate><guid>https://matteotomasini.com/portfolio/case-study-one/</guid><description>&lt;p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title/><link>https://matteotomasini.com/</link><description>Recent content on</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 04 Jun 2025 12:13:59 +0100</lastBuildDate><atom:link href="https://matteotomasini.com/index.xml" rel="self" type="application/rss+xml"/><item><title>CCard Delete Account</title><link>https://matteotomasini.com/ccard/delete_account/</link><pubDate>Wed, 04 Jun 2025 12:13:59 +0100</pubDate><guid>https://matteotomasini.com/ccard/delete_account/</guid><description>&lt;h1 id="richiesta-di-cancellazione-account"&gt;Richiesta di Cancellazione Account&lt;/h1&gt;
+&lt;p&gt;Se desideri rimuovere il tuo account e tutti i dati ad esso associati, segui le istruzioni qui di seguito.&lt;br&gt;
+La cancellazione non può essere annullata, quindi prima di procedere assicurati di aver salvato eventuali informazioni di tuo interesse.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="1-invia-una-mail"&gt;1. Invia una mail&lt;/h2&gt;
+&lt;p&gt;Scrivi una email vuota o con oggetto “Richiesta Cancellazione” e inviala al seguente indirizzo:&lt;/p&gt;
+&lt;p&gt;&lt;a href="mailto:mattetom.dev?subject=Richiesta%20Cancellazione%20Account"&gt;invia una mail a &lt;strong&gt;mattetom.dev&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(Puoi cliccare sul link qui sopra: si aprirà il tuo client di posta elettronica.)&lt;/em&gt;&lt;/p&gt;</description></item><item><title>Privacy Policy CCard</title><link>https://matteotomasini.com/privacy/ccard/</link><pubDate>Wed, 04 Jun 2025 12:13:59 +0100</pubDate><guid>https://matteotomasini.com/privacy/ccard/</guid><description>&lt;h1 id="privacy-policy"&gt;Privacy Policy&lt;/h1&gt;
+&lt;p&gt;Ultimo aggiornamento: 04 giugno 2025&lt;/p&gt;
+&lt;p&gt;La presente Informativa sulla Privacy descrive come &lt;strong&gt;CCard&lt;/strong&gt; (&amp;ldquo;noi&amp;rdquo;, &amp;ldquo;ci&amp;rdquo; o &amp;ldquo;la nostra App&amp;rdquo;) raccoglie, utilizza e protegge i tuoi dati personali in conformità al Regolamento (UE) 2016/679 (GDPR) e ad altre normative applicabili.&lt;/p&gt;
+&lt;h2 id="1-titolare-del-trattamento"&gt;1. Titolare del trattamento&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Matteo Tomasini&lt;/strong&gt;&lt;br&gt;
+Email: &lt;strong&gt;&lt;a href="mailto:matteotom.dev@gmail.com"&gt;matteotom.dev@gmail.com&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="2-tipi-di-dati-raccolti"&gt;2. Tipi di dati raccolti&lt;/h2&gt;
+&lt;h3 id="a-dati-forniti-dallutente"&gt;a. &lt;strong&gt;Dati forniti dall’utente&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Nome, indirizzo email (tramite &lt;strong&gt;Firebase Authentication&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;Dati delle fidelity card (nome negozio, punti, descrizione, immagini)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="b-dati-generati-dalluso-dellapp"&gt;b. &lt;strong&gt;Dati generati dall’uso dell’app&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Log di utilizzo, statistiche anonime&lt;/li&gt;
+&lt;li&gt;ID dispositivo, sistema operativo e versione app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="c-dati-relativi-agli-acquisti"&gt;c. &lt;strong&gt;Dati relativi agli acquisti&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Gestiti tramite &lt;strong&gt;RevenueCat&lt;/strong&gt;: nessun dato sensibile viene raccolto direttamente da noi&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="d-dati-sincronizzati"&gt;d. &lt;strong&gt;Dati sincronizzati&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Gli utenti Premium possono attivare il &lt;strong&gt;backup cloud delle fidelity card&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;La sincronizzazione può comportare il &lt;strong&gt;merge tra dati locali (Drift)&lt;/strong&gt; e quelli su &lt;strong&gt;Firebase&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="3-finalità-e-basi-giuridiche-del-trattamento"&gt;3. Finalità e basi giuridiche del trattamento&lt;/h2&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;Finalità&lt;/th&gt;
+ &lt;th&gt;Base giuridica&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Fornire e gestire l&amp;rsquo;app&lt;/td&gt;
+ &lt;td&gt;Esecuzione del contratto&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Gestione accessi e autenticazione (Firebase)&lt;/td&gt;
+ &lt;td&gt;Esecuzione del contratto&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Backup cloud (Premium)&lt;/td&gt;
+ &lt;td&gt;Consenso esplicito&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Miglioramento dell&amp;rsquo;app e analisi d’uso&lt;/td&gt;
+ &lt;td&gt;Legittimo interesse&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Gestione acquisti in-app (RevenueCat)&lt;/td&gt;
+ &lt;td&gt;Esecuzione del contratto&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;Risposta a richieste dell’utente o autorità&lt;/td&gt;
+ &lt;td&gt;Obbligo legale&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="4-conservazione-dei-dati"&gt;4. Conservazione dei dati&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;I dati locali vengono salvati su &lt;strong&gt;Drift&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;I dati cloud vengono conservati su &lt;strong&gt;Firebase&lt;/strong&gt; finché l’utente non richiede la cancellazione&lt;/li&gt;
+&lt;li&gt;I dati relativi agli acquisti sono gestiti da &lt;strong&gt;RevenueCat&lt;/strong&gt;, secondo le loro policy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="5-condivisione-dei-dati"&gt;5. Condivisione dei dati&lt;/h2&gt;
+&lt;p&gt;Non condividiamo i tuoi dati con terze parti salvo:&lt;/p&gt;</description></item><item><title>Privacy Policy</title><link>https://matteotomasini.com/privacy/chatgpt_image_generator/</link><pubDate>Tue, 14 Mar 2023 12:13:59 +0100</pubDate><guid>https://matteotomasini.com/privacy/chatgpt_image_generator/</guid><description>&lt;p&gt;Matteo built the ChatGPT Image Generator app as a Free app. This SERVICE is provided by Matteo at no cost and is intended for use as is.&lt;/p&gt;
+&lt;p&gt;This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.&lt;/p&gt;
+&lt;p&gt;If you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy.&lt;/p&gt;</description></item><item><title>Hugo site with membership</title><link>https://matteotomasini.com/blog/hugo-site-with-membership/</link><pubDate>Mon, 04 Jul 2022 22:00:00 +0000</pubDate><guid>https://matteotomasini.com/blog/hugo-site-with-membership/</guid><description>&lt;p&gt;Lately I&amp;rsquo;ve been getting interested in building sites with Hugo.&lt;/p&gt;
+&lt;p&gt;This site of mine is an example, but my goal is the remaking of my wife&amp;rsquo;s site computersenzapensieri.com.&lt;/p&gt;
+&lt;p&gt;Her site is currently created in WordPress and hosted on Aruba.it; undoubtedly presents two problems, even considering that to date it has not yet become a source of income (which we hope will soon become):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The first problem is related to performance: in my opinion WordPress is a platform that requires too many resources. And if we talk about small sites with few daily visits, it is absurd to think of having to spend a hundred euros a year between hosting and SQL to avoid that a page loading takes several seconds.&lt;/li&gt;
+&lt;li&gt;The second problem is linked to the cost of hosting. For a hobby-level site like both mine and my wife&amp;rsquo;s, it is expected to take up virtually no resources and therefore can be easily hosted by mostly free services. Be sure that as a developer I am mostly against the concept that software and internet must be mostly free (we all must bring bread at home) but we must make sure to consume an adequate number of resources with respect to the type of project and therefore for small sites with few daily visits it is useless to have to deploy enormous computing powers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I then stumbled upon static site engines including Hugo.&lt;/p&gt;</description></item><item><title>Add budget to Microsoft Azure service</title><link>https://matteotomasini.com/blog/add-budget-to-azure-service/</link><pubDate>Fri, 13 May 2022 12:49:27 +0200</pubDate><guid>https://matteotomasini.com/blog/add-budget-to-azure-service/</guid><description>&lt;p&gt;Have you ever received an unexpected Microsoft Azure billing?&lt;/p&gt;
+&lt;p&gt;Sometimes you are sure that the resources you are using on Microsoft Azure are the usual ones every month.
+It was not noticed, for example, that for a few days there were a series of events for which the logs increased dramatically.&lt;/p&gt;
+&lt;p&gt;This is what happened to me last month:
+quiet of using the classic resources, I found myself an invoice of almost double compared to the previous months.&lt;/p&gt;</description></item><item><title>Recipe App Ux Study</title><link>https://matteotomasini.com/portfolio/recipe-app-ux-study/</link><pubDate>Wed, 12 Aug 2020 18:19:35 +0600</pubDate><guid>https://matteotomasini.com/portfolio/recipe-app-ux-study/</guid><description>&lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p&gt;</description></item><item><title>UX Case Study for Agriculture App</title><link>https://matteotomasini.com/portfolio/ux-case-study-for-agriculture-app/</link><pubDate>Wed, 12 Aug 2020 12:13:40 +0000</pubDate><guid>https://matteotomasini.com/portfolio/ux-case-study-for-agriculture-app/</guid><description>&lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p&gt;</description></item><item><title>Event App Case Study</title><link>https://matteotomasini.com/portfolio/event-app-case-study/</link><pubDate>Wed, 12 Aug 2020 18:07:16 +0600</pubDate><guid>https://matteotomasini.com/portfolio/event-app-case-study/</guid><description>&lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p&gt;</description></item><item><title>Case Study One</title><link>https://matteotomasini.com/portfolio/case-study-one/</link><pubDate>Mon, 13 Jul 2020 12:49:27 +0600</pubDate><guid>https://matteotomasini.com/portfolio/case-study-one/</guid><description>&lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p&gt;</description></item></channel></rss>
