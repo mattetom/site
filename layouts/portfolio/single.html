@@ -62,9 +62,20 @@
             </div>
           </div>
         </div>
+        {{ if ne .Params.hideMainImage true }}
         <div class="case-details-thumb mb-5">
-          <img src="{{ .Params.thumbnail | absURL }}" alt="case-details" />
+          <img src="{{ .Params.thumbnail | relURL }}" alt="case-details" />
         </div>
+        {{ end }}
+        {{ with .Params.screenshots }}
+        <div class="case-details-carousel mb-5" aria-label="Project screenshots">
+          {{ range . }}
+          <figure class="case-details-carousel-item">
+            <img src="{{ . | relURL }}" alt="project screenshot" loading="lazy" />
+          </figure>
+          {{ end }}
+        </div>
+        {{ end }}
         {{ .Content }}
       </div>
     </div>

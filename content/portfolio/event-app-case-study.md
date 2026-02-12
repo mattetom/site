@@ -1,6 +1,7 @@
 ---
 title: Event App Case Study
 date: 2020-08-12T18:07:16.000+06:00
+draft: true
 thumbnail: images/portfolio/portfolio-2.png
 service: Web Design, Branding
 client: Johnathon Doe
