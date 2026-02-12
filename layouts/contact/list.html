@@ -73,7 +73,7 @@
               </svg>
             </div>
             <div class="icon">
-              <img src="{{ "images/contact/phone.svg" | absURL }}" alt="phone" />
+              <img src="{{ "images/contact/mail.svg" | absURL }}" alt="mail" />
             </div>
           </div>
           <h4>
@@ -191,13 +191,6 @@
 
         </div>
       </div>
-      {{ $map := .Site.Params.map }}
-      {{ with $map }}
-        <div class="col-lg-6">
-          <div id="map" data-lat={{ $map.latitude }} data-long={{ $map.longitude }} data-pin={{ $map.pinImage | absURL }}>
-          </div>
-        </div>
-      {{ end }}
     </div>
   </div>
 </section>

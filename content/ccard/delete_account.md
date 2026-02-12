@@ -15,7 +15,7 @@ La cancellazione non può essere annullata, quindi prima di procedere assicurati
 
 Scrivi una email vuota o con oggetto “Richiesta Cancellazione” e inviala al seguente indirizzo:
 
-[invia una mail a **mattetom.dev**](mailto:mattetom.dev?subject=Richiesta%20Cancellazione%20Account)
+[invia una mail a **mattetom.dev@gmail.com**](mailto:mattetom.dev@gmail.com?subject=Richiesta%20Cancellazione%20Account)
 
 _(Puoi cliccare sul link qui sopra: si aprirà il tuo client di posta elettronica.)_
 

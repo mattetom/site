@@ -13,7 +13,7 @@ La presente Informativa sulla Privacy descrive come **CCard** ("noi", "ci" o "la
 ## 1. Titolare del trattamento
 
 **Matteo Tomasini**  
-Email: **matteotom.dev@gmail.com**
+Email: **mattetom.dev@gmail.com**
 
 ## 2. Tipi di dati raccolti
 

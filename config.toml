@@ -1,11 +1,10 @@
 baseURL = "https://matteotomasini.com"
 languageCode = "en-us"
+title = "Matteo Tomasini"
 
 # ─────────── Fix pagination ───────────
 [pagination]
   pagerSize = 6
-
-title = "Matteo Tomasini"
 
 # ─────────── Main menu ───────────
 [[menu.main]]
@@ -59,9 +58,10 @@ title = "Matteo Tomasini"
   blogPageURL     = "blog"
   contactLink     = "contact"
   copyright       = "All right reserved copyright © matteotomasini.com 2025"
+  description     = "Software engineer portfolio, articles, and app privacy resources."
   footerLogo      = "images/contact/widget-logo.png"
   formspreeURL    = "YOUR FORMSPREE URL"
-  googleAnalytics = "YOUR GOOGLE ANALYTICS CODE"
+  googleAnalytics = "G-Z189WBRGXX"
   logo            = "images/site-navigation/logo.png"
   useNetlifyForm  = true
 
@@ -70,12 +70,6 @@ title = "Matteo Tomasini"
     email        = "matteo.tomasini@gmail.com"
     openingHours = ""
     phone        = ""
-
-  [params.map]
-    APIkey     = ""
-    latitude   = ""
-    longitude  = ""
-    pinImage   = ""
 
   [[params.social]]
     icon   = "fa-facebook-official"
