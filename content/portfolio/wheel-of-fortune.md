@@ -1,11 +1,11 @@
 ---
 title: Wheel Of Fortune
-date: 2026-02-12T10:00:00+00:00
+date: 2026-01-15T10:00:00+00:00
 draft: false
 thumbnail: images/portfolio/wheel-feature-cover.png
 hideMainImage: true
 service: Mobile App Development, Game UX
-client: Personal Project
+client: My daughter
 shortDescription: Ruota della Fortuna is a family-friendly word game for iOS and Android designed to be ad-light and enjoyable across multiple age ranges.
 challenge: Existing mobile versions were ad-heavy and often frustrating for children because phrase difficulty was not age-appropriate.
 solution: I built a cleaner mobile experience with curated phrase difficulty by age, multiple play modes, and a tactile UX that keeps the game accessible for both kids and adults.
@@ -15,6 +15,8 @@ screenshots:
   - images/portfolio/wheel-store-3.png
   - images/portfolio/wheel-store-4.png
   - images/portfolio/wheel-store-5.png
+playStoreURL: https://play.google.com/store/apps/details?id=com.matteotomasini.wheel_of_fortune
+appStoreURL: https://apps.apple.com/us/app/ruota-a-punti/id6758135987
 ---
 Wheel Of Fortune is a personal project born at home before it was a software idea.
 
@@ -54,5 +56,3 @@ This project is a good example of how product decisions can start from a real us
 ## Project links and visuals
 
 - Live website: [wheeloffortune.matteotomasini.com](https://wheeloffortune.matteotomasini.com)
-- Google Play: [com.matteotomasini.wheel_of_fortune](https://play.google.com/store/apps/details?id=com.matteotomasini.wheel_of_fortune)
-- App Store: [Ruota a Punti](https://apps.apple.com/us/app/ruota-a-punti/id6758135987)

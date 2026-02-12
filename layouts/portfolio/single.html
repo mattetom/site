@@ -76,7 +76,23 @@
           {{ end }}
         </div>
         {{ end }}
-        {{ .Content }}
+        {{ if or .Params.playStoreURL .Params.appStoreURL }}
+        <div class="case-details-store mb-5">
+          {{ with .Params.playStoreURL }}
+          <a class="btn btn-primary btn-zoom mr-3 mb-2" href="{{ . }}" target="_blank" rel="noopener noreferrer">
+            <i class="fa fa-android"></i> Google Play Store
+          </a>
+          {{ end }}
+          {{ with .Params.appStoreURL }}
+          <a class="btn btn-outline-primary btn-zoom mb-2" href="{{ . }}" target="_blank" rel="noopener noreferrer">
+            <i class="fa fa-apple"></i> Apple App Store
+          </a>
+          {{ end }}
+        </div>
+        {{ end }}
+        <div class="case-details-content">
+          {{ .Content }}
+        </div>
       </div>
     </div>
     <div class="row">
