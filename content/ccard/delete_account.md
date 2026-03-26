@@ -47,5 +47,5 @@ Se hai bisogno di ulteriori chiarimenti o supporto, puoi scriverci a **mattetom.
 
 ---
 
-© 2025 [matteotomasini.com](https://matteotomasini.com) – Tutti i diritti riservati.  
+© 2026 [matteotomasini.com](https://matteotomasini.com) – Tutti i diritti riservati.  
 [Torna alla Home](https://matteotomasini.com/CCard)
