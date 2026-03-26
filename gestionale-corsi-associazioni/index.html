@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Gestionale Corsi e Iscrizioni per Associazioni | UNITRE Gestionale</title>
+  <meta name="description" content="Software gestionale per la gestione di corsi, iscrizioni, soci e pagamenti. Ideale per associazioni culturali, Università della Terza Età, enti di formazione e organizzazioni no profit.">
+  <meta name="keywords" content="gestionale corsi, software gestione iscrizioni, gestionale associazioni culturali, gestionale università terza età, software gestione corsi formazione, gestionale enti no profit, gestionale soci, software iscrizioni corsi, gestionale pagamenti associazione">
+
+  <link rel="canonical" href="https://matteotomasini.com/gestionale-corsi-associazioni/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gestionale Corsi e Iscrizioni per Associazioni">
+  <meta property="og:description" content="Gestisci corsi, iscrizioni, soci e pagamenti della tua associazione con un unico strumento semplice e completo.">
+  <meta property="og:url" content="https://matteotomasini.com/gestionale-corsi-associazioni/">
+  <meta property="og:locale" content="it_IT">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "UNITRE Gestionale",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Software gestionale per la gestione di corsi, iscrizioni, soci e pagamenti per associazioni culturali, Università della Terza Età e enti di formazione.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "description": "Contattaci per una demo gratuita"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Matteo Tomasini",
+      "url": "https://matteotomasini.com"
+    },
+    "featureList": [
+      "Gestione anagrafica soci",
+      "Catalogo corsi con categorie",
+      "Iscrizioni online con carrello",
+      "Gestione liste d'attesa",
+      "Generazione ricevute PDF",
+      "Notifiche push",
+      "Gestione gite ed escursioni",
+      "Registro presenze",
+      "Sincronizzazione Google Contacts",
+      "Controllo accessi per ruolo"
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#hero" class="nav__logo">
+        <span class="nav__logo-icon">U</span>
+        <span class="nav__logo-text">UNITRE Gestionale</span>
+      </a>
+      <div class="nav__links">
+        <a href="#funzionalita">Funzionalità</a>
+        <a href="#vantaggi">Vantaggi</a>
+        <a href="#chi-siamo">Chi siamo</a>
+        <a href="#contatti" class="nav__cta">Richiedi Demo</a>
+      </div>
+      <button class="nav__burger" aria-label="Menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero" id="hero">
+    <div class="hero__bg-grid"></div>
+    <div class="hero__content">
+      <span class="hero__badge">Software Gestionale per Associazioni</span>
+      <h1 class="hero__title">
+        Gestisci corsi, iscrizioni e soci<br>
+        <em>senza fogli di calcolo.</em>
+      </h1>
+      <p class="hero__sub">
+        Un'unica piattaforma per amministrare la tua associazione culturale,
+        Università della Terza Età o ente di formazione. Dall'anagrafica al pagamento,
+        dal registro presenze alla ricevuta PDF.
+      </p>
+      <div class="hero__actions">
+        <a href="#contatti" class="btn btn--primary">Richiedi una demo gratuita</a>
+        <a href="#funzionalita" class="btn btn--ghost">Scopri le funzionalità</a>
+      </div>
+      <p class="hero__proof">Già in uso presso UNITRE Tradate &mdash; oltre 1.000 iscritti e 100 corsi gestiti ogni anno accademico</p>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__card hero__card--1">
+        <div class="hero__card-icon">&#128218;</div>
+        <div class="hero__card-label">120 Corsi attivi</div>
+        <div class="hero__card-bar"><span style="width:78%"></span></div>
+      </div>
+      <div class="hero__card hero__card--2">
+        <div class="hero__card-icon">&#128101;</div>
+        <div class="hero__card-label">1.080 Iscritti</div>
+        <div class="hero__card-bar"><span style="width:92%"></span></div>
+      </div>
+      <div class="hero__card hero__card--3">
+        <div class="hero__card-icon">&#9989;</div>
+        <div class="hero__card-label">12.400 Presenze registrate</div>
+        <div class="hero__card-bar"><span style="width:65%"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SOCIAL PROOF BAR ═══════════ -->
+  <section class="proof-bar">
+    <div class="proof-bar__inner">
+      <div class="proof-bar__item">
+        <strong>1.000+</strong>
+        <span>Iscritti per anno</span>
+      </div>
+      <div class="proof-bar__sep"></div>
+      <div class="proof-bar__item">
+        <strong>100+</strong>
+        <span>Corsi per anno</span>
+      </div>
+      <div class="proof-bar__sep"></div>
+      <div class="proof-bar__item">
+        <strong>1000+</strong>
+        <span>Ricevute generate</span>
+      </div>
+      <div class="proof-bar__sep"></div>
+      <div class="proof-bar__item">
+        <strong>5+</strong>
+        <span>Anni accademici</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FEATURES ═══════════ -->
+  <section class="features" id="funzionalita">
+    <div class="features__header">
+      <span class="section-tag">Funzionalità</span>
+      <h2 class="section-title">Tutto quello che serve alla tua associazione,<br><em>in un unico gestionale.</em></h2>
+      <p class="section-sub">Ogni modulo è stato progettato lavorando fianco a fianco con chi gestisce davvero un'associazione culturale.</p>
+    </div>
+
+    <div class="features__grid">
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Anagrafica Soci</h3>
+        <p>Gestisci l'intero ciclo di vita del socio: dati anagrafici, tessera, quote associative, storico iscrizioni per anno accademico. Ricerca avanzata e filtri per stato, anno e corso.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>Catalogo Corsi</h3>
+        <p>Organizza i corsi per categorie, docenti, orari e sedi. Definisci posti disponibili, liste d'attesa automatiche e date delle singole lezioni. Tutto visibile anche nel catalogo pubblico.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
+        <h3>Iscrizioni con Carrello</h3>
+        <p>I soci scelgono i corsi da un catalogo online, li aggiungono al carrello e completano l'iscrizione. L'operatore convalida e genera la ricevuta in un clic.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+        </div>
+        <h3>Documenti PDF</h3>
+        <p>Genera automaticamente ricevute di pagamento, moduli di iscrizione, fogli presenze, registri di corso e liberatorie. Tutti personalizzabili e pronti per la stampa.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <h3>Notifiche Push</h3>
+        <p>Comunica con i soci tramite notifiche push su smartphone. Avvisi su corsi, variazioni di orario, eventi speciali e news dell'associazione direttamente sul dispositivo.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>
+        </div>
+        <h3>Registro Presenze</h3>
+        <p>Registra le presenze lezione per lezione. Visualizza statistiche di frequenza per socio e per corso. Genera il foglio presenze PDF per ogni singola data.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Gestione Gite</h3>
+        <p>Organizza escursioni e uscite culturali: itinerario, posti disponibili, quote di partecipazione, elenco partecipanti e documenti di viaggio.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Anni Accademici</h3>
+        <p>Gestisci più anni accademici in parallelo. Ogni anno ha i suoi corsi, le sue iscrizioni e i suoi dati. Lo storico resta sempre consultabile e confrontabile.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <h3>Ruoli e Permessi</h3>
+        <p>Accesso differenziato per amministratori, direttori, volontari e soci. Ogni ruolo vede solo ciò che gli compete: dal pannello completo alla sola consultazione.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ VANTAGGI ═══════════ -->
+  <section class="benefits" id="vantaggi">
+    <div class="benefits__header">
+      <span class="section-tag">Vantaggi</span>
+      <h2 class="section-title">Perché scegliere questo gestionale<br><em>rispetto a un foglio Excel?</em></h2>
+    </div>
+
+    <div class="benefits__grid">
+      <div class="benefit">
+        <div class="benefit__number">01</div>
+        <h3>Zero installazioni</h3>
+        <p>Funziona da browser, su qualsiasi dispositivo. Niente da installare, niente da aggiornare manualmente. Sempre accessibile, anche da smartphone.</p>
+      </div>
+      <div class="benefit">
+        <div class="benefit__number">02</div>
+        <h3>Dati sempre al sicuro</h3>
+        <p>Database in cloud con backup automatici. Niente più file persi su chiavette USB o fogli Excel cancellati per errore. I dati sono protetti e sempre recuperabili.</p>
+      </div>
+      <div class="benefit">
+        <div class="benefit__number">03</div>
+        <h3>Risparmio di tempo</h3>
+        <p>Quello che prima richiedeva ore &mdash; ricevute, elenchi, conteggi &mdash; ora si fa in pochi clic. Il gestionale automatizza le operazioni ripetitive e riduce gli errori.</p>
+      </div>
+      <div class="benefit">
+        <div class="benefit__number">04</div>
+        <h3>Fatto per le associazioni</h3>
+        <p>Non è un gestionale generico adattato. È stato costruito dall'interno, con chi ogni giorno gestisce una realtà associativa. Ogni funzione risponde a un bisogno reale.</p>
+      </div>
+      <div class="benefit">
+        <div class="benefit__number">05</div>
+        <h3>Comunicazione integrata</h3>
+        <p>Notifiche push, email transazionali e newsletter. Raggiungi i tuoi soci dove sono, senza dover usare strumenti separati per comunicare.</p>
+      </div>
+      <div class="benefit">
+        <div class="benefit__number">06</div>
+        <h3>Scalabile e modulare</h3>
+        <p>Che tu abbia 50 o 500 iscritti, il gestionale cresce con te. Attiva solo i moduli che ti servono e aggiungi funzionalità quando ne hai bisogno.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOR WHO ═══════════ -->
+  <section class="for-who">
+    <div class="for-who__header">
+      <span class="section-tag">Per chi è</span>
+      <h2 class="section-title">Pensato per chi eroga formazione<br><em>e gestisce comunità di persone.</em></h2>
+    </div>
+    <div class="for-who__grid">
+      <div class="for-who__card">
+        <div class="for-who__card-accent"></div>
+        <h3>Università della Terza Età</h3>
+        <p>Gestione completa di anni accademici, corsi, docenti, iscrizioni e quote. Il caso d'uso per cui il software è nato.</p>
+      </div>
+      <div class="for-who__card">
+        <div class="for-who__card-accent"></div>
+        <h3>Associazioni Culturali</h3>
+        <p>Laboratori, conferenze, eventi: organizza qualsiasi attività formativa con anagrafica soci, pagamenti e comunicazioni.</p>
+      </div>
+      <div class="for-who__card">
+        <div class="for-who__card-accent"></div>
+        <h3>Enti di Formazione</h3>
+        <p>Catalogo corsi pubblico, iscrizioni online, registro presenze e generazione automatica di attestati e documenti.</p>
+      </div>
+      <div class="for-who__card">
+        <div class="for-who__card-accent"></div>
+        <h3>Pro Loco e Circoli</h3>
+        <p>Tessere soci, organizzazione gite, gestione eventi e comunicazione diretta con i membri tramite notifiche.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ABOUT ═══════════ -->
+  <section class="about" id="chi-siamo">
+    <div class="about__inner">
+      <div class="about__text">
+        <span class="section-tag">Chi siamo</span>
+        <h2 class="section-title">Nato sul campo,<br><em>non in un ufficio marketing.</em></h2>
+        <p>Questo gestionale è nato dalla collaborazione diretta con UNITRE Tradate, un'Università della Terza Età con oltre 1.000 iscritti e 100 corsi ogni anno accademico.</p>
+        <p>Non è un prodotto generico: ogni funzionalità è stata progettata per risolvere problemi reali &mdash; quelli che chi gestisce un'associazione conosce fin troppo bene: fogli Excel ingestibili, ricevute fatte a mano, comunicazioni disperse tra email e WhatsApp.</p>
+        <p>Sviluppato da <strong>Matteo Tomasini</strong>, ingegnere del software con esperienza nella realizzazione di applicazioni web su misura.</p>
+      </div>
+      <div class="about__stats">
+        <div class="about__stat">
+          <div class="about__stat-value">5+</div>
+          <div class="about__stat-label">Anni di utilizzo<br>continuativo</div>
+        </div>
+        <div class="about__stat">
+          <div class="about__stat-value">1.000+</div>
+          <div class="about__stat-label">Iscritti gestiti<br>ogni anno</div>
+        </div>
+        <div class="about__stat">
+          <div class="about__stat-value">100+</div>
+          <div class="about__stat-label">Corsi attivi<br>per anno accademico</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA / CONTACT ═══════════ -->
+  <section class="cta" id="contatti">
+    <div class="cta__inner">
+      <h2 class="cta__title">Vuoi vedere il gestionale in azione?</h2>
+      <p class="cta__sub">Scrivimi per una demo gratuita e senza impegno. Ti mostro come funziona.</p>
+      <div class="cta__actions">
+        <a href="mailto:matteo.tomasini@gmail.com?subject=Richiesta%20demo%20Gestionale%20Corsi" class="btn btn--primary btn--lg">
+          Scrivimi per una demo
+        </a>
+      </div>
+      <p class="cta__note">Rispondo personalmente entro 24 ore.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ FAQ (SEO) ═══════════ -->
+  <section class="faq">
+    <div class="faq__inner">
+      <span class="section-tag">Domande frequenti</span>
+      <h2 class="section-title">Hai qualche dubbio?<br><em>Ecco le risposte.</em></h2>
+
+      <div class="faq__list">
+        <details class="faq__item">
+          <summary>Quanto costa il gestionale?</summary>
+          <p>Il prezzo dipende dalla dimensione della tua associazione e dai moduli che ti servono. Contattami per un preventivo su misura. La demo è sempre gratuita.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Serve installare qualcosa?</summary>
+          <p>No, il gestionale funziona interamente da browser web. Basta una connessione internet e un dispositivo qualsiasi: computer, tablet o smartphone.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Posso importare i dati che ho già su Excel?</summary>
+          <p>Sì, è possibile importare l'anagrafica soci e i dati dei corsi da fogli di calcolo esistenti. Ti assisto io nel processo di migrazione.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Il gestionale è adatto anche per piccole associazioni?</summary>
+          <p>Assolutamente sì. Il sistema è modulare: puoi attivare solo le funzionalità che ti servono. Funziona bene con 50 soci come con 1.000 e oltre.</p>
+        </details>
+        <details class="faq__item">
+          <summary>I dati dei soci sono al sicuro?</summary>
+          <p>I dati sono conservati su database in cloud con backup automatici, accesso protetto da autenticazione e ruoli, e conformità alle normative sulla privacy.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Posso gestire più anni accademici?</summary>
+          <p>Sì, il gestionale gestisce più anni accademici in parallelo. Puoi consultare lo storico di qualsiasi anno passato in qualsiasi momento.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quanto costa il gestionale per associazioni?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Il prezzo dipende dalla dimensione della tua associazione e dai moduli che ti servono. Contattami per un preventivo su misura. La demo è sempre gratuita."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Serve installare qualcosa per usare il gestionale?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, il gestionale funziona interamente da browser web. Basta una connessione internet e un dispositivo qualsiasi: computer, tablet o smartphone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Posso importare i dati da Excel?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sì, è possibile importare l'anagrafica soci e i dati dei corsi da fogli di calcolo esistenti."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Il gestionale è adatto per piccole associazioni?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Assolutamente sì. Il sistema è modulare: puoi attivare solo le funzionalità che ti servono. Funziona bene con 50 soci come con 1.000 e oltre."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "I dati dei soci sono al sicuro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "I dati sono conservati su database in cloud con backup automatici, accesso protetto da autenticazione e ruoli, e conformità alle normative sulla privacy."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__left">
+        <span class="nav__logo-icon">U</span>
+        <span>UNITRE Gestionale</span>
+      </div>
+      <div class="footer__right">
+        <a href="https://matteotomasini.com">matteotomasini.com</a>
+        <span>&copy; 2025 Matteo Tomasini</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky nav on scroll -->
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 60);
+    });
+  </script>
+
+</body>
+</html>
