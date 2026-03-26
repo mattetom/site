@@ -18,7 +18,7 @@
 
   {{ "<!-- Stylesheets -->" | safeHTML }}
   {{ $options := (dict "targetPath" "css/style.css" "outputStyle" "compressed") }}
-  {{ $style := resources.Get "scss/style.scss" | css.Sass $options }}
+  {{ $style := resources.Get "scss/style.scss" | toCSS $options }}
   <link href="{{ $style.Permalink }}" rel="stylesheet" />
 
   {{ "<!--Favicon-->" | safeHTML }}

@@ -69,12 +69,50 @@
         {{ end }}
         {{ with .Params.screenshots }}
         <div class="case-details-carousel mb-5" aria-label="Project screenshots">
-          {{ range . }}
-          <figure class="case-details-carousel-item">
-            <img src="{{ . | relURL }}" alt="project screenshot" loading="lazy" />
+          {{ range $i, $src := . }}
+          <figure class="case-details-carousel-item" onclick="openLightbox({{ $i }})" style="cursor:pointer">
+            <img src="{{ $src | relURL }}" alt="project screenshot" loading="lazy" />
           </figure>
           {{ end }}
         </div>
+        <!-- Lightbox overlay -->
+        <div id="lightbox" class="case-lightbox" onclick="if(event.target===this)closeLightbox()">
+          <button class="case-lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+          <button class="case-lightbox-prev" onclick="lightboxNav(-1)" aria-label="Previous">&#8249;</button>
+          <img id="lightbox-img" class="case-lightbox-img" src="" alt="screenshot" />
+          <button class="case-lightbox-next" onclick="lightboxNav(1)" aria-label="Next">&#8250;</button>
+          <div class="case-lightbox-counter"><span id="lightbox-counter"></span></div>
+        </div>
+        <script>
+        (function(){
+          var imgs = [{{ range $i, $src := . }}{{ if $i }},{{ end }}"{{ $src | relURL }}"{{ end }}];
+          var idx = 0;
+          var lb = document.getElementById('lightbox');
+          var lbImg = document.getElementById('lightbox-img');
+          var lbCount = document.getElementById('lightbox-counter');
+          window.openLightbox = function(i) {
+            idx = i; lbImg.src = imgs[idx];
+            lbCount.textContent = (idx+1) + ' / ' + imgs.length;
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          };
+          window.closeLightbox = function() {
+            lb.classList.remove('active');
+            document.body.style.overflow = '';
+          };
+          window.lightboxNav = function(dir) {
+            idx = (idx + dir + imgs.length) % imgs.length;
+            lbImg.src = imgs[idx];
+            lbCount.textContent = (idx+1) + ' / ' + imgs.length;
+          };
+          document.addEventListener('keydown', function(e) {
+            if (!lb.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') lightboxNav(-1);
+            if (e.key === 'ArrowRight') lightboxNav(1);
+          });
+        })();
+        </script>
         {{ end }}
         {{ if or .Params.playStoreURL .Params.appStoreURL }}
         <div class="case-details-store mb-5">
