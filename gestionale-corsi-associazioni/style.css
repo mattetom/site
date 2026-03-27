@@ -1,25 +1,25 @@
 /* ═══════════════════════════════════════════════════
-   UNITRE Gestionale — Landing Page
-   Aesthetic: Warm editorial Italian — deep navy,
-   amber accents, refined serif display type
+   Regestio — Landing Page
+   Aesthetic: Refined green tones inspired by UniTre,
+   deep forest base, emerald accents, serif display type
    ═══════════════════════════════════════════════════ */
 
 /* ── Reset & Base ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --navy:       #0f1729;
-  --navy-light: #1a2540;
-  --navy-mid:   #243054;
-  --slate:      #8892a8;
-  --cream:      #f8f6f1;
-  --cream-dark: #ece8df;
-  --amber:      #d4952e;
-  --amber-light:#f0c060;
-  --amber-glow: rgba(212, 149, 46, .12);
+  --navy:       #0e1f16;
+  --navy-light: #162b1f;
+  --navy-mid:   #1e3a28;
+  --slate:      #7a9486;
+  --cream:      #f4f7f2;
+  --cream-dark: #dfe8da;
+  --amber:      #2e8b57;
+  --amber-light:#4db87a;
+  --amber-glow: rgba(46, 139, 87, .12);
   --white:      #ffffff;
-  --text:       #2c3142;
-  --text-light: #5a6178;
+  --text:       #1e2e24;
+  --text-light: #4a6355;
   --radius:     12px;
   --radius-lg:  20px;
   --font-display: 'DM Serif Display', Georgia, serif;
@@ -91,10 +91,10 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--amber);
 }
 .btn--primary:hover {
-  background: #c08422;
-  border-color: #c08422;
+  background: #24734a;
+  border-color: #24734a;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(212, 149, 46, .3);
+  box-shadow: 0 8px 24px rgba(46, 139, 87, .3);
 }
 
 .btn--ghost {
@@ -173,7 +173,7 @@ a { text-decoration: none; color: inherit; }
   font-weight: 600 !important;
 }
 .nav__cta:hover {
-  background: #c08422 !important;
+  background: #24734a !important;
 }
 
 .nav__burger {
@@ -234,7 +234,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--amber-glow);
   padding: .45rem 1rem;
   border-radius: 60px;
-  border: 1px solid rgba(212, 149, 46, .25);
+  border: 1px solid rgba(46, 139, 87, .25);
   margin-bottom: 1.5rem;
 }
 
@@ -253,7 +253,7 @@ a { text-decoration: none; color: inherit; }
   margin-top: 1.25rem;
   font-size: 1.1rem;
   line-height: 1.7;
-  color: var(--slate);
+  color: rgba(255,255,255,.7);
   max-width: 500px;
 }
 
@@ -276,8 +276,7 @@ a { text-decoration: none; color: inherit; }
 .hero__proof {
   margin-top: 2rem;
   font-size: .82rem;
-  color: var(--slate);
-  opacity: .7;
+  color: rgba(255,255,255,.5);
 }
 
 /* Hero visual cards */
@@ -402,7 +401,7 @@ a { text-decoration: none; color: inherit; }
   transition: transform .4s ease;
 }
 .feature-card:hover {
-  border-color: rgba(212, 149, 46, .2);
+  border-color: rgba(46, 139, 87, .2);
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0,0,0,.06);
 }
@@ -462,7 +461,7 @@ a { text-decoration: none; color: inherit; }
 }
 .benefit:hover {
   background: rgba(255,255,255,.05);
-  border-color: rgba(212, 149, 46, .2);
+  border-color: rgba(46, 139, 87, .2);
 }
 
 .benefit__number {
@@ -480,7 +479,7 @@ a { text-decoration: none; color: inherit; }
 }
 .benefit p {
   font-size: .9rem;
-  color: var(--slate);
+  color: rgba(255,255,255,.65);
   line-height: 1.65;
 }
 
@@ -612,7 +611,7 @@ a { text-decoration: none; color: inherit; }
 .cta__sub {
   margin-top: 1rem;
   font-size: 1.05rem;
-  color: var(--slate);
+  color: rgba(255,255,255,.7);
   line-height: 1.7;
 }
 .cta__actions {
@@ -634,8 +633,7 @@ a { text-decoration: none; color: inherit; }
 .cta__note {
   margin-top: 1.25rem;
   font-size: .82rem;
-  color: var(--slate);
-  opacity: .6;
+  color: rgba(255,255,255,.5);
 }
 
 /* ═══════════ FAQ ═══════════ */
