@@ -28,7 +28,7 @@ Two deploy paths are wired up; both fire off `main`:
 - **Netlify** (primary, per README badge) — auto-builds on push. Forms use `useNetlifyForm = true` in `config.toml`. Netlify CMS lives at `/admin/` (`static/admin/config.yml`, git-gateway backend pointing to `main`).
 - **GitHub Pages** via `.github/workflows/gh-pages.yml` — builds with `hugo --minify` and pushes `./public` to the `gh-pages` branch.
 
-`/public/` and `/resources/_gen/` are gitignored — never commit build output.
+`/public/` and `/resources/_gen/` are gitignored — never commit build output. **`.DS_Store` is tracked in this repo** — when committing, stage specific files instead of `git add -A`/`.` to avoid pulling in macOS metadata.
 
 ## Architecture
 
@@ -36,6 +36,8 @@ Two deploy paths are wired up; both fire off `main`:
 Hugo resolves files from the project root first, falling back to `themes/mattetom/`. Almost every layout in `layouts/` shadows a same-named file in the theme. **When changing a layout, edit the project copy in `layouts/`, not the theme submodule.** If a needed file only exists in the theme, copy it into `layouts/` before editing. The theme submodule should generally be left clean so it can be updated from upstream.
 
 The same override applies to `assets/scss/` and `assets/js/` (project) shadowing `themes/mattetom/assets/`.
+
+Icons use **Font Awesome 4** syntax (`<i class="fa fa-android"></i>`), not FA5/6 (`fa-solid`, `fab`).
 
 ### Content model
 Section pages on the homepage are driven by **data files**, not Markdown:
@@ -48,7 +50,7 @@ So to change copy on the landing page, edit YAML in `data/`, not HTML.
 The Markdown content under `content/` populates these section types:
 
 - `content/blog/` — articles (rendered via `layouts/blog/`).
-- `content/portfolio/` — case studies; the homepage portfolio grid lists `Site.RegularPages` filtered by `Type "portfolio"` in reverse order. Each entry uses front matter fields `thumbnail`, `service`, `client`, `screenshots`, `shortDescription`, `challenge`, `solution`.
+- `content/portfolio/` — case studies; the homepage portfolio grid lists `Site.RegularPages` filtered by `Type "portfolio"` in reverse order. Each entry uses front matter fields `thumbnail`, `service`, `client`, `screenshots`, `shortDescription`, `challenge`, `solution`. Portfolio entries also support **`*URL` front-matter fields** (`projectURL`, `playStoreURL`, `appStoreURL`) which `layouts/portfolio/single.html` renders as buttons only when populated. To add a new external link type, follow the same `{{ with .Params.fooURL }}` pattern.
 - `content/privacy/` — privacy policies for shipped apps (`layouts/privacy/single.html`).
 - `content/ccard/` — account deletion / app support pages (`layouts/ccard/single.html`).
 - `content/contact/`, `content/posts/` — minor.
