@@ -15,6 +15,7 @@ screenshots:
   - images/portfolio/wheel-store-3.png
   - images/portfolio/wheel-store-4.png
   - images/portfolio/wheel-store-5.png
+projectURL: https://wheeloffortune.matteotomasini.com
 playStoreURL: https://play.google.com/store/apps/details?id=com.matteotomasini.wheel_of_fortune
 appStoreURL: https://apps.apple.com/us/app/ruota-a-punti/id6758135987
 ---

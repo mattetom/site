@@ -13,6 +13,7 @@ screenshots:
   - images/portfolio/geocam-store-1.png
   - images/portfolio/geocam-store-2.png
   - images/portfolio/geocam-store-3.png
+projectURL: https://geocam.matteotomasini.com
 playStoreURL: https://play.google.com/store/apps/details?id=com.matteotomasini.geoblink
 appStoreURL: https://apps.apple.com/it/app/geocam/id6447012622
 ---
@@ -47,6 +48,3 @@ The product focuses on reliability and low-friction interaction:
 
 GeoCam is an example of utility-driven product design: a focused app that solves one recurring behavior problem well. The value is not in adding more screens, but in removing daily cognitive load while keeping home protection reliable.
 
-## Project links and visuals
-
-- Live website: [geocam.matteotomasini.com](https://geocam.matteotomasini.com)

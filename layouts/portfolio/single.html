@@ -114,8 +114,13 @@
         })();
         </script>
         {{ end }}
-        {{ if or .Params.playStoreURL .Params.appStoreURL }}
+        {{ if or .Params.playStoreURL .Params.appStoreURL .Params.projectURL }}
         <div class="case-details-store mb-5">
+          {{ with .Params.projectURL }}
+          <a class="btn btn-primary btn-zoom mr-3 mb-2" href="{{ . }}" target="_blank" rel="noopener noreferrer">
+            <i class="fa fa-globe"></i> Visit project site
+          </a>
+          {{ end }}
           {{ with .Params.playStoreURL }}
           <a class="btn btn-primary btn-zoom mr-3 mb-2" href="{{ . }}" target="_blank" rel="noopener noreferrer">
             <i class="fa fa-android"></i> Google Play Store
