@@ -17,7 +17,7 @@ projectURL: https://geocam.matteotomasini.com
 playStoreURL: https://play.google.com/store/apps/details?id=com.matteotomasini.geoblink
 appStoreURL: https://apps.apple.com/it/app/geocam/id6447012622
 ---
-GeoCam started from a practical, repeated pain point: remembering to open Blink and manually switch camera status every time leaving or returning home.
+[GeoCam](https://geocam.matteotomasini.com) — a Blink geofencing app for iOS and Android — started from a practical, repeated pain point: remembering to open Blink and manually switch camera status every time leaving or returning home.
 
 The goal was to make home security feel automatic. Instead of adding another daily task, GeoCam uses geofencing so Blink follows presence in the background.
 
@@ -47,4 +47,8 @@ The product focuses on reliability and low-friction interaction:
 ## Why this project matters
 
 GeoCam is an example of utility-driven product design: a focused app that solves one recurring behavior problem well. The value is not in adding more screens, but in removing daily cognitive load while keeping home protection reliable.
+
+## Live site
+
+Visit [**geocam.matteotomasini.com**](https://geocam.matteotomasini.com) for the full product page, FAQ, and detailed comparisons against [IFTTT](https://geocam.matteotomasini.com/geocam-vs-ifttt-blink.html), [Home Assistant](https://geocam.matteotomasini.com/geocam-vs-home-assistant-blink.html), [Alexa Routines](https://geocam.matteotomasini.com/geocam-vs-alexa-blink.html), and [Blink's native schedules](https://geocam.matteotomasini.com/geocam-vs-blink-schedules.html).
 
