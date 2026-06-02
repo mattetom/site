@@ -3,6 +3,7 @@ date = 2026-05-07T10:00:00+00:00
 featureImage = "/images/portfolio/geocam-feature.png"
 postImage = "/images/portfolio/geocam-feature.png"
 title = "Building GeoCam: Blink Geofencing Without IFTTT or Alexa"
+description = "Blink has no native geofencing in 2026. Here's why Alexa, IFTTT, and Home Assistant fall short for location-based arming — and how I built GeoCam to auto-arm Blink cameras when everyone leaves the house."
 tags = ["smart-home", "blink", "geofencing", "side-project"]
 categories = "blog"
 +++
