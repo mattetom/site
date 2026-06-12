@@ -1,0 +1,3 @@
+# /regestio -> landing Regestio esistente
+/regestio              /gestionale-corsi-associazioni/        301!
+/regestio/*            /gestionale-corsi-associazioni/:splat  301!

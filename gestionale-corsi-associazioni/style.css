@@ -840,11 +840,147 @@ a { text-decoration: none; color: inherit; }
 }
 .footer__right a:hover { color: var(--amber); }
 
+/* ═══════════ PREZZI ═══════════ */
+.pricing {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.pricing__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.pricing__header .section-sub { margin-left: auto; margin-right: auto; }
+
+.pricing__banner {
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-align: center;
+}
+.pricing__banner--ok {
+  background: var(--amber-glow);
+  color: var(--amber);
+  border: 1px solid var(--amber-light);
+}
+.pricing__banner--ko {
+  background: rgba(180, 60, 60, .08);
+  color: #a04040;
+  border: 1px solid rgba(180, 60, 60, .3);
+}
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.6rem;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(14, 31, 22, .1);
+}
+
+.pricing-card--featured {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--cream);
+}
+.pricing-card--featured .pricing-card__name { color: var(--white); }
+.pricing-card--featured .pricing-card__limit { color: var(--slate); }
+.pricing-card--featured .pricing-card__price { color: var(--white); }
+.pricing-card--featured .pricing-card__price span { color: var(--slate); }
+.pricing-card--featured .pricing-card__features li { color: var(--cream-dark); }
+.pricing-card--featured .pricing-card__features li::before { color: var(--amber-light); }
+
+.pricing-card__badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--amber);
+  color: var(--white);
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .3rem .9rem;
+  border-radius: 60px;
+  white-space: nowrap;
+}
+
+.pricing-card__name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--navy);
+}
+.pricing-card__limit {
+  font-size: .85rem;
+  color: var(--text-light);
+  margin-bottom: 1.25rem;
+}
+.pricing-card__price {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+.pricing-card__price span {
+  font-family: var(--font-body);
+  font-size: .9rem;
+  color: var(--text-light);
+}
+.pricing-card__price--custom { font-size: 1.8rem; padding: .3rem 0; }
+
+.pricing-card__features {
+  list-style: none;
+  margin-bottom: 1.75rem;
+  flex-grow: 1;
+}
+.pricing-card__features li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: .88rem;
+  color: var(--text-light);
+  margin-bottom: .55rem;
+}
+.pricing-card__features li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+  font-weight: 700;
+}
+
+.pricing-card__cta { width: 100%; }
+.pricing-card__cta:disabled { opacity: .6; cursor: wait; transform: none; }
+
+.pricing__note {
+  text-align: center;
+  font-size: .85rem;
+  color: var(--text-light);
+  margin-top: 2rem;
+}
+
 /* ═══════════ RESPONSIVE ═══════════ */
 @media (max-width: 1024px) {
   .features__grid { grid-template-columns: repeat(2, 1fr); }
   .benefits__grid { grid-template-columns: repeat(2, 1fr); }
   .for-who__grid  { grid-template-columns: repeat(2, 1fr); }
+  .pricing__grid  { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -876,6 +1012,7 @@ a { text-decoration: none; color: inherit; }
   .features__grid  { grid-template-columns: 1fr; }
   .benefits__grid  { grid-template-columns: 1fr; }
   .for-who__grid   { grid-template-columns: 1fr; }
+  .pricing__grid   { grid-template-columns: 1fr; }
   .about__inner    { grid-template-columns: 1fr; gap: 2.5rem; }
 
   .proof-bar__inner { gap: 1.5rem; }

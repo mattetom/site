@@ -26,12 +26,29 @@
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
     "description": "Software gestionale per la gestione di corsi, iscrizioni, soci e pagamenti per associazioni culturali, Università della Terza Età e enti di formazione.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "EUR",
-      "description": "Contattaci per una demo gratuita"
-    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Small — fino a 300 soci",
+        "price": "99",
+        "priceCurrency": "EUR",
+        "description": "Canone mensile, fino a 300 soci"
+      },
+      {
+        "@type": "Offer",
+        "name": "Medium — fino a 1.000 soci",
+        "price": "299",
+        "priceCurrency": "EUR",
+        "description": "Canone mensile, fino a 1.000 soci"
+      },
+      {
+        "@type": "Offer",
+        "name": "Large — fino a 2.000 soci",
+        "price": "499",
+        "priceCurrency": "EUR",
+        "description": "Canone mensile, fino a 2.000 soci"
+      }
+    ],
     "author": {
       "@type": "Person",
       "name": "Matteo Tomasini",
@@ -71,6 +88,7 @@
       <div class="nav__links">
         <a href="#funzionalita">Funzionalità</a>
         <a href="#vantaggi">Vantaggi</a>
+        <a href="#prezzi">Prezzi</a>
         <a href="#chi-siamo">Chi siamo</a>
         <a href="#contatti" class="nav__cta">Richiedi Demo</a>
       </div>
@@ -396,6 +414,76 @@
     </div>
   </section>
 
+  <!-- ═══════════ PREZZI ═══════════ -->
+  <section class="pricing" id="prezzi">
+    <div class="pricing__header">
+      <span class="section-tag">Prezzi</span>
+      <h2 class="section-title">Un piano per ogni associazione,<br><em>senza sorprese.</em></h2>
+      <p class="section-sub">Canone mensile tutto incluso: hosting, backup automatici, aggiornamenti e assistenza. Disdici quando vuoi.</p>
+    </div>
+
+    <div class="pricing__banner" id="checkout-banner" hidden></div>
+
+    <div class="pricing__grid">
+
+      <div class="pricing-card">
+        <h3 class="pricing-card__name">Small</h3>
+        <p class="pricing-card__limit">Fino a 300 soci</p>
+        <div class="pricing-card__price">99&euro;<span>/mese</span></div>
+        <ul class="pricing-card__features">
+          <li>Tutte le funzionalit&agrave; del gestionale</li>
+          <li>App mobile per i soci inclusa</li>
+          <li>Hosting e backup automatici</li>
+          <li>Assistenza via email</li>
+        </ul>
+        <button type="button" class="btn btn--ghost pricing-card__cta" data-plan="small">Abbonati</button>
+      </div>
+
+      <div class="pricing-card pricing-card--featured">
+        <span class="pricing-card__badge">Pi&ugrave; scelto</span>
+        <h3 class="pricing-card__name">Medium</h3>
+        <p class="pricing-card__limit">Fino a 1.000 soci</p>
+        <div class="pricing-card__price">299&euro;<span>/mese</span></div>
+        <ul class="pricing-card__features">
+          <li>Tutte le funzionalit&agrave; del gestionale</li>
+          <li>App mobile per i soci inclusa</li>
+          <li>Hosting e backup automatici</li>
+          <li>Assistenza prioritaria</li>
+        </ul>
+        <button type="button" class="btn btn--primary pricing-card__cta" data-plan="medium">Abbonati</button>
+      </div>
+
+      <div class="pricing-card">
+        <h3 class="pricing-card__name">Large</h3>
+        <p class="pricing-card__limit">Fino a 2.000 soci</p>
+        <div class="pricing-card__price">499&euro;<span>/mese</span></div>
+        <ul class="pricing-card__features">
+          <li>Tutte le funzionalit&agrave; del gestionale</li>
+          <li>App mobile per i soci inclusa</li>
+          <li>Hosting e backup automatici</li>
+          <li>Assistenza prioritaria</li>
+        </ul>
+        <button type="button" class="btn btn--ghost pricing-card__cta" data-plan="large">Abbonati</button>
+      </div>
+
+      <div class="pricing-card">
+        <h3 class="pricing-card__name">Ultra</h3>
+        <p class="pricing-card__limit">Oltre 2.000 soci</p>
+        <div class="pricing-card__price pricing-card__price--custom">Su misura</div>
+        <ul class="pricing-card__features">
+          <li>Tutte le funzionalit&agrave; del gestionale</li>
+          <li>App mobile per i soci inclusa</li>
+          <li>Configurazione dedicata</li>
+          <li>Assistenza dedicata</li>
+        </ul>
+        <a href="mailto:matteo.tomasini@gmail.com?subject=Regestio%20piano%20Ultra%20%E2%80%94%20richiesta%20commerciale" class="btn btn--ghost pricing-card__cta">Contatta il commerciale</a>
+      </div>
+
+    </div>
+
+    <p class="pricing__note">Pagamento sicuro con carta tramite Stripe. Fatturazione mensile, nessun vincolo di durata.</p>
+  </section>
+
   <!-- ═══════════ CTA / CONTACT ═══════════ -->
   <section class="cta" id="contatti">
     <div class="cta__inner">
@@ -419,7 +507,7 @@
       <div class="faq__list">
         <details class="faq__item">
           <summary>Quanto costa il gestionale?</summary>
-          <p>Il prezzo dipende dalla dimensione della tua associazione e dai moduli che ti servono. Contattami per un preventivo su misura. La demo è sempre gratuita.</p>
+          <p>Il canone dipende dal numero di soci: si parte da 99&euro;/mese fino a 300 soci (piano Small), 299&euro;/mese fino a 1.000 (Medium), 499&euro;/mese fino a 2.000 (Large). Oltre i 2.000 soci il piano Ultra è su misura. La demo è sempre gratuita.</p>
         </details>
         <details class="faq__item">
           <summary>Serve installare qualcosa?</summary>
@@ -456,7 +544,7 @@
         "name": "Quanto costa il gestionale per associazioni?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Il prezzo dipende dalla dimensione della tua associazione e dai moduli che ti servono. Contattami per un preventivo su misura. La demo è sempre gratuita."
+          "text": "Il canone dipende dal numero di soci: 99€/mese fino a 300 soci, 299€/mese fino a 1.000, 499€/mese fino a 2.000. Oltre i 2.000 soci il piano Ultra è su misura. La demo è sempre gratuita."
         }
       },
       {
@@ -514,6 +602,46 @@
     window.addEventListener('scroll', () => {
       document.getElementById('nav').classList.toggle('nav--scrolled', window.scrollY > 60);
     });
+  </script>
+
+  <!-- Stripe Checkout -->
+  <script>
+    document.querySelectorAll('[data-plan]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Attendere…';
+        try {
+          const res = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ plan: btn.dataset.plan })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.url) throw new Error(data.error || 'checkout failed');
+          window.location.href = data.url;
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = original;
+          alert('Non è stato possibile avviare il pagamento. Riprova tra poco oppure scrivimi: matteo.tomasini@gmail.com');
+        }
+      });
+    });
+
+    // Esito ritorno da Stripe (?checkout=success|cancel)
+    const esito = new URLSearchParams(window.location.search).get('checkout');
+    if (esito) {
+      const banner = document.getElementById('checkout-banner');
+      banner.hidden = false;
+      if (esito === 'success') {
+        banner.classList.add('pricing__banner--ok');
+        banner.textContent = 'Grazie! Abbonamento attivato. Ti contatterò entro 24 ore per configurare il gestionale della tua associazione.';
+      } else {
+        banner.classList.add('pricing__banner--ko');
+        banner.textContent = 'Pagamento annullato. Nessun addebito effettuato: puoi riprovare quando vuoi.';
+      }
+      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   </script>
 
 </body>
