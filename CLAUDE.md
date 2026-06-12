@@ -25,8 +25,8 @@ There is no test suite, linter, or package.json — pure Hugo + SCSS + a small a
 
 Two deploy paths are wired up; both fire off `main`:
 
-- **Netlify** (primary, per README badge) — auto-builds on push. Forms use `useNetlifyForm = true` in `config.toml`. Netlify CMS lives at `/admin/` (`static/admin/config.yml`, git-gateway backend pointing to `main`).
-- **GitHub Pages** via `.github/workflows/gh-pages.yml` — builds with `hugo --minify` and pushes `./public` to the `gh-pages` branch.
+- **Netlify** (primary — serves matteotomasini.com; site name `matteotomasinicom`, repo linked via `netlify` CLI, `.netlify/` gitignored) — auto-builds on push. Forms use `useNetlifyForm = true` in `config.toml`. Netlify CMS lives at `/admin/` (`static/admin/config.yml`, git-gateway backend pointing to `main`). Serverless functions live in `netlify/functions/` (auto-detected, no `netlify.toml`); redirects in `static/_redirects`, response headers in `static/_headers`.
+- **GitHub Pages** via `.github/workflows/gh-pages.yml` — builds with `hugo --minify` and pushes `./public` to the `gh-pages` branch. Secondary deploy: `_redirects` and functions don't work there, only on Netlify.
 
 `/public/` and `/resources/_gen/` are gitignored — never commit build output. **`.DS_Store` is tracked in this repo** — when committing, stage specific files instead of `git add -A`/`.` to avoid pulling in macOS metadata.
 
@@ -57,6 +57,11 @@ The Markdown content under `content/` populates these section types:
 
 ### Static assets and app landing pages
 `static/` is copied verbatim. It contains both site assets (`images/`, `plugins/`) and **standalone app landing/support sites** served as subpaths (`gestionale-corsi-associazioni/`, `auto-meet-screen-share/`, `wheel_of_fortune/`, `teswe/`, `yaspaint/`). These are independent HTML/CSS bundles — not Hugo-rendered — so editing them does not require rebuilding layouts. `static/_headers` configures Netlify response headers (e.g. Tesla `.well-known` MIME type).
+
+### Regestio landing + Stripe checkout
+`static/gestionale-corsi-associazioni/` is the **Regestio** landing (the Unitre gestionale productized; related portfolio entry `content/portfolio/unitre-gestionale.md`). Also reachable at **`/regestio`** via 301 in `static/_redirects`. The pricing section (`#prezzi`) offers monthly subscription plans: Small 99€ (≤300 soci), Medium 299€ (≤1.000), Large 499€ (≤2.000), Ultra on request (mailto). FAQ and JSON-LD carry the same prices — keep all three in sync when changing them.
+
+Checkout flow: the "Abbonati" buttons POST `{plan}` to `/api/checkout` → `netlify/functions/checkout.mjs` (zero npm deps, calls the Stripe REST API via `fetch`) creates a Checkout Session in `subscription` mode with **inline `price_data`** — prices are defined server-side in the function's `PLANS` map, deliberately no product catalog in Stripe (Stripe still auto-creates ad-hoc Product objects per session; that's expected). Return URLs land on the landing with `?checkout=success|cancel`, handled by a banner script in the page. Requires the **`STRIPE_SECRET_KEY`** env var on Netlify (currently a **test-mode** key, sandbox "Portio Sandbox"; never commit keys). Go-live = swap in `sk_live_…` via `netlify env:set` + redeploy. No webhooks/auto-provisioning: a paid subscription just notifies via Stripe email, instance setup is manual.
 
 ### Config touchpoints
 `config.toml` holds site metadata, the homepage anchor menu, social links, Google Analytics ID, and Netlify form toggle. The `[params]` block is read throughout partials.
