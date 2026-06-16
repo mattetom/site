@@ -494,13 +494,34 @@
   <section class="cta" id="contatti">
     <div class="cta__inner">
       <h2 class="cta__title">Vuoi vedere il gestionale in azione?</h2>
-      <p class="cta__sub">Scrivimi per una demo gratuita e senza impegno. Ti mostro come funziona.</p>
-      <div class="cta__actions">
-        <a href="mailto:matteo.tomasini@gmail.com?subject=Richiesta%20demo%20Regestio" class="btn btn--primary btn--lg">
-          Scrivimi per una demo
-        </a>
-      </div>
-      <p class="cta__note">Rispondo personalmente entro 24 ore.</p>
+      <p class="cta__sub">Compila il modulo per una demo gratuita e senza impegno. Ti rispondo personalmente entro 24 ore.</p>
+
+      <div class="cta__banner" id="demo-banner" hidden></div>
+
+      <form class="cta__form" name="regestio-demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gestionale-corsi-associazioni/?demo=success#contatti">
+        <input type="hidden" name="form-name" value="regestio-demo">
+        <p class="cta__hp"><label>Non compilare se sei umano: <input name="bot-field"></label></p>
+
+        <div class="cta__field">
+          <label for="f-nome">Nome e cognome</label>
+          <input type="text" name="name" id="f-nome" autocomplete="name" required>
+        </div>
+        <div class="cta__field">
+          <label for="f-email">Email</label>
+          <input type="email" name="email" id="f-email" autocomplete="email" required>
+        </div>
+        <div class="cta__field">
+          <label for="f-assoc">Associazione / Unitre <span>(facoltativo)</span></label>
+          <input type="text" name="associazione" id="f-assoc" autocomplete="organization">
+        </div>
+        <div class="cta__field">
+          <label for="f-msg">Messaggio <span>(facoltativo)</span></label>
+          <textarea name="messaggio" id="f-msg" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg cta__submit">Richiedi la demo</button>
+      </form>
+
+      <p class="cta__note">Oppure scrivimi direttamente a <a href="mailto:matteo.tomasini@gmail.com">matteo.tomasini@gmail.com</a></p>
     </div>
   </section>
 
@@ -633,6 +654,44 @@
         }
       });
     });
+
+    // ── Form demo (Netlify) — invio AJAX ──
+    const demoForm = document.querySelector('form[name="regestio-demo"]');
+    const demoBanner = document.getElementById('demo-banner');
+    function showDemoOk() {
+      demoBanner.hidden = false;
+      demoBanner.className = 'cta__banner cta__banner--ok';
+      demoBanner.textContent = 'Grazie! Richiesta inviata. Ti rispondo entro 24 ore.';
+    }
+    if (demoForm) {
+      demoForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = demoForm.querySelector('.cta__submit');
+        const original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Invio…';
+        try {
+          const body = new URLSearchParams(new FormData(demoForm)).toString();
+          const res = await fetch('/gestionale-corsi-associazioni/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body
+          });
+          if (!res.ok) throw new Error('submit failed');
+          demoForm.reset();
+          showDemoOk();
+        } catch (err) {
+          demoBanner.hidden = false;
+          demoBanner.className = 'cta__banner cta__banner--ko';
+          demoBanner.innerHTML = 'Invio non riuscito. Riprova oppure scrivimi a <a href="mailto:matteo.tomasini@gmail.com">matteo.tomasini@gmail.com</a>.';
+        } finally {
+          btn.disabled = false;
+          btn.textContent = original;
+        }
+      });
+      // fallback: ritorno da submit senza JS (?demo=success)
+      if (new URLSearchParams(window.location.search).get('demo') === 'success') showDemoOk();
+    }
 
     // Esito ritorno da Stripe (?checkout=success|cancel)
     const esito = new URLSearchParams(window.location.search).get('checkout');

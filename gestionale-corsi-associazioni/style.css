@@ -759,6 +759,65 @@ a { text-decoration: none; color: inherit; }
   font-size: .82rem;
   color: rgba(255,255,255,.5);
 }
+.cta__note a { color: rgba(255,255,255,.75); text-decoration: underline; }
+.cta__note a:hover { color: var(--white); }
+
+/* ── CTA form (Netlify) ── */
+.cta__form {
+  max-width: 460px;
+  margin: 2.25rem auto 0;
+  display: grid;
+  gap: 1.1rem;
+  text-align: left;
+}
+.cta__field { display: flex; flex-direction: column; gap: .4rem; }
+.cta__field label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.78);
+}
+.cta__field label span { font-weight: 400; color: rgba(255,255,255,.45); }
+.cta__form input,
+.cta__form textarea {
+  width: 100%;
+  padding: .8rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: .95rem;
+  transition: border-color .2s ease, background .2s ease;
+}
+.cta__form textarea { resize: vertical; min-height: 84px; }
+.cta__form input:focus,
+.cta__form textarea:focus {
+  outline: none;
+  border-color: var(--amber-light);
+  background: rgba(255,255,255,.1);
+}
+.cta__submit { width: 100%; margin-top: .25rem; }
+.cta__submit:disabled { opacity: .6; cursor: wait; transform: none; }
+.cta__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.cta__banner {
+  max-width: 460px;
+  margin: 1.75rem auto 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: .95rem;
+}
+.cta__banner--ok {
+  background: var(--amber-glow);
+  color: var(--amber-light);
+  border: 1px solid var(--amber-light);
+}
+.cta__banner--ko {
+  background: rgba(180,60,60,.14);
+  color: #ff9b9b;
+  border: 1px solid rgba(255,120,120,.4);
+}
+.cta__banner a { color: inherit; text-decoration: underline; }
 
 /* ═══════════ FAQ ═══════════ */
 .faq {
