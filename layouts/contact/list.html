@@ -123,11 +123,13 @@
           <h3>Contact Form</h3>
         </div>
         <div class="contact-form-input">
-          {{ with .Site.Params.useNetlifyForm }}
-          <form id="contact" netlify method="POST">
-          {{ else }} 
+          {{ if .Site.Params.useNetlifyForm }}
+          <form name="contact" id="contact-form" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="contact" />
+            <p style="display:none"><label>Non compilare se sei umano: <input name="bot-field" /></label></p>
+          {{ else }}
           <form id="contact-form" action="{{ .Site.Params.formspreeURL }}" method="POST">
-          {{end}} 
+          {{end}}
             <div class="form-row">
 
               <div class="form-group col-md-6 pr-3">
