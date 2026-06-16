@@ -67,6 +67,8 @@ Site-wide Netlify forms gotcha: the AJAX submit handler `assets/js/form-handler.
 
 Demo request form (`#contatti`): a **Netlify form** named `regestio-demo` (`data-netlify="true"`, honeypot `bot-field`), submitted via AJAX (`fetch` POST form-encoded to the page path) with a success/error banner; a mailto is kept as fallback. Submissions email the owner via a pre-existing **site-wide** Netlify notification (`submission_created` hook, `form_id: null` → covers every form) — do NOT add a per-form email hook (the API rejects it as a duplicate). The field literally named `name` becomes the dashboard submission title.
 
+Links from the main site to `/regestio`: (1) the **homepage product card** — `layouts/partials/regestioSection.html` + `data/regestioSection.yml` (enable flag), included in `layouts/index.html` between the portfolio and resume sections; (2) the **portfolio case study** `content/portfolio/unitre-gestionale.md` — front-matter `productURL: /regestio` renders a primary "Discover Regestio" button in `layouts/portfolio/single.html` (the `projectURL` button is now `btn-outline-primary`), plus an inline link in the body. These are the only entry points to Regestio from the site.
+
 Brand assets: `static/gestionale-corsi-associazioni/brand/` — `icon.svg` + `icon-*.png` (R mark, green tile) and `logo[.svg|.png]` / `logo-white.*` (icon + "Regestio" wordmark, light/dark bg). SVG masters have glyphs converted to paths (DM Serif Display, font-independent). Brand color `#2e8b57`, accent `#0e1f16`. Used for the favicon/apple-touch-icon/og:image and for Stripe branding (icon = `icon-512.png`, logo = `logo.png`).
 
 ### Config touchpoints
