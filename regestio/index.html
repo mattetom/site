@@ -8,7 +8,7 @@
   <meta name="description" content="Software gestionale per la gestione di corsi, iscrizioni, soci e pagamenti. Ideale per associazioni culturali, Università della Terza Età, enti di formazione e organizzazioni no profit.">
   <meta name="keywords" content="gestionale corsi, software gestione iscrizioni, gestionale associazioni culturali, gestionale università terza età, software gestione corsi formazione, gestionale enti no profit, gestionale soci, software iscrizioni corsi, gestionale pagamenti associazione">
 
-  <link rel="canonical" href="https://matteotomasini.com/gestionale-corsi-associazioni/">
+  <link rel="canonical" href="https://matteotomasini.com/regestio/">
 
   <!-- Favicon / icons -->
   <link rel="icon" type="image/svg+xml" href="brand/icon.svg">
@@ -19,9 +19,9 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Regestio — Gestionale Corsi e Iscrizioni per Associazioni">
   <meta property="og:description" content="Gestisci corsi, iscrizioni, soci e pagamenti della tua associazione con un unico strumento semplice e completo.">
-  <meta property="og:url" content="https://matteotomasini.com/gestionale-corsi-associazioni/">
+  <meta property="og:url" content="https://matteotomasini.com/regestio/">
   <meta property="og:locale" content="it_IT">
-  <meta property="og:image" content="https://matteotomasini.com/gestionale-corsi-associazioni/brand/logo.png">
+  <meta property="og:image" content="https://matteotomasini.com/regestio/brand/logo.png">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -498,7 +498,7 @@
 
       <div class="cta__banner" id="demo-banner" hidden></div>
 
-      <form class="cta__form" name="regestio-demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gestionale-corsi-associazioni/?demo=success#contatti">
+      <form class="cta__form" name="regestio-demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/regestio/?demo=success#contatti">
         <input type="hidden" name="form-name" value="regestio-demo">
         <p class="cta__hp"><label>Non compilare se sei umano: <input name="bot-field"></label></p>
 
@@ -672,7 +672,7 @@
         btn.textContent = 'Invio…';
         try {
           const body = new URLSearchParams(new FormData(demoForm)).toString();
-          const res = await fetch('/gestionale-corsi-associazioni/', {
+          const res = await fetch('/regestio/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body
