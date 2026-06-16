@@ -31,7 +31,7 @@ export default async (req) => {
   }
 
   const origin = new URL(req.url).origin;
-  const landing = `${origin}/gestionale-corsi-associazioni/`;
+  const landing = `${origin}/regestio/`;
 
   const body = new URLSearchParams({
     mode: 'subscription',
