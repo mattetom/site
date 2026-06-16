@@ -1,0 +1,12 @@
+---
+enable: true
+topTitle: Prodotto
+title: >
+  ## Regestio — il gestionale per associazioni e Unitre
+text: >
+  Il gestionale che ho costruito per UNITRE Tradate è diventato un prodotto pronto all'uso:
+  corsi, iscrizioni, soci, pagamenti e app per i membri, in un'unica piattaforma.
+  Quattro piani in abbonamento, attivazione rapida.
+ctaLabel: Scopri Regestio
+ctaURL: /regestio
+logo: gestionale-corsi-associazioni/brand/logo.svg

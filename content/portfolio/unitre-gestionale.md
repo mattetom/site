@@ -15,12 +15,15 @@ screenshots:
   - images/portfolio/unitre-audit.png
   - images/portfolio/unitre-documenti.png
 projectURL: https://unitretradate.it
+productURL: /regestio
 shortDescription: A comprehensive management platform built for Università della Terza Età (University of the Third Age) — handling members, courses, enrollments, trips, payments, notifications, and document generation. Designed for UNITRE Tradate, architected to serve any association or institution that delivers courses and manages subscriptions.
 challenge: Running a University of the Third Age involves juggling member registrations, course scheduling across dozens of subjects, trip organization, payment tracking, PDF document generation, and multi-channel communications — all managed through a legacy Microsoft Access database, spreadsheets, and paper forms that couldn't synchronize between online services and in-person office operations.
 solution: I designed and built a unified web platform that digitizes the entire association lifecycle — from public course catalog and self-service enrollment, through back-office management with role-based access, to automated notifications, PDF generation, and audit logging. The architecture is multi-tenant ready, so other UNITRE branches or similar organizations can adopt it with minimal configuration.
 ---
 
 This project started from a real operational need: UNITRE Tradate — a cultural association offering 100+ courses per academic year to hundreds of members — was running its operation on a legacy Microsoft Access application, paper forms, and Excel sheets — a fragmented setup where the Access database couldn't synchronize with online services, forcing staff to duplicate work between the in-person office and the web. The goal was not just digitization, but building a platform that could be adopted by any organization with a similar model: courses, enrollments, membership fees, and communications.
+
+> This platform is now available as a ready-to-adopt product — **[Regestio](/regestio)** — with subscription plans for associations, Universities of the Third Age and training providers.
 
 ## Project goals
 

@@ -114,10 +114,15 @@
         })();
         </script>
         {{ end }}
-        {{ if or .Params.playStoreURL .Params.appStoreURL .Params.projectURL }}
+        {{ if or .Params.playStoreURL .Params.appStoreURL .Params.projectURL .Params.productURL }}
         <div class="case-details-store mb-5">
+          {{ with .Params.productURL }}
+          <a class="btn btn-primary btn-zoom mr-3 mb-2" href="{{ . }}">
+            <i class="fa fa-rocket"></i> Discover Regestio
+          </a>
+          {{ end }}
           {{ with .Params.projectURL }}
-          <a class="btn btn-primary btn-zoom mr-3 mb-2" href="{{ . }}" target="_blank" rel="noopener noreferrer">
+          <a class="btn btn-outline-primary btn-zoom mr-3 mb-2" href="{{ . }}" target="_blank" rel="noopener noreferrer">
             <i class="fa fa-globe"></i> Visit project site
           </a>
           {{ end }}

@@ -1,0 +1,48 @@
+{{ with .Site.Data.regestioSection }}
+{{ if .enable }}
+<section class="section regestio-cta" id="regestio">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="regestio-cta__card">
+          <div class="regestio-cta__logo">
+            <img src="{{ .logo | absURL }}" alt="Regestio" loading="lazy">
+          </div>
+          <div class="regestio-cta__body">
+            <span class="top-title">{{ .topTitle }}</span>
+            {{ .title | markdownify }}
+            <p>{{ .text }}</p>
+            <a class="btn btn-primary btn-zoom" href="{{ .ctaURL }}">{{ .ctaLabel }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .regestio-cta__card {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 3rem;
+    background: #f4f7f2;
+    border: 1px solid #dfe8da;
+    border-radius: 20px;
+  }
+  .regestio-cta__logo {
+    flex: 0 0 200px;
+    display: flex;
+    justify-content: center;
+  }
+  .regestio-cta__logo img { width: 100%; max-width: 220px; height: auto; }
+  .regestio-cta__body { flex: 1; }
+  .regestio-cta__body .top-title { color: #2e8b57; }
+  .regestio-cta__body h2 { margin: .25rem 0 .75rem; }
+  .regestio-cta__body p { margin-bottom: 1.5rem; }
+  @media (max-width: 767px) {
+    .regestio-cta__card { flex-direction: column; text-align: center; padding: 2rem 1.5rem; gap: 1.5rem; }
+    .regestio-cta__logo { flex-basis: auto; }
+  }
+</style>
+{{ end }}
+{{ end }}
