@@ -30,6 +30,8 @@ Two deploy paths are wired up; both fire off `main`:
 
 `/public/` and `/resources/_gen/` are gitignored — never commit build output. **`.DS_Store` is tracked in this repo** — when committing, stage specific files instead of `git add -A`/`.` to avoid pulling in macOS metadata.
 
+**Future-dated posts are silently dropped from production.** Both deploy paths build without `--buildFuture`, so a `content/blog/` post whose `date` is later than the build moment (e.g. today at a time still in the future, in UTC) is skipped and never published — the build succeeds with no error. When adding a post, set `date` safely in the past. Symptom: `hugo` exit 0 but `public/blog/<slug>/` missing; confirm with `hugo --buildFuture` (page appears) vs plain `hugo` (page absent).
+
 ## Architecture
 
 ### Theme override pattern (important)
