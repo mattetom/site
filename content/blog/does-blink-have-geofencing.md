@@ -70,6 +70,7 @@ Not meaningfully. Modern iOS and Android use an event-based geofence API that wa
 ### See also
 
 - [Blink Geofencing: How to Auto-Arm Cameras When You Leave](/blog/building-geocam-blink-geofencing/)
+- [The Best Blink Geofencing App in 2026](/blog/best-blink-geofencing-app/)
 - [How to make Blink cameras arm automatically](/blog/how-to-arm-blink-cameras-automatically/)
 - [Blink Schedules vs Geofencing](/blog/blink-schedules-vs-geofencing/)
 - [GeoCam vs Alexa](/blog/geocam-vs-alexa-blink/)
