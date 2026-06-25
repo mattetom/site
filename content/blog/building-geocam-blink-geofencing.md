@@ -2,8 +2,8 @@
 date = 2026-05-07T10:00:00+00:00
 featureImage = "/images/portfolio/geocam-feature.png"
 postImage = "/images/portfolio/geocam-feature.png"
-title = "Building GeoCam: Blink Geofencing Without IFTTT or Alexa"
-description = "Blink has no native geofencing in 2026. Here's why Alexa, IFTTT, and Home Assistant fall short for location-based arming, and how I built GeoCam to auto-arm Blink cameras when everyone leaves the house."
+title = "Blink Geofencing: How to Auto-Arm Cameras When You Leave (2026)"
+description = "Blink has no native geofencing in 2026. Here's how to auto-arm your Blink cameras by phone location, why Alexa, IFTTT, and Home Assistant fall short, and how I built GeoCam to do it for the whole household."
 tags = ["smart-home", "blink", "geofencing", "side-project"]
 categories = "blog"
 +++
@@ -14,7 +14,7 @@ This post is the short version of what I tried, why I ended up building my own, 
 
 ### Blink doesn't have native geofencing
 
-This is the first thing worth saying clearly: as of 2026, the Blink app does not include location-based arming. The product team has chosen schedules and manual control as the primary automation surfaces. That is a defensible product decision (geofencing is messy on real phones, and a security camera that arms or disarms by mistake is worse than one that just sits there), but it leaves a clear gap for households where everyone's day looks different.
+This is the first thing worth saying clearly: as of 2026, [the Blink app does not include location-based arming](/blog/does-blink-have-geofencing/). The product team has chosen schedules and manual control as the primary automation surfaces. That is a defensible product decision (geofencing is messy on real phones, and a security camera that arms or disarms by mistake is worse than one that just sits there), but it leaves a clear gap for households where everyone's day looks different.
 
 I wrote up the gap separately, with worked examples for hybrid work, shift work, and family schedules: [Blink Schedules vs Geofencing, which one should you actually use](/blog/blink-schedules-vs-geofencing/). The short answer is "use both," but that requires a way to do the geofencing half.
 

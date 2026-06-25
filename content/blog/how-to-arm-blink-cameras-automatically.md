@@ -134,6 +134,7 @@ Set your zone once, add your family, forget about it. €3.99/month covers the w
 
 ### See also
 
+- [Does Blink Have Geofencing?](/blog/does-blink-have-geofencing/)
 - [Blink Schedules vs Geofencing](/blog/blink-schedules-vs-geofencing/)
 - [GeoCam vs IFTTT for Blink](/blog/geocam-vs-ifttt-blink/)
 - [GeoCam vs Alexa](/blog/geocam-vs-alexa-blink/)
