@@ -1,0 +1,18 @@
+[client]
+other = "Cliente"
+[service]
+other = "Servizi"
+[date]
+other = "Data"
+[dateFormat]
+other = "02/01/2006"
+[challenge]
+other = "Il problema"
+[solution]
+other = "La soluzione"
+[nextCase]
+other = "Progetto successivo"
+[visitProjectSite]
+other = "Vai al sito del progetto"
+[readInOtherLang]
+other = "Leggi questa pagina in"

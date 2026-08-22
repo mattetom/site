@@ -6,6 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
   <link rel="canonical" href="{{ .Permalink }}" />
+{{- /* hreflang: solo se esistono traduzioni REALMENTE pubblicate (permalink non vuoto:
+       le kind disabilitate per lingua risultano "tradotte" ma non generano pagina). */ -}}
+{{- $alts := slice -}}
+{{- range .Translations -}}
+  {{- if .Permalink -}}{{- $alts = $alts | append . -}}{{- end -}}
+{{- end -}}
+{{- if $alts -}}
+  <link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}" />
+  {{ range $alts }}<link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}" />
+  {{ end }}
+{{- end }}
 
   {{ "<!-- Slick Carousel -->" | safeHTML }}
   <link rel="stylesheet" href="{{ "plugins/slick/slick.css" | absURL }}" />

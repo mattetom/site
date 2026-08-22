@@ -85,3 +85,48 @@ title = "Matteo Tomasini"
     icon   = "fa-twitter-square"
     url    = "https://twitter.com/MatteoTomasini7"
     weight = 3
+
+# ─────────── Multilingua ───────────
+# Attivato 08/2026 per la scheda CCard. L'inglese resta la lingua di default e
+# NON finisce in sottocartella: tutte le URL esistenti restano invariate.
+# L'italiano genera solo le pagine che hanno una traduzione (*.it.md): le altre
+# kind sono disabilitate per non pubblicare home/tassonomie italiane vuote.
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    languageCode = "en-us"
+    weight = 1
+
+  [languages.it]
+    languageName = "Italiano"
+    languageCode = "it-IT"
+    weight = 2
+    disableKinds = ["home", "taxonomy", "term", "RSS", "section"]
+
+    [[languages.it.menu.main]]
+      name   = "Home"
+      url    = "#home"
+      weight = 1
+    [[languages.it.menu.main]]
+      name   = "Chi sono"
+      url    = "#about"
+      weight = 2
+    [[languages.it.menu.main]]
+      name   = "Servizi"
+      url    = "#service"
+      weight = 3
+    [[languages.it.menu.main]]
+      name   = "Competenze"
+      url    = "#skills"
+      weight = 6
+    [[languages.it.menu.main]]
+      name   = "Blog"
+      url    = "#blog"
+      weight = 7
+    [[languages.it.menu.main]]
+      name   = "Contatti"
+      url    = "#contact"
+      weight = 8

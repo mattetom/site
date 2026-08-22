@@ -1,0 +1,20 @@
+# Stringhe di interfaccia dei layout. I valori inglesi DEVONO restare identici
+# al testo che era scritto a mano nei layout, così l'output EN non cambia.
+[client]
+other = "Client"
+[service]
+other = "Service"
+[date]
+other = "Date"
+[dateFormat]
+other = "January 2, 2006"
+[challenge]
+other = "Challenge"
+[solution]
+other = "Solution"
+[nextCase]
+other = "Next case"
+[visitProjectSite]
+other = "Visit project site"
+[readInOtherLang]
+other = "Read this page in"

@@ -30,24 +30,32 @@
         <p>
           {{ .Params.shortDescription }}
         </p>
+{{- $langAlts := slice -}}
+{{- range .Translations -}}{{- if .Permalink -}}{{- $langAlts = $langAlts | append . -}}{{- end -}}{{- end -}}
+{{- with $langAlts }}
+        <p class="case-details-lang mb-4">
+          <i class="fa fa-language"></i> {{ i18n "readInOtherLang" }}
+          {{ range . }}<a href="{{ .Permalink }}" hreflang="{{ .Site.Language.Lang }}">{{ .Site.Language.LanguageName }}</a>{{ end }}
+        </p>
+{{- end }}
         <div class="case-details-info">
           <div class="case-details-info-item">
-            <h5 class="text-light">Client</h5>
+            <h5 class="text-light">{{ i18n "client" }}</h5>
             <p>{{ .Params.client }}</p>
           </div>
           <div class="case-details-info-item">
-            <h5>Service</h5>
+            <h5>{{ i18n "service" }}</h5>
             <p>{{ .Params.service }}</p>
           </div>
           <div class="case-details-info-item">
-            <h5>Date</h5>
-            <p>{{ .PublishDate.Format "January 2, 2006" }}</p>
+            <h5>{{ i18n "date" }}</h5>
+            <p>{{ .PublishDate.Format (i18n "dateFormat") }}</p>
           </div>
         </div>
         <div class="row mb-5">
           <div class="col-lg-6">
             <div class="case-details-service">
-              <h3>Challenge</h3>
+              <h3>{{ i18n "challenge" }}</h3>
               <p>
                 {{ .Params.challenge }}
               </p>
@@ -55,7 +63,7 @@
           </div>
           <div class="col-lg-6">
             <div class="case-details-service">
-              <h3>Solution</h3>
+              <h3>{{ i18n "solution" }}</h3>
               <p>
                 {{ .Params.solution }}
               </p>
@@ -123,7 +131,7 @@
           {{ end }}
           {{ with .Params.projectURL }}
           <a class="btn btn-outline-primary btn-zoom mr-3 mb-2" href="{{ . }}" target="_blank" rel="noopener noreferrer">
-            <i class="fa fa-globe"></i> Visit project site
+            <i class="fa fa-globe"></i> {{ i18n "visitProjectSite" }}
           </a>
           {{ end }}
           {{ with .Params.playStoreURL }}
@@ -183,7 +191,7 @@
           {{ if .NextInSection }}
           <div class="next d-flex align-items-center">
             <div class=" content text-right">
-              <span class="small">Next case</span>
+              <span class="small">{{ i18n "nextCase" }}</span>
               <h5 class="title">
                 <a class="text-dark" href="{{ .NextInSection.Permalink }}">{{ .NextInSection.Title }}</a>
               </h5>
