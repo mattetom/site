@@ -57,6 +57,24 @@ The Markdown content under `content/` populates these section types:
 - `content/ccard/` — account deletion / app support pages (`layouts/ccard/single.html`).
 - `content/contact/`, `content/posts/` — minor.
 
+### Multilingual (i18n)
+The site is multilingual since 08/2026, but **deliberately only where a translation actually exists**. English is the default language and is **not** served from a subdirectory (`defaultContentLanguageInSubdir = false`), so every pre-existing URL is unchanged. Italian lives under `/it/`.
+
+`[languages.it]` sets `disableKinds = ["home", "taxonomy", "term", "RSS", "section"]`. This is the load-bearing part: without it Hugo publishes an Italian homepage and Italian taxonomy pages that contain the untranslated English content, which is thin duplicate content. With it, `/it/` renders **only** pages that have a translation file.
+
+**To translate a page**, add a sibling `<name>.it.md` next to `<name>.md` (e.g. `content/portfolio/ccard.md` + `content/portfolio/ccard.it.md`). Nothing else is required: hreflang, the language switcher, and the `/it/` sitemap follow automatically. Only `content/portfolio/ccard.*` is translated today.
+
+Interface strings live in `i18n/en.toml` and `i18n/it.toml` and are read with `{{ i18n "key" }}`. **The English values must stay byte-identical to the text that was previously hardcoded in the layouts**, otherwise the English output changes.
+
+Gotchas, both hit during the initial setup:
+
+- **A kind disabled per language still reports `.IsTranslated`, but its `.Permalink` is empty.** The homepage was emitting `<link rel="alternate" hreflang="it" href="" />`. Any hreflang or language-switcher loop must filter on a non-empty `.Permalink` first (see `layouts/partials/head.html` and `layouts/portfolio/single.html`).
+- **Hugo 0.104 does not localise month names**, so `.Format` with `"January 2, 2006"` prints English months on Italian pages. The Italian `dateFormat` in `i18n/it.toml` is numeric (`02/01/2006`) for this reason.
+- Enabling `[languages]` turns `sitemap.xml` from a `urlset` into a **`sitemapindex`** pointing at `/en/sitemap.xml` and `/it/sitemap.xml`. That is valid and Google accepts it, but the sitemap is registered in Search Console, so expect the change to show up there.
+- Menu labels come from `.Site.Menus.main`, which is per-language: Italian entries are defined under `[[languages.it.menu.main]]` in `config.toml`. `navbar.html` builds links from `.Site.BaseURL`, which resolves to the site root, so Italian nav links correctly point at the English homepage anchors (there is no Italian homepage).
+
+**When changing a layout, verify the English output did not move**: build to a temp dir before and after and `diff -rq` the two. That check is what caught both gotchas above.
+
 ### Static assets and app landing pages
 `static/` is copied verbatim. It contains both site assets (`images/`, `plugins/`) and **standalone app landing/support sites** served as subpaths (`regestio/`, `auto-meet-screen-share/`, `wheel_of_fortune/`, `teswe/`, `yaspaint/`). These are independent HTML/CSS bundles — not Hugo-rendered — so editing them does not require rebuilding layouts. `static/_headers` configures Netlify response headers (e.g. Tesla `.well-known` MIME type).
 
