@@ -4,40 +4,44 @@ date: 2025-06-04T12:13:59+01:00
 draft: false
 ---
 
-# Richiesta di Cancellazione Account
+# Cancellazione dell'account
 
-Se desideri rimuovere il tuo account e tutti i dati ad esso associati, segui le istruzioni qui di seguito.  
-La cancellazione non può essere annullata, quindi prima di procedere assicurati di aver salvato eventuali informazioni di tuo interesse.
-
----
-
-## 1. Invia una mail
-
-Scrivi una email vuota o con oggetto “Richiesta Cancellazione” e inviala al seguente indirizzo:
-
-[invia una mail a **mattetom.dev@gmail.com**](mailto:mattetom.dev@gmail.com?subject=Richiesta%20Cancellazione%20Account)
-
-_(Puoi cliccare sul link qui sopra: si aprirà il tuo client di posta elettronica.)_
+Puoi eliminare il tuo account CCard direttamente dall'app, in qualsiasi momento e senza passare da noi.
+La cancellazione non può essere annullata, quindi prima di procedere assicurati di aver salvato le informazioni che ti interessano.
 
 ---
 
-## 2. Attendi la conferma
+## 1. Elimina l'account dall'app
 
-Una volta ricevuta la tua richiesta, provvederemo a cancellare il tuo account e tutti i dati personali nei tempi previsti dalla normativa vigente (in genere, entro 30 giorni).  
-Ti invieremo una risposta alla stessa email confermando che l’operazione è avvenuta con successo.
+1. Apri **CCard** e vai sulla scheda **Profilo**.
+2. Scorri fino in fondo e tocca **Elimina account**.
+3. Leggi il riepilogo e conferma toccando di nuovo **Elimina account**.
+
+Se hai effettuato l'accesso molto tempo fa, l'app ti chiederà di autenticarti un'ultima volta con Apple o con Google: è una verifica di sicurezza richiesta da Firebase prima di rimuovere un account.
+
+L'eliminazione è immediata.
 
 ---
 
-## 3. Cosa sarà eliminato
+## 2. Cosa viene eliminato
 
-Con la cancellazione del tuo account verranno rimossi:
+Con la cancellazione dell'account vengono rimossi:
 
-- Tutti i dati di accesso (account OAuth e credenziali associate)
-- Le eventuali preferenze personali e lo storico di utilizzo
-- I tuoi dati anagrafici (se presenti nel nostro database)
-- Eventuali tessere fedeltà virtuali generate tramite l’app
+- L'account di accesso (Apple o Google) e le credenziali associate
+- Tutte le tessere salvate nel backup cloud
+- Le preferenze collegate all'account
+
+**Le tessere presenti sul dispositivo restano dove sono.** CCard funziona senza account: dopo la cancellazione puoi continuare a usare l'app in locale, come hai sempre fatto.
 
 > _Nota:_ i log di sistema (in forma anonimizzata) potrebbero essere conservati per fini di sicurezza e analisi statistiche, come previsto dalla legge.
+
+---
+
+## 3. Se non riesci ad accedere all'app
+
+Se hai perso l'accesso al dispositivo o all'account, scrivi a **mattetom.dev@gmail.com** con oggetto "Richiesta Cancellazione": provvederemo alla cancellazione nei tempi previsti dalla normativa vigente (in genere entro 30 giorni) e ti risponderemo a conferma dell'avvenuta rimozione.
+
+Questa è una via di riserva: la strada normale è il pulsante nell'app.
 
 ---
 
@@ -47,5 +51,5 @@ Se hai bisogno di ulteriori chiarimenti o supporto, puoi scriverci a **mattetom.
 
 ---
 
-© 2026 [matteotomasini.com](https://matteotomasini.com) – Tutti i diritti riservati.  
+© 2026 [matteotomasini.com](https://matteotomasini.com) – Tutti i diritti riservati.
 [Torna alla Home](https://matteotomasini.com/CCard)
