@@ -50,7 +50,7 @@ This was a deliberate pricing decision. A loyalty card wallet is a utility that 
 ## Technical and UX decisions
 
 - **Local-first storage.** Cards live in a local SQLite database via Drift. Cloud sync is an additive layer on top, not the source of truth, so the app is fully functional with the network off.
-- **Sync built to survive conflicts.** Multi-device sync is the feature most likely to lose data quietly, so it was covered with tests against a real Firestore emulator rather than trusted by inspection.
+- **Sync built to survive conflicts.** Multi-device sync is the feature most likely to lose data quietly, so the conflict cases are covered by automated tests rather than trusted by inspection.
 - **On-device scanning.** Barcode recognition runs locally through ML Kit, so card codes are never sent anywhere for processing.
 - **Automatic brightness.** A small detail that dominates the actual user experience: the screen brightens when the code opens and restores when it closes.
 - **Bilingual from the start.** Italian and English, matching the store listings.

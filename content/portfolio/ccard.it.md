@@ -50,7 +50,7 @@ CCard Premium è un **acquisto una tantum**, non un abbonamento. Aggiunge il bac
 ## Scelte tecniche e di esperienza d'uso
 
 - **Archiviazione locale prima di tutto.** Le carte vivono in un database SQLite locale gestito con Drift. La sincronizzazione cloud è uno strato aggiuntivo, non la fonte di verità, quindi l'app resta pienamente funzionante con la rete spenta.
-- **Sincronizzazione costruita per reggere i conflitti.** La sincronizzazione multi-dispositivo è la funzione che più facilmente perde dati in silenzio, per questo è stata coperta da test contro un Firestore reale invece che data per buona a vista.
+- **Sincronizzazione costruita per reggere i conflitti.** La sincronizzazione multi-dispositivo è la funzione che più facilmente perde dati in silenzio, per questo i casi di conflitto sono coperti da test automatici invece che dati per buoni a vista.
 - **Scansione sul dispositivo.** Il riconoscimento dei codici avviene localmente tramite ML Kit: i codici delle tessere non vengono mai inviati altrove per essere elaborati.
 - **Luminosità automatica.** Un dettaglio minimo che domina l'esperienza reale: lo schermo si illumina quando il codice si apre e torna com'era quando si chiude.
 - **Bilingue fin dall'inizio.** Italiano e inglese, in linea con le schede degli store.
