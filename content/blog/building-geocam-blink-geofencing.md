@@ -6,6 +6,7 @@ title = "Blink Geofencing: How to Auto-Arm Cameras When You Leave (2026)"
 description = "Blink has no native geofencing in 2026. Here's how to auto-arm your Blink cameras by phone location, why Alexa, IFTTT, and Home Assistant fall short, and how I built GeoCam to do it for the whole household."
 tags = ["smart-home", "blink", "geofencing", "side-project"]
 categories = "blog"
+geocamCTA = true
 +++
 
 The trigger to build [GeoCam](https://geocam.matteotomasini.com) was small and unglamorous: I kept forgetting to arm my Blink cameras when I left the house, and I kept forgetting to disarm them when I came back. My partner had the same problem. After enough false-positive notifications and "wait, are the cameras even on right now?" moments, I went looking for an off-the-shelf fix. There wasn't one I liked.

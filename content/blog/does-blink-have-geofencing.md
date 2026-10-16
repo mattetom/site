@@ -6,6 +6,7 @@ title = "Does Blink Have Geofencing? (2026 Answer + the Fix That Works)"
 description = "Does Blink have geofencing in 2026? Short answer: no, the Blink app has no location-based arming. Here's why, what your options are, and the 60-second fix most families use."
 tags = ["smart-home", "blink", "geofencing", "faq"]
 categories = "blog"
+geocamCTA = true
 +++
 
 **Short answer: no.** As of 2026, the Blink app does not have geofencing. There is no "arm when I leave home" toggle, no location trigger, and no presence detection anywhere in the official app. Blink's only built-in automation is a time-based schedule, plus manual arm and disarm.

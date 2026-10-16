@@ -93,3 +93,25 @@
     }
   }
 }
+
+// GeoCam store call to action at the top of Blink articles (partials/geocam-cta.html)
+.geocam-cta {
+  padding: 24px 28px 16px;
+  border: 1px solid rgba($primary, 0.25);
+  border-left: 4px solid $primary;
+  border-radius: 8px;
+  background: mix($primary, #fff, 6%);
+  position: relative;
+  z-index: 2;
+  &__title {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: $headings-color;
+  }
+  &__text {
+    margin-bottom: 16px;
+  }
+  @include mobile {
+    padding: 20px 16px 12px;
+  }
+}

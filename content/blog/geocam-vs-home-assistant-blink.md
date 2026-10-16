@@ -6,6 +6,7 @@ title = "GeoCam vs Home Assistant for Blink Geofencing"
 description = "Home Assistant geofences Blink only via the unofficial blinkpy integration plus YAML automations on a server you maintain. GeoCam needs none of that, just an app."
 tags = ["smart-home", "blink", "geofencing", "home-assistant"]
 categories = "blog"
+geocamCTA = true
 +++
 
 Home Assistant is a powerhouse for people who already run a smart-home server. But to make it geofence Blink, you stitch together an unofficial integration, a device tracker, and YAML automations on hardware you have to keep alive. GeoCam delivers the same outcome with an app install and a five-minute setup, and one 3.99 euro plan covers everyone in the house.

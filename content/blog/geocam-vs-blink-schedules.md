@@ -6,6 +6,7 @@ title = "GeoCam vs Blink Schedules | When Time-Based Arming Leaves Gaps"
 description = "Three real days where Blink's built-in time-based schedule leaves your home unprotected, and how a location-based trigger like GeoCam closes the gap."
 tags = ["smart-home", "blink", "geofencing", "automation"]
 categories = "blog"
+geocamCTA = true
 +++
 
 Blink's native schedule is the simplest possible automation: arm at 9am, disarm at 6pm, repeat. It works perfectly when life works perfectly. Here are three ordinary days where it doesn't, and why a location-based trigger like GeoCam closes the gap. One subscription covers your whole household.

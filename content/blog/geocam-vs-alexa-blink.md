@@ -6,6 +6,7 @@ title = "GeoCam vs Alexa Routines for Blink"
 description = "Alexa Routines are voice and time-first. Their location trigger reads one phone via the Alexa app and arrives via cloud round-trip. GeoCam is purpose-built for Blink geofencing."
 tags = ["smart-home", "blink", "geofencing", "alexa"]
 categories = "blog"
+geocamCTA = true
 +++
 
 Alexa Routines are great for "Alexa, goodnight" voice commands and 7am light schedules. Geofencing is bolted on after the fact: it reads one phone, runs through Amazon's cloud, and arrives later than you'd expect. GeoCam is built for the geofence trigger first, with Blink as the only target, and one subscription covers every phone in the house.

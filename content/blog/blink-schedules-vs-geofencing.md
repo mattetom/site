@@ -2,10 +2,11 @@
 date = 2026-06-19T05:00:00+00:00
 featureImage = "/images/portfolio/geocam-feature.png"
 postImage = "/images/portfolio/geocam-feature.png"
-title = "Blink Schedules vs Geofencing: Which One Should You Actually Use?"
-description = "A practical 2026 comparison of Blink time-based schedules and location-based geofencing. WFH, shift work, school holidays, and family households: where each method wins and where it breaks."
+title = "How to Set a Blink Schedule (and When Geofencing Works Better)"
+description = "How to set a Blink arm and disarm schedule in the app, step by step, what Blink schedules cannot do, and when location-based geofencing is the better trigger for your household (2026)."
 tags = ["smart-home", "blink", "geofencing", "automation"]
 categories = "blog"
+geocamCTA = true
 +++
 
 If you have looked at any Blink automation thread in the last year, you have seen the same argument: *"just use schedules"* versus *"schedules are useless, you need geofencing"*. Both camps have a point, and both are usually wrong about why. The honest answer is that schedules and geofencing solve different problems, and the right choice depends on a small number of facts about your household.
@@ -14,9 +15,18 @@ This guide compares the two head-to-head, walks through four real-world scenario
 
 **TL;DR:** Schedules are clock-aware. Geofencing is location-aware. Schedules win for households with a strict, repeating timetable and people who do not always carry a phone. Geofencing wins everywhere else, especially for families and irregular routines. Most reliable households run both, with geofencing as the primary trigger and a schedule as the safety net.
 
-## How Blink Schedules actually work
+## How to set a Blink schedule
 
-Inside the official Blink app, each system has a *scheduled arming* tab. You add a rule: **arm at 09:00 on weekdays, disarm at 18:00 on weekdays, arm at 23:00 every day, disarm at 07:00**. The schedule repeats weekly forever, until you edit it.
+In the official Blink app, a schedule belongs to a whole system, not to a single camera:
+
+1. Open **Settings**, then **Device and System Settings**, and pick the system you want to schedule.
+2. Check that the system's time zone is right, then open **Scheduling**.
+3. On the weekly schedule, add an **arm** entry, set the time (in 15-minute steps) and tick the days, then save.
+4. Add a matching **disarm** entry the same way.
+
+A typical set of rules: **arm at 09:00 on weekdays, disarm at 18:00 on weekdays, arm at 23:00 every day, disarm at 07:00**. The schedule repeats weekly forever, until you edit it. You can switch it off under Scheduling without deleting it, which is handy before a trip.
+
+Two details catch people out. The schedule wins over everything else: a manual, Alexa, or IFTTT arm or disarm only lasts until the next scheduled change. And because the schedule covers the whole system, the official app cannot give one camera a different timetable from the others.
 
 What schedules cannot do:
 

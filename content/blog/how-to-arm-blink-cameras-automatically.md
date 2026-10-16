@@ -6,6 +6,7 @@ title = "How to Make Blink Cameras Arm Automatically When You Leave Home (2026 G
 description = "A practical 2026 guide to making Blink cameras arm automatically. Compare Alexa Routines, IFTTT, Apple Shortcuts, and geofencing, with step-by-step setup for the method that actually works for families."
 tags = ["smart-home", "blink", "geofencing", "how-to"]
 categories = "blog"
+geocamCTA = true
 +++
 
 Updated April 2026 · ~8 minute read

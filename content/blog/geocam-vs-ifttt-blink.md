@@ -6,6 +6,7 @@ title = "GeoCam vs IFTTT for Blink Geofencing"
 description = "IFTTT has no native Blink service: you chain through Alexa or build Webhooks. Compare GeoCam's direct Blink path against IFTTT's applet model: applet count, latency, family logic."
 tags = ["smart-home", "blink", "geofencing", "ifttt"]
 categories = "blog"
+geocamCTA = true
 +++
 
 IFTTT can chain almost anything, but using it to geofence Blink cameras is harder than it looks. Blink has no native IFTTT service, so any "if I leave home, arm Blink" recipe ends up routed through Alexa or hand-built Webhooks. GeoCam is a single app that talks to Blink directly from your phone, and one subscription covers your whole household.
