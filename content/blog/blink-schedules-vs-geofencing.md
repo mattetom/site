@@ -2,8 +2,8 @@
 date = 2026-06-19T05:00:00+00:00
 featureImage = "/images/portfolio/geocam-feature.png"
 postImage = "/images/portfolio/geocam-feature.png"
-title = "How to Set a Blink Schedule (and When Geofencing Works Better)"
-description = "How to set a Blink arm and disarm schedule in the app, step by step, what Blink schedules cannot do, and when location-based geofencing is the better trigger for your household (2026)."
+title = "How to Set a Blink Schedule for Each Camera (and When Geofencing Works Better)"
+description = "How to set a Blink arm and disarm schedule in the app, step by step, how to give each camera its own timetable, and when location-based geofencing is the better trigger for your household (2026)."
 tags = ["smart-home", "blink", "geofencing", "automation"]
 categories = "blog"
 geocamCTA = true
@@ -27,6 +27,10 @@ In the official Blink app, a schedule belongs to a whole system, not to a single
 A typical set of rules: **arm at 09:00 on weekdays, disarm at 18:00 on weekdays, arm at 23:00 every day, disarm at 07:00**. The schedule repeats weekly forever, until you edit it. You can switch it off under Scheduling without deleting it, which is handy before a trip.
 
 Two details catch people out. The schedule wins over everything else: a manual, Alexa, or IFTTT arm or disarm only lasts until the next scheduled change. And because the schedule covers the whole system, the official app cannot give one camera a different timetable from the others.
+
+### Scheduling each camera on its own
+
+If you want the indoor cameras off during the day and on at night while the outdoor ones keep recording, you need a per-camera schedule. [GeoCam](https://geocam.matteotomasini.com/) does this with scheduled routines (Pro): pick a time and the days, then choose which cameras get motion detection turned on or off. For example, turn off motion on the living room camera at 07:00 and back on at 22:00, without touching the rest of the system and without a second Sync Module. The same routines can also follow your location, which is where the rest of this guide comes in.
 
 What schedules cannot do:
 
