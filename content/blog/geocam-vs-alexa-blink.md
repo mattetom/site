@@ -26,7 +26,7 @@ Here's roughly what the routine ends up looking like in the Alexa app:
 
 **Alexa will:** Smart Home, then Blink, then System "Home", then Arm
 
-That's it for one direction. You build a mirror routine for arrival. There is no built-in way to say "only fire when nobody else is home". That requires a second Amazon account, a second phone, and conditional logic Alexa Routines don't natively expose.
+That covers leaving. Arriving is the catch: Blink's own support page states that you cannot disarm your system with Alexa Routines, and disarming by voice needs your Alexa voice code. So a routine can arm Blink when you go out, but nothing disarms it when you come back unless you say the code or open the Blink app. There is also no built-in way to say "only fire when nobody else is home".
 
 ## Where the Alexa approach struggles
 
@@ -62,6 +62,10 @@ For the broader walkthrough, see [how to arm Blink cameras automatically](/blog/
 **Can Alexa Routines arm Blink based on location?**
 
 Yes, but the location trigger reads from the Alexa app on a single phone, requires Background App Refresh and precise location permission, and the action runs after Amazon's cloud relays it through Blink. Most users see noticeable delays and occasional missed triggers.
+
+**Can Alexa Routines disarm Blink when I get home?**
+
+No. Blink's support documentation says you cannot disarm your system with Alexa Routines; disarming through Alexa needs the voice code. GeoCam disarms automatically when you arrive, and that part is free on one phone. More detail: [Why Alexa Routines can't disarm Blink](/blog/alexa-routine-disarm-blink/).
 
 **Why does Alexa not have native geofence support per family member?**
 

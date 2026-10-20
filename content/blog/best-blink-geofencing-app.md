@@ -35,7 +35,7 @@ A purpose-built app does one job: arm and disarm Blink based on your location. [
 
 ### 2. Alexa Routines
 
-Amazon owns both Blink and Alexa, so a Routine can flip Blink's arm state. Alexa supports a location trigger, but it reads one phone via the Alexa app and runs through Amazon's cloud.
+Amazon owns both Blink and Alexa, so a Routine can arm Blink, but not disarm it: Blink's support page says routines cannot disarm the system, and voice disarm needs a code. Alexa supports a location trigger, but it reads one phone via the Alexa app and runs through Amazon's cloud.
 
 - **Pros:** free, no extra app if you already use Alexa.
 - **Cons:** single-phone presence, cloud round-trip latency, the location trigger is the flakiest part of Routines, and the Blink-Alexa link occasionally needs re-authorising. Full breakdown: [GeoCam vs Alexa Routines](/blog/geocam-vs-alexa-blink/).
@@ -43,10 +43,10 @@ Amazon owns both Blink and Alexa, so a Routine can flip Blink's arm state. Alexa
 
 ### 3. IFTTT
 
-There is no native Blink service on IFTTT in 2026, so any recipe routes through Alexa or hand-built Webhooks.
+IFTTT has a Blink service with Arm system and Disarm system actions, so two location applets can arm Blink when one phone leaves and disarm it when that phone arrives. That uses the whole free plan, and it has no "last person out" logic.
 
 - **Pros:** flexible if Blink is one node in a larger automation graph you already run.
-- **Cons:** fragile multi-service chain, location triggers now behind a paid plan, several-minute latency, and per-person cost scaling. Full breakdown: [GeoCam vs IFTTT](/blog/geocam-vs-ifttt-blink/).
+- **Cons:** each applet follows a single phone, the two applets use the whole free plan, it can only arm or disarm the whole system, and applets can stop firing when the IFTTT app loses background access. Full breakdown: [GeoCam vs IFTTT](/blog/geocam-vs-ifttt-blink/).
 - **Best for:** power users already invested in IFTTT who can rebuild it when an upstream service changes.
 
 ### 4. Apple Shortcuts (iOS only)

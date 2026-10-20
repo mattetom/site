@@ -23,8 +23,8 @@ I wrote up the gap separately, with worked examples for hybrid work, shift work,
 
 Before writing a single line of code I tried each existing workaround. I documented all four in a [single guide](/blog/how-to-arm-blink-cameras-automatically/), but here's the honest summary of why I gave up on each:
 
-- **Alexa Routines.** Alexa can flip Blink arm states, and Alexa supports location triggers, but the chain is fragile and the disarm side is the weak link. I wrote up the failure modes in [GeoCam vs Alexa Routines for Blink](/blog/geocam-vs-alexa-blink/).
-- **IFTTT.** IFTTT has no native Blink service in 2026; you end up chaining through Alexa or Webhooks, which means you're stacking fragile pieces. Latency and applet limits became real. The full comparison is in [GeoCam vs IFTTT for Blink Geofencing](/blog/geocam-vs-ifttt-blink/).
+- **Alexa Routines.** Alexa supports location triggers and a routine can arm Blink, but Blink does not let routines disarm the system, so the trip home always needed a voice code or a tap. I wrote up the failure modes in [GeoCam vs Alexa Routines for Blink](/blog/geocam-vs-alexa-blink/).
+- **IFTTT.** IFTTT's Blink service can arm and disarm from two location applets, but each applet follows a single phone, two applets are the whole free plan, and the applets depended on the IFTTT app staying alive in the background. The full comparison is in [GeoCam vs IFTTT for Blink Geofencing](/blog/geocam-vs-ifttt-blink/).
 - **Home Assistant.** Technically the most powerful path, but the setup tax is enormous if you don't already run Home Assistant. I broke down what it actually takes in [GeoCam vs Home Assistant for Blink](/blog/geocam-vs-home-assistant-blink/).
 - **Blink Schedules.** Not a workaround, the official tool, but time-based, so it leaves gaps any time your real day doesn't match the calendar. I walked through three concrete days where the gap matters in [GeoCam vs Blink Schedules](/blog/geocam-vs-blink-schedules/).
 

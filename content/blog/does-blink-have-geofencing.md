@@ -28,8 +28,8 @@ The result is a clear gap: schedules work only for households with a perfectly f
 
 There are four real ways to add location-based arming to Blink. Each has trade-offs, and I have a full write-up for every one:
 
-- **Alexa Routines.** Since Amazon owns both, Alexa can flip Blink's arm state, but its location trigger reads one phone and routes through the cloud, so it is slow and single-person. See [GeoCam vs Alexa Routines](/blog/geocam-vs-alexa-blink/).
-- **IFTTT.** There is no native Blink service, so you chain through Alexa or Webhooks, and location triggers now sit behind a paid plan. See [GeoCam vs IFTTT](/blog/geocam-vs-ifttt-blink/).
+- **Alexa Routines.** Since Amazon owns both, a routine can arm Blink when you leave, but Blink does not allow routines to disarm it, so nothing disarms it when you come back; the location trigger also reads one phone only. See [GeoCam vs Alexa Routines](/blog/geocam-vs-alexa-blink/).
+- **IFTTT.** IFTTT has a Blink service, and two location applets can arm and disarm it for one phone. That uses the whole free plan, and there is no logic for a household with more than one phone. See [GeoCam vs IFTTT](/blog/geocam-vs-ifttt-blink/).
 - **Home Assistant.** The most powerful path, but it needs an always-on server, an unofficial integration, and YAML automations. See [GeoCam vs Home Assistant](/blog/geocam-vs-home-assistant-blink/).
 - **A dedicated geofencing app.** Purpose-built for exactly this job, no hub, no server, no chained accounts.
 

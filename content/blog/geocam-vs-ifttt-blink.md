@@ -3,71 +3,79 @@ date = 2026-06-19T05:00:00+00:00
 featureImage = "/images/portfolio/geocam-feature.png"
 postImage = "/images/portfolio/geocam-feature.png"
 title = "GeoCam vs IFTTT for Blink Geofencing"
-description = "IFTTT has no native Blink service: you chain through Alexa or build Webhooks. Compare GeoCam's direct Blink path against IFTTT's applet model: applet count, latency, family logic."
+description = "IFTTT's Blink service can arm and disarm when one phone leaves or arrives. Compare it with GeoCam: applet limits, family logic, per-camera control and what each costs."
 tags = ["smart-home", "blink", "geofencing", "ifttt"]
 categories = "blog"
 geocamCTA = true
 +++
 
-IFTTT can chain almost anything, but using it to geofence Blink cameras is harder than it looks. Blink has no native IFTTT service, so any "if I leave home, arm Blink" recipe ends up routed through Alexa or hand-built Webhooks. GeoCam is a single app that talks to Blink directly from your phone, and one subscription covers your whole household.
+IFTTT is the most common way people try to make Blink follow their location, and for good reason: it has a Blink service, and the two location applets "arm Blink when I leave" and "disarm Blink when I arrive" are among its most used Blink recipes. For one person living alone it can be enough. The limits show up as soon as there is a second person in the house, or you want more than "the whole system on or off".
 
-## What "IFTTT for Blink" actually means in 2026
+## How IFTTT works with Blink in 2026
 
-Blink does not publish an official IFTTT service. To trigger Blink arm/disarm from an IFTTT applet you take one of two routes, both with caveats:
+IFTTT has a Blink service with two actions, **Arm system** and **Disarm system**, plus a **Motion detected** trigger. To geofence Blink you combine those actions with IFTTT's Location service:
 
-- **Through Alexa.** Blink integrates with Alexa, and Alexa exposes routines to IFTTT. You build an Alexa routine to arm or disarm Blink, then trigger that routine from IFTTT. This chains three accounts (IFTTT, then Alexa, then Blink). Any link breaking, whether a re-auth, a skill update, or an offline echo device, silently breaks the whole chain.
-- **Through IFTTT Webhooks.** You can wire IFTTT's Webhooks service to a self-hosted endpoint that calls Blink's reverse-engineered HTTP API. It works until Blink rotates auth tokens or changes endpoints, which they do, since the API isn't public.
+- **Applet 1:** when my phone leaves the home area, arm the Blink system.
+- **Applet 2:** when my phone enters the home area, disarm the Blink system.
 
-Either route needs at least two applets: one for "leaving home" to arm, one for "arriving home" to disarm. IFTTT's free tier currently includes only two applets total, so a second household phone usually means moving to a paid IFTTT plan.
+The location comes from the phone running the IFTTT app, which needs background location permission. IFTTT's free plan includes two applets, so this pair uses the whole free allowance. IFTTT Pro, at $2.99 a month or $35.88 a year, raises the limit to 20 applets.
 
-## Where IFTTT geofencing falls short for security cameras
+## Where IFTTT falls short for a household
 
-- **Trigger latency.** IFTTT location triggers are not real-time. The IFTTT app polls and propagates events on its own schedule; the gap between "I left the zone" and "Blink received the arm command" is typically several minutes. For a security camera, that gap is exactly what you wanted to eliminate.
-- **Single-device location only.** The IFTTT location service reads from the phone running the IFTTT app. There is no built-in "everyone is out" check: if your partner has their own phone, you build separate per-person applets and combine them yourself.
-- **Per-person cost scaling.** Each additional household member needs their own IFTTT account and applets. With IFTTT Pro pricing applied per account, a family of three on IFTTT costs more than three GeoCam subscriptions, and GeoCam covers the whole household on one €3.99/month plan.
-- **No failure visibility.** When an applet doesn't fire, there's no surfacing in the IFTTT app. You only notice when you check Blink and realize the cameras didn't change state.
+- **One phone decides.** Each location applet reacts to the phone it runs on. If you leave and your partner is still home, your applet arms the cameras anyway, and theirs disarms them when they come back. IFTTT has no built-in "arm only when everyone is out" logic.
+- **Whole system only.** The Blink actions arm or disarm the system. There is no action to turn motion on or off for a single camera, so "outdoor cameras on, indoor cameras off when we are home" needs a second Sync Module or manual work.
+- **Applet budget.** A second person, a second location or a schedule on top of the two location applets means moving to a paid IFTTT plan.
+- **Reliability depends on the IFTTT app.** Location applets rely on the IFTTT app staying allowed to run in the background. Blink users regularly report applets that stop firing after an app update, a permission change or battery optimisation, and the first sign is usually a camera that did not arm.
 
 ## How GeoCam handles the same job
 
-GeoCam is purpose-built for one workflow: location-driven Blink arming. It authenticates with your Blink account directly from the app, with no chained services, no Webhooks endpoint, and no Alexa skill in the middle. You set a zone on a map and the OS-level geofence APIs handle transitions in the background. With Pro, every household phone runs the app and the system waits for the last person to leave before arming. One subscription covers the whole family, with no per-account math.
+GeoCam is built for one workflow: Blink arming driven by location. It connects to your Blink account directly from the app and registers the home area with the phone's own geofencing (Core Location on iPhone, the Geofencing API on Android), so it works even when you have not opened the app for days.
 
-For the wider context, see [how to arm Blink cameras automatically](/blog/how-to-arm-blink-cameras-automatically/).
+- **Free on one phone:** arms when you leave and disarms when you come back, on one phone and one Blink network.
+- **Pro, for the household:** every family phone runs GeoCam with the same Blink account, and the system arms only when the last person has left and disarms when the first one comes back. Pro also adds schedules and routines that turn single cameras on or off when you leave, arrive or at a set time. It costs €3.99 a month or €39.99 a year for the whole household, with a 7-day free trial.
+
+For the wider picture, see [how to arm Blink cameras automatically](/blog/how-to-arm-blink-cameras-automatically/).
 
 ## Side-by-side
 
-| Aspect | GeoCam | IFTTT for Blink |
+| Aspect | GeoCam | IFTTT with Blink |
 | --- | --- | --- |
-| Native Blink connection | Direct from the app | Routed via Alexa or Webhooks |
-| Applet / cost ceiling | Single subscription, no applet count | 2 free applets, then paid plan |
-| Multi-person presence logic | Built-in last-out logic (Pro) | Manual combination of per-phone applets |
-| Family-friendly pricing | €3.99/mo per household (unlimited phones) | Paid tier × number of family accounts |
-| Failure visibility | In-app status of last action | Silent applet failures |
+| Arm on leave, disarm on arrive | Yes, free on one phone | Yes, two applets (the whole free plan) |
+| "Last person out" logic | Built in (Pro) | Not available |
+| Single cameras on or off | Yes, on leave, arrive or at set times (Pro) | No, whole system only |
+| Extra people or rules | Same subscription | Paid IFTTT plan |
+| Cost for a family | €3.99/month or €39.99/year per household | Free for two applets, then $2.99/month per account |
 
 ## Best fit
 
-**Choose GeoCam** if you want Blink home/away to "just work" without managing applets, Webhooks endpoints, or three-account chains, and you want everyone in the house covered on one subscription.
+**Choose IFTTT** if you live alone, already use IFTTT for other things and two applets cover what you need.
 
-**Choose IFTTT** if Blink is one node in a much larger cross-service automation graph you already maintain and you are comfortable rebuilding it when an upstream service changes.
+**Choose GeoCam** if more than one person lives in the house, you want single cameras to follow you, or you want something built only for Blink that does not depend on a general automation app staying alive in the background.
 
 ## FAQ
 
-**Does IFTTT have a native Blink integration?**
+**Does IFTTT have a Blink integration?**
 
-No. Blink does not publish an official IFTTT service. To use IFTTT with Blink you must chain through Alexa (Blink, then Alexa skill, then IFTTT) or use IFTTT's Webhooks against the unofficial Blink HTTP API.
+Yes. IFTTT's Blink service offers the actions Arm system and Disarm system and a Motion detected trigger. Combined with IFTTT's Location service you can arm Blink when your phone leaves an area and disarm it when it arrives.
 
 **How many IFTTT applets do I need to geofence Blink?**
 
-At minimum two: one applet for leaving home to arm cameras, one for arriving home to disarm. IFTTT's free tier currently includes only two applets, so any additional household member or use case typically requires a paid IFTTT plan.
+Two: one to arm when you leave and one to disarm when you arrive. That is the whole free plan, so a second person or any extra rule needs IFTTT Pro.
+
+**Can IFTTT arm Blink only when everyone has left?**
+
+Not on its own. Each location applet reacts to a single phone. To arm only when the last person leaves you need presence logic across several phones, which GeoCam Pro has built in.
 
 **Should I choose GeoCam or IFTTT for Blink geofencing?**
 
-Choose GeoCam if you want a single app that connects directly to Blink with built-in household presence logic and no service chain. Choose IFTTT if Blink is one node in a much wider cross-service automation graph you already maintain.
+For one person with simple needs, IFTTT's free plan works. For a family, per-camera control or fewer moving parts, GeoCam is the better fit.
 
 ### See also
 
+- [How to Arm Blink Only When the Last Person Leaves](/blog/arm-blink-when-last-person-leaves/)
 - [GeoCam vs Home Assistant](/blog/geocam-vs-home-assistant-blink/)
 - [GeoCam vs Alexa](/blog/geocam-vs-alexa-blink/)
 - [GeoCam vs Blink Schedules](/blog/geocam-vs-blink-schedules/)
 - [How to arm Blink cameras automatically](/blog/how-to-arm-blink-cameras-automatically/)
 
-[Try GeoCam](https://geocam.matteotomasini.com/#download) to get location-driven Blink arming for your whole household.
+[Try GeoCam](https://geocam.matteotomasini.com/#download): free on one phone, with Pro for the whole household.
