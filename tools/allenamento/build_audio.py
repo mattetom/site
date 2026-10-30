@@ -4,6 +4,7 @@
 macOS only: uses `say` (British voices) and `afconvert`. Writes, next to script.json, audio/:
   <part>-full.m4a   the whole part as in the exam (intro, example, questions with pauses)
   <part>-q<n>.m4a   one question only, used to listen again to the wrong ones
+  <part>-intro.m4a  intro and example only (the speaking practice plays this, then one question at a time)
 
 Usage: python3 tools/allenamento/build_audio.py static/allenamento-tlyp0q/cambridge-listening-1
 """
@@ -71,6 +72,7 @@ def main(folder):
     for part in script["parts"]:
         full = lines_audio(voices, part["intro"]) + silence(PAUSE_BLOCK)
         full += lines_audio(voices, part["exampleLines"]) + silence(PAUSE_BLOCK)
+        write_m4a(full, adir / f"{part['id']}-intro.m4a")
         for q in part["questions"]:
             one = lines_audio(voices, q["lines"])
             full += one + silence(PAUSE_QUESTION)

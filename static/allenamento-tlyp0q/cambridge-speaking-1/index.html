@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+<title>Movers Speaking practice 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../app.css">
+<style>
+.qplay { font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; border: 2px solid var(--blue); color: var(--blue); background: var(--card); border-radius: 999px; padding: 6px 14px; min-height: 44px; }
+.qplay.main { background: var(--blue); color: var(--card); }
+.pics2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pic { border: 2px solid var(--line); border-radius: 16px; padding: 8px; background: var(--scene); color: #1d2a44; }
+.pic h3 { margin: 0 0 6px; font-family: var(--display); font-size: 17px; text-align: center; }
+.cells { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.cell { font: inherit; font-size: 34px; line-height: 1.15; min-height: 70px; border-radius: 12px; border: 2px solid #d3dbeb; background: #fff; display: grid; place-items: center; color: inherit; }
+button.cell { cursor: pointer; }
+.cell.on { border-color: #2f5fb3; box-shadow: 0 0 0 3px #2f5fb3; }
+.cell.ex { border-color: #3d8b4f; background: #e1f2e4; }
+.cell.ok { border-color: #3d8b4f; background: #e1f2e4; }
+.cell.no { border-color: #c23b50; background: #fbe5e8; }
+.cell.missed { border-style: dashed; border-color: #c23b50; }
+.panels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.panel { border: 2px solid var(--line); border-radius: 16px; background: var(--scene); color: #1d2a44; padding: 10px; text-align: center; }
+.panel .n { font-family: var(--mono); font-weight: 700; color: #2f5fb3; }
+.panel .p { font-size: 42px; line-height: 1.2; }
+.panel .m { font-size: 15px; text-align: left; margin-top: 6px; display: none; }
+.panels.shown .panel .m { display: block; }
+.oddset { border: 2px solid var(--line); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.oddrow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.oddrow .cell { font-size: 40px; }
+.model { margin: 0; padding: 8px 12px; border-left: 4px solid var(--ok); background: var(--ok-bg); border-radius: 0 10px 10px 0; font-size: 16px; }
+.self { display: flex; gap: 8px; flex-wrap: wrap; }
+.qa { border: 2px solid var(--line); border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" id="back" href="../">&larr; All exercises</a>
+  <header class="hero">
+    <span id="hb"></span>
+    <div>
+      <div class="eyebrow">CAMBRIDGE &middot; A1 MOVERS &middot; SPEAKING</div>
+      <h1>Movers <span>Speaking</span> practice</h1>
+      <p class="sub" id="hello">Four parts like the real test. Listen to the examiner and answer OUT LOUD, with full sentences.</p>
+    </div>
+  </header>
+  <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
+  <main class="card" id="card" aria-live="polite"></main>
+  <p class="sync" id="sync"></p>
+</div>
+<audio id="au" preload="none" playsinline></audio>
+
+<script src="../app.js"></script>
+<script>
+const { esc, fmt, bunny } = APP;
+let S, step = 0, scores = {}, maxes = {}, items = [], st = {};
+let startedAt = new Date().toISOString();
+const card = document.getElementById("card");
+const au = document.getElementById("au");
+document.getElementById("hb").innerHTML = bunny("");
+document.getElementById("back").href = "../" + APP.carry();
+if (APP.name()) document.getElementById("hello").textContent = `Hi ${APP.name()}! Four parts like the real test. Listen to the examiner and answer OUT LOUD, with full sentences.`;
+
+fetch("script.json").then(r => r.json()).then(j => { S = j; show(); APP.status(); })
+  .catch(() => { card.innerHTML = "<p>Oops, the exercise did not load. Check the internet and reload the page.</p>"; });
+
+function play(src) { au.pause(); au.src = src; au.currentTime = 0; au.play().catch(() => {}); }
+function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+function drawTally() {
+  document.getElementById("steps").innerHTML = S.parts.map((p, i) => `<span class="step ${scores[p.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
+  document.getElementById("pts").textContent = `${fmt(total())} points`;
+}
+function selfButtons(key) {
+  return `<div class="self" data-self="${key}">
+    <button type="button" class="tgb" aria-pressed="false" data-v="1">I said it by myself</button>
+    <button type="button" class="tgb" aria-pressed="false" data-v="0.5">Some of it</button>
+    <button type="button" class="tgb" aria-pressed="false" data-v="0">I needed help</button></div>`;
+}
+
+function show() {
+  drawTally();
+  au.pause();
+  if (step >= S.parts.length) return finish();
+  const P = S.parts[step];
+  st = { P, on: new Set() };
+  const base = `audio/${P.id}`;
+  const qbtn = q => `<button type="button" class="qplay" data-src="${base}-q${q}.m4a">▶ Question${P.questions.length > 1 ? " " + q : ""}</button>`;
+  let body = `<div class="row"><button type="button" class="qplay main" data-src="${base}-intro.m4a">▶ Listen to the examiner</button></div>`;
+  if (P.type === "diff") {
+    const grid = (cells, clickable) => `<div class="cells">${cells.map((c, i) => clickable
+      ? `<button type="button" class="cell ${i === P.exampleCell ? "ex" : ""}" data-i="${i}" aria-label="${esc(c[1])}">${c[0]}</button>`
+      : `<div class="cell ${i === P.exampleCell ? "ex" : ""}">${c[0]}</div>`).join("")}</div>`;
+    body += `<div class="row">${qbtn(1)}</div>
+      <div class="pics2"><div class="pic"><h3>Picture A</h3>${grid(P.a, false)}</div><div class="pic"><h3>Picture B</h3>${grid(P.b, true)}</div></div>
+      <p class="note">The green one is the example (two cats, three cats).</p><div id="models"></div>`;
+  } else if (P.type === "story") {
+    body += `<p class="how"><b>${esc(P.storyTitle)}</b></p>
+      <div class="panels" id="panels">${P.panels.map((p, i) => `<div class="panel"><div class="n">${i + 1}</div><div class="p">${p.pic}</div><div class="m">${esc(p.model)}</div></div>`).join("")}</div>
+      <div class="row">${P.questions.map(q => qbtn(q.q)).join("")}</div>
+      <div class="row"><button type="button" class="btn ghost" id="reveal">Show the story</button></div>
+      <p class="how">How did you do?</p>${selfButtons("story")}`;
+  } else if (P.type === "odd") {
+    const ex = P.example;
+    body += `<div class="oddset"><p class="note"><b>Example</b></p><div class="oddrow">${ex.pics.map((p, i) => `<div class="cell ${i === ex.odd ? "ex" : ""}">${p}</div>`).join("")}</div><p class="model">${esc(ex.why)}</p></div>
+      ${P.sets.map((s, k) => `<div class="oddset" data-k="${k}"><div class="row">${qbtn(k + 1)}</div><div class="oddrow">${s.pics.map((p, i) => `<button type="button" class="cell" data-i="${i}" aria-label="${esc(s.labels[i])}">${p}</button>`).join("")}</div><div class="why"></div></div>`).join("")}`;
+  } else if (P.type === "ask") {
+    body += P.questions.map(q => `<div class="qa" data-q="${q.q}"><div class="row">${qbtn(q.q)}<button type="button" class="tgb showm">Show an example answer</button></div>
+      <p class="model" hidden>${esc(q.model)}</p>${selfButtons("q" + q.q)}</div>`).join("");
+  }
+  card.innerHTML = `
+    <div class="ex-head"><b>${esc(P.title)}</b><small>part ${step + 1} of ${S.parts.length}</small></div>
+    <p class="how">${esc(P.how)}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="row"><button class="btn" id="go" type="button">${P.type === "diff" || P.type === "odd" ? "Check" : "Done"}</button></div>`;
+  wire(P);
+}
+
+function wire(P) {
+  card.querySelectorAll(".qplay").forEach(b => b.onclick = () => play(b.dataset.src));
+  card.querySelectorAll(".self").forEach(g => g.querySelectorAll(".tgb").forEach(b => b.onclick = () => {
+    g.querySelectorAll(".tgb").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  }));
+  if (P.type === "diff") card.querySelectorAll(".pic button.cell").forEach(c => c.onclick = () => {
+    const i = +c.dataset.i;
+    if (st.done || i === P.exampleCell) return;
+    st.on.has(i) ? st.on.delete(i) : st.on.add(i);
+    c.classList.toggle("on", st.on.has(i));
+  });
+  if (P.type === "odd") card.querySelectorAll(".oddset[data-k]").forEach(set => set.querySelectorAll("button.cell").forEach(c => c.onclick = () => {
+    if (st.done) return;
+    set.querySelectorAll("button.cell").forEach(x => x.classList.toggle("on", x === c));
+  }));
+  if (P.type === "story") document.getElementById("reveal").onclick = () => document.getElementById("panels").classList.add("shown");
+  if (P.type === "ask") card.querySelectorAll(".showm").forEach(b => b.onclick = () => { b.closest(".qa").querySelector(".model").hidden = false; });
+  document.getElementById("go").onclick = () => check(P);
+}
+
+function note(t) { document.getElementById("fb").innerHTML = `<div class="fb mid"><span>${esc(t)}</span></div>`; }
+function selfValue(key) { const b = card.querySelector(`.self[data-self="${key}"] [aria-pressed="true"]`); return b ? Number(b.dataset.v) : null; }
+
+function check(P) {
+  let pts = 0, max = 0, msg = "";
+  if (P.type === "diff") {
+    if (st.on.size < 1) return note("Tap the things in picture B that are different.");
+    const right = new Set(P.diffs.map(d => d.cell));
+    max = right.size;
+    card.querySelectorAll(".pic button.cell").forEach(c => {
+      const i = +c.dataset.i;
+      if (i === P.exampleCell) return;
+      if (right.has(i)) c.classList.add(st.on.has(i) ? "ok" : "missed");
+      else if (st.on.has(i)) c.classList.add("no");
+    });
+    P.diffs.forEach((d, k) => {
+      const found = st.on.has(d.cell);
+      if (found) pts++;
+      items.push({ part: P.id, q: k + 1, skill: "differences", tags: ["speaking", "differences"], expected: P.b[d.cell][1], given: found ? "found" : "not found", score: found ? 1 : 0, mode: "full" });
+    });
+    [...st.on].filter(i => !right.has(i)).forEach(i => items.push({ part: P.id, q: "extra", skill: "differences", tags: ["speaking", "differences"], expected: "same in both pictures", given: P.b[i][1], score: 0, mode: "full" }));
+    document.getElementById("models").innerHTML = `<p class="how"><b>Now say these sentences out loud:</b></p>${P.diffs.map(d => `<p class="model">${esc(d.say)}</p>`).join("")}`;
+    msg = "Use 'In picture A ..., but in picture B ...'. Dashed red = a difference you didn't find.";
+  } else if (P.type === "odd") {
+    const sets = [...card.querySelectorAll(".oddset[data-k]")];
+    if (sets.some(s => !s.querySelector(".cell.on"))) return note("Tap one picture in every group.");
+    max = sets.length;
+    sets.forEach(s => {
+      const k = +s.dataset.k, set = P.sets[k];
+      const v = +s.querySelector(".cell.on").dataset.i;
+      const ok = v === set.odd;
+      if (ok) pts++;
+      s.querySelectorAll("button.cell").forEach(c => { if (+c.dataset.i === set.odd) c.classList.add("ok"); else if (c.classList.contains("on")) c.classList.add("no"); });
+      s.querySelector(".why").innerHTML = `<p class="model">${esc(set.why)}</p>`;
+      items.push({ part: P.id, q: k + 1, skill: "odd one out", tags: ["speaking", "vocabulary"], expected: set.labels[set.odd], given: set.labels[v], score: ok ? 1 : 0, mode: "full" });
+    });
+    msg = "Now say WHY out loud for each group: 'The ... is different because ...'.";
+  } else if (P.type === "story") {
+    const v = selfValue("story");
+    if (v === null) return note("Tap how you did: by yourself, some of it, or with help.");
+    document.getElementById("panels").classList.add("shown");
+    max = 1; pts = v;
+    items.push({ part: P.id, q: 1, skill: "picture story (self)", tags: ["speaking", "self-assessment"], expected: "tell the story", given: String(v), score: v, mode: "full" });
+    msg = "Tell it again using the green sentences. Use is ...ing: Tom is playing, he is crying.";
+  } else if (P.type === "ask") {
+    const vals = P.questions.map(q => selfValue("q" + q.q));
+    if (vals.some(v => v === null)) return note("For every question, tap how you did.");
+    max = vals.length;
+    P.questions.forEach((q, i) => {
+      pts += vals[i];
+      card.querySelector(`.qa[data-q="${q.q}"] .model`).hidden = false;
+      items.push({ part: P.id, q: q.q, skill: "personal questions (self)", tags: ["speaking", "self-assessment"], expected: q.lines[0][1], given: String(vals[i]), score: vals[i], mode: "full" });
+    });
+    msg = "Answer with a full sentence and say a little more: 'because ...', 'with my ...'.";
+  }
+  st.done = true;
+  scores[P.id] = pts; maxes[P.id] = max;
+  drawTally();
+  const say = pts === max ? "Hop hop! Great talking!" : pts >= max * 0.6 ? "Good job, keep going!" : "Don't worry, practise it again out loud!";
+  document.getElementById("fb").innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><div class="fbrow">${bunny("s" + (pts === max ? " hop" : ""))}<div><span class="say">${say}</span><strong>${fmt(pts)} of ${max}</strong><span>${esc(msg)}</span></div></div></div>`;
+  const go = document.getElementById("go");
+  go.textContent = step === S.parts.length - 1 ? "See the result" : "Next part";
+  go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
+}
+
+function finish() {
+  au.pause();
+  const t = total(), m = Object.values(maxes).reduce((a, b) => a + b, 0);
+  APP.send({ exercise: S.id, title: S.title, mode: "full", startedAt, score: t, max: m,
+    parts: S.parts.map(p => ({ id: p.id, title: p.title, score: scores[p.id] ?? 0, max: maxes[p.id] ?? 0 })), items });
+  card.innerHTML = `<div class="end">
+    <div class="ex-head"><b>Result</b><small>${m} points</small></div>
+    <div class="endtop">${bunny(t >= m * 0.8 ? "hop" : "")}<div class="big">${fmt(t)} / ${m}</div></div>
+    <p>${t >= m * 0.8 ? "Great talking! Do it again with Mum or Dad as the examiner." : "Practise out loud again: say every sentence, even if it isn't perfect. Mistakes are OK, keep talking!"}</p>
+    <table class="res">${S.parts.map(p => `<tr><td>${esc(p.title)}</td><td>${fmt(scores[p.id] ?? 0)} / ${maxes[p.id] ?? 0}</td></tr>`).join("")}</table>
+    <div class="row"><button class="btn" id="again" type="button">Do it again</button></div></div>`;
+  document.getElementById("again").onclick = () => { step = 0; scores = {}; maxes = {}; items = []; startedAt = new Date().toISOString(); show(); window.scrollTo({ top: 0 }); };
+}
+</script>
+</body>
+</html>

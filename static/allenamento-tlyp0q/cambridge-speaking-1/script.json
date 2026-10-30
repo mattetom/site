@@ -1,0 +1,75 @@
+{
+  "id": "cambridge-speaking-1",
+  "title": "Movers Speaking practice 1",
+  "voices": { "R": "Daniel", "F": "Moira", "M": "Reed (English (UK))", "G": "Flo (English (UK))", "B": "Eddy (English (UK))" },
+  "parts": [
+    {
+      "id": "p1", "type": "diff", "title": "Part 1: find the differences",
+      "how": "Listen to the examiner. Tap the four things in picture B that are different. Then say a sentence for each one.",
+      "a": [["🐈🐈", "cats"], ["☀️", "weather"], ["👦🎈", "boy"], ["🚌", "street"], ["🌳🌳", "trees"], ["👵☕", "grandma"]],
+      "b": [["🐈🐈🐈", "cats"], ["🌧️", "weather"], ["👦⚽", "boy"], ["🚲", "street"], ["🌳", "trees"], ["👵☕", "grandma"]],
+      "diffs": [
+        { "cell": 1, "say": "In picture A it's sunny, but in picture B it's raining." },
+        { "cell": 2, "say": "In picture A the boy has got a balloon, but in picture B he has got a ball." },
+        { "cell": 3, "say": "In picture A there's a bus, but in picture B there's a bike." },
+        { "cell": 4, "say": "In picture A there are two trees, but in picture B there is one tree." }
+      ],
+      "exampleCell": 0,
+      "intro": [["F", "Hello. Here are two pictures. They are the same, but some things are different."]],
+      "exampleLines": [["F", "For example, in picture A there are two cats, but in picture B there are three cats."]],
+      "questions": [
+        { "q": 1, "lines": [["F", "Now you tell me four differences. Look at the weather, the boy, the street and the trees."]] }
+      ]
+    },
+    {
+      "id": "p2", "type": "story", "title": "Part 2: tell the story",
+      "how": "Listen to the examiner and look at the four pictures. Tell the story out loud, one picture at a time.",
+      "storyTitle": "Tom's bad day",
+      "panels": [
+        { "pic": "🧒⚽🌳", "model": "Tom is playing football in the park with his friends." },
+        { "pic": "🧒🤕", "model": "Tom falls over. He hurts his leg and he's crying." },
+        { "pic": "🚗🏥", "model": "Tom's dad takes him to the hospital in the car." },
+        { "pic": "👩‍⚕️🩹🍦", "model": "The doctor puts a plaster on his leg. Now Tom is happy and he's eating an ice cream." }
+      ],
+      "intro": [["F", "These pictures tell a story. It's called Tom's bad day. Just look at the pictures first."]],
+      "exampleLines": [["F", "Tom is playing football in the park with his friends. Now you tell the story."]],
+      "questions": [
+        { "q": 1, "lines": [["F", "Look at picture two. What happens now?"]] },
+        { "q": 2, "lines": [["F", "And in picture three? Where is Tom going?"]] },
+        { "q": 3, "lines": [["F", "And in the last picture? How does Tom feel now?"]] }
+      ]
+    },
+    {
+      "id": "p3", "type": "odd", "title": "Part 3: odd one out",
+      "how": "Listen. Tap the picture that is different, then say why.",
+      "example": { "pics": ["🍎", "🍌", "🍐", "🥕"], "odd": 3, "why": "The carrot is a vegetable. The others are fruit." },
+      "sets": [
+        { "pics": ["🚌", "🚗", "🏠", "🚲"], "labels": ["bus", "car", "house", "bike"], "odd": 2, "why": "The house is a building. The others are things you can ride or drive." },
+        { "pics": ["👩‍⚕️", "🧑‍🍳", "🐶", "🧑‍🚒"], "labels": ["nurse", "cook", "dog", "firefighter"], "odd": 2, "why": "The dog is an animal. The others are people with jobs." },
+        { "pics": ["🏥", "🏫", "🌳", "🏦"], "labels": ["hospital", "school", "tree", "bank"], "odd": 2, "why": "The tree is a plant. The others are buildings in a town." },
+        { "pics": ["🧣", "⚽", "🧤", "👒"], "labels": ["scarf", "ball", "gloves", "hat"], "odd": 1, "why": "The ball is a toy. The others are clothes." }
+      ],
+      "intro": [["F", "Now look at these pictures. One is different. The carrot is different."]],
+      "exampleLines": [["F", "Why? Because the carrot is a vegetable, and the others are fruit."]],
+      "questions": [
+        { "q": 1, "lines": [["F", "Look at these four pictures. Which one is different? Why?"]] },
+        { "q": 2, "lines": [["F", "Now look at these. Which one is different? Why?"]] },
+        { "q": 3, "lines": [["F", "And these. Which one is different? Why?"]] },
+        { "q": 4, "lines": [["F", "And the last ones. Which one is different? Why?"]] }
+      ]
+    },
+    {
+      "id": "p4", "type": "ask", "title": "Part 4: questions about you",
+      "how": "Listen to each question and answer out loud with a full sentence. Then look at an example answer.",
+      "intro": [["F", "Now let's talk about you."]],
+      "exampleLines": [["F", "Answer with a sentence, please."]],
+      "questions": [
+        { "q": 1, "model": "My favourite place is the park, because I play with my friends there.", "lines": [["F", "What's your favourite place in your town?"]] },
+        { "q": 2, "model": "I go to school by car. My mum takes me.", "lines": [["F", "How do you go to school?"]] },
+        { "q": 3, "model": "When I'm ill, I stay in bed and I drink lots of water.", "lines": [["F", "What do you do when you are ill?"]] },
+        { "q": 4, "model": "At the weekend I play with my cousins. We ride our bikes.", "lines": [["F", "Who do you play with at the weekend?"]] },
+        { "q": 5, "model": "Last Sunday I went to the lake with my family.", "lines": [["F", "What did you do last Sunday?"]] }
+      ]
+    }
+  ]
+}

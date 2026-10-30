@@ -36,6 +36,24 @@
   "testLabel": "Cambridge Listening test"
  },
  {
+  "id": "cambridge-reading-writing-1",
+  "subject": "Cambridge",
+  "kind": "exercise",
+  "ico": "📝",
+  "title": "Movers Reading and Writing 1",
+  "test": "2026-11-17",
+  "testLabel": "Cambridge Reading and Writing test"
+ },
+ {
+  "id": "cambridge-speaking-1",
+  "subject": "Cambridge",
+  "kind": "exercise",
+  "ico": "🗣️",
+  "title": "Movers Speaking practice 1",
+  "test": "2026-11-24",
+  "testLabel": "Cambridge Speaking test"
+ },
+ {
   "id": "inglese-peter-pan-quiz",
   "subject": "English",
   "kind": "game",

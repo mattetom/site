@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+<title>Movers Reading and Writing 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../app.css">
+<style>
+.story { margin: 0; padding: 12px 14px; border-left: 4px solid var(--blue); background: var(--blue-bg); border-radius: 0 12px 12px 0; font-size: 17px; line-height: 1.7; }
+.story p { margin: 0 0 8px; }
+.ex1 { font-size: 16px; color: var(--ink-soft); border: 2px dashed var(--line); border-radius: 12px; padding: 8px 12px; }
+.ex1 b { color: var(--ok); }
+.dlg .who { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+.park { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px; border-radius: 16px; background: #dff2d0; border: 2px solid var(--line); }
+.park div { background: rgba(255,255,255,.55); border-radius: 12px; min-height: 92px; display: grid; place-items: center; font-size: 40px; line-height: 1.1; text-align: center; }
+.park .pond { background: #bfe3f5; }
+.short { display: flex; flex-direction: column; gap: 6px; }
+.short input, .free textarea { font: inherit; font-weight: 600; width: 100%; padding: 6px 8px; border: 0; border-bottom: 2.5px solid var(--ink-soft); background: var(--paper); color: var(--ink); border-radius: 6px 6px 0 0; }
+.free textarea { min-height: 54px; resize: vertical; }
+.short.ok input { border-bottom-color: var(--ok); background: var(--ok-bg); }
+.short.no input { border-bottom-color: var(--miss); background: var(--miss-bg); }
+.free { display: flex; flex-direction: column; gap: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" id="back" href="../">&larr; All exercises</a>
+  <header class="hero">
+    <span id="hb"></span>
+    <div>
+      <div class="eyebrow">CAMBRIDGE &middot; A1 MOVERS &middot; READING AND WRITING</div>
+      <h1>Movers <span>Reading &amp; Writing</span> 1</h1>
+      <p class="sub" id="hello">Six parts like the real test. Read carefully and check your spelling!</p>
+    </div>
+  </header>
+  <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
+  <main class="card" id="card" aria-live="polite"></main>
+  <p class="sync" id="sync"></p>
+</div>
+
+<script src="../app.js"></script>
+<script>
+const { esc, grade, fmt, bunny, clean } = APP;
+const EXERCISE = "cambridge-reading-writing-1";
+
+// Types: cloze (sentences with blanks), pick (choose one option), answers (short answers checked on
+// key words; free = sentences she writes herself, saved but not marked).
+const EX = [
+  { id: "p1", type: "cloze", title: "Part 1", max: 5, skill: "vocabulary definitions", tags: ["vocabulary", "health", "places", "spelling"], wide: true,
+    how: "Look and read. Choose the correct words and write them on the lines.",
+    chips: ["🦷 a dentist", "📚 a library", "🎬 a cinema", "👩‍⚕️ a nurse", "🗺️ a map", "🛒 a market", "☕ a café", "🚉 a bus station"],
+    example: "You go here when you are very ill and need a doctor. → a hospital",
+    tip: "Leggi tutta la frase, poi cerca la parola nel riquadro. Scrivila con a / an, come nel riquadro.",
+    sents: [
+      ["This person looks at your teeth. ", { a: ["a dentist", "dentist"], show: "a dentist" }],
+      ["You can borrow books from this place. ", { a: ["a library", "library"], show: "a library" }],
+      ["You can watch films here on a very big screen. ", { a: ["a cinema", "cinema"], show: "a cinema" }],
+      ["This person helps the doctor and looks after people who are ill. ", { a: ["a nurse", "nurse"], show: "a nurse" }],
+      ["You look at this when you want to find a street in a town. ", { a: ["a map", "map"], show: "a map" }]
+    ] },
+  { id: "p2", type: "pick", title: "Part 2", max: 6, skill: "dialogue answers", tags: ["dialogue", "health", "grammar"],
+    how: "Read the conversation and choose the best answer. Sam is at home and he isn't well.",
+    example: "Mum: What's the matter, Sam? → Sam: I've got a headache.",
+    tip: "La risposta giusta usa lo stesso verbo della domanda: Did you...? No, I didn't. Do you want...? Yes, please.",
+    items: [
+      { q: "Mum: Do you want to go to the doctor?", opts: ["Yes, it is.", "Yes, please.", "Yes, I can."], a: "Yes, please.",
+        why: "A una proposta (Do you want...?) si risponde Yes, please." },
+      { q: "Mum: When did your headache start?", opts: ["It's in my head.", "Every day.", "After breakfast."], a: "After breakfast.",
+        why: "When = quando: la risposta e un momento, after breakfast (dopo colazione)." },
+      { q: "Mum: Did you drink some water?", opts: ["No, I didn't.", "No, I don't.", "No, it isn't."], a: "No, I didn't.",
+        why: "Domanda con DID (passato): si risponde No, I didn't." },
+      { q: "Mum: Would you like some soup?", opts: ["Yes, I like.", "Yes, I'd love some.", "Yes, I'm soup."], a: "Yes, I'd love some.",
+        why: "Would you like...? = ti andrebbe? Si risponde Yes, I'd love some (si, volentieri)." },
+      { q: "Mum: Shall we go to the park later?", opts: ["In the park.", "It's later.", "Good idea!"], a: "Good idea!",
+        why: "Shall we...? e una proposta: Good idea! (buona idea)." },
+      { q: "Mum: How do you feel now?", opts: ["Much better, thanks.", "With my hands.", "I'm feeling it."], a: "Much better, thanks.",
+        why: "How do you feel? = come ti senti? Much better = molto meglio." }
+    ] },
+  { id: "p3", type: "cloze", title: "Part 3", max: 5, skill: "story words", tags: ["reading", "places", "town", "spelling"],
+    how: "Read the story. Choose a word from the box and write it next to numbers 1 to 5.",
+    chips: ["📚 library", "🗺️ map", "⛲ square", "🌧️ rain", "☂️ umbrella", "🎂 cake", "🚲 bike", "🦁 zoo"],
+    example: "Last Saturday, Vicky and her dad went into town by bus.",
+    tip: "Dopo 'the' serve una cosa o un posto (the library); dopo 'started to' serve un verbo (to rain).",
+    sents: [
+      ["First they went to the ", { a: ["library"] }, " because Vicky wanted a new book about animals."],
+      ["Then Dad looked at his ", { a: ["map"] }, ". 'The café is next to the big ", { a: ["square"] }, ",' he said."],
+      ["They walked there, but it started to ", { a: ["rain"] }, "."],
+      ["Vicky didn't have her ", { a: ["umbrella"] }, ", so they ran into the café and had a hot chocolate."]
+    ] },
+  { id: "p3b", type: "pick", title: "Part 3: the title", max: 1, skill: "story title", tags: ["reading"],
+    how: "Now choose the best name for the story.",
+    items: [ { q: "The best name for the story is...", opts: ["Vicky's new bike", "A wet day in town", "Dad's birthday"], a: "A wet day in town",
+      why: "Nella storia piove (rain) e sono in citta (town): A wet day in town = una giornata bagnata in citta." } ] },
+  { id: "p4", type: "pick", title: "Part 4", max: 5, skill: "grammar in a text", tags: ["grammar", "comparatives", "prepositions", "health"],
+    how: "Read the text. Choose the right word for each space.",
+    story: "Hospitals. A hospital is a building where people go when they are very ill. In big towns, hospitals are often (1) ______ than the other buildings. (2) ______ are special rooms for children, with toys and books. Nurses work in the day and (3) ______ night. Children who are ill (4) ______ stay in bed and drink lots of water. When they feel (5) ______, they can go home.",
+    tip: "Comparativo: bigger THAN. 'There are' = ci sono. AT night. MUST = devono. Better = meglio.",
+    items: [
+      { q: "(1) hospitals are often ... than the other buildings", opts: ["big", "bigger", "biggest"], a: "bigger", why: "Con THAN serve il comparativo: bigger than." },
+      { q: "(2) ... are special rooms for children", opts: ["Their", "They", "There"], a: "There", why: "There are = ci sono. Their = loro (di loro)." },
+      { q: "(3) Nurses work in the day and ... night", opts: ["in", "on", "at"], a: "at", why: "Si dice AT night (di notte), ma IN the day." },
+      { q: "(4) Children who are ill ... stay in bed", opts: ["must", "mustn't", "don't"], a: "must", why: "Must = devono: chi e malato deve stare a letto." },
+      { q: "(5) When they feel ..., they can go home", opts: ["good", "better", "best"], a: "better", why: "Feel better = sentirsi meglio." }
+    ] },
+  { id: "p5", type: "cloze", title: "Part 5", max: 7, skill: "story sentences", tags: ["reading", "town", "spelling"], wide: true,
+    how: "Read the story. Complete the sentences with one, two or three words.",
+    story: "Jim lives in a small flat in the city with his mum and his grandfather. Every Saturday, Jim and Grandpa take the bus to the market in the square. They buy fruit, cheese and bread. Last Saturday, the market was very busy. Jim saw a little brown dog under a table. It was sad because it was lost. Grandpa asked the man at the cheese shop, but he didn't know the dog. Then a girl with long red hair ran across the square. 'Rex! There you are!' she shouted. The dog jumped up and was very happy. The girl gave Jim a big smile and said 'Thank you!' Jim and Grandpa went home on the bus. 'That was a good day,' said Grandpa.",
+    example: "Jim lives in a small flat in the city.",
+    tip: "Le parole giuste sono gia nella storia: cercale e copiale bene, lettera per lettera.",
+    sents: [
+      ["Every Saturday, Jim and Grandpa go to the market by ", { a: ["bus", "the bus"], show: "bus" }, "."],
+      ["At the market they buy fruit, ", { a: ["cheese"] }, " and bread."],
+      ["Jim saw a little brown dog ", { a: ["under a table", "under the table", "under"], show: "under a table" }, "."],
+      ["The dog was sad because it was ", { a: ["lost"] }, "."],
+      ["A girl with long ", { a: ["red hair", "red"], show: "red hair" }, " ran across the square."],
+      ["The dog's name was ", { a: ["rex"], show: "Rex" }, "."],
+      ["Jim and Grandpa went home ", { a: ["on the bus", "by bus", "on a bus"], show: "on the bus" }, "."]
+    ] },
+  { id: "p6a", type: "cloze", title: "Part 6", max: 2, skill: "picture sentences", tags: ["writing", "picture", "spelling"], scene: true,
+    how: "Look at the picture and complete the sentences.",
+    tip: "Guarda bene la figura: cosa fa la bambina sotto l'albero? Quante anatre ci sono?",
+    sents: [
+      ["The girl under the tree is ", { a: ["reading"] }, " a book."],
+      ["There are ", { a: ["three", "3"], show: "three" }, " ducks in the water."]
+    ] },
+  { id: "p6b", type: "answers", title: "Part 6: questions", max: 2, skill: "picture answers", tags: ["writing", "picture"], scene: true,
+    how: "Look at the picture and answer the questions. Then write two sentences about the picture.",
+    tip: "Rispondi con poche parole: 'a bike' va bene. Le frasi libere le guarda papa.",
+    items: [
+      { q: "What is the boy riding?", key: [["bike", "bicycle"]], show: "a bike" },
+      { q: "Who is walking the dog?", key: [["man", "grandpa", "grandfather", "granddad"]], show: "an old man" }
+    ],
+    free: ["Write a sentence about the picture.", "Write another sentence about the picture."] }
+];
+const TOTAL = EX.reduce((a, e) => a + e.max, 0);
+
+let mode = "full", RUN = EX, only = {}, step = 0;
+let scores = {}, misses = {}, wrongWords = [], items = [];
+let startedAt = new Date().toISOString();
+const card = document.getElementById("card");
+document.getElementById("hb").innerHTML = bunny("");
+document.getElementById("back").href = "../" + APP.carry();
+if (APP.name()) document.getElementById("hello").textContent = `Hi ${APP.name()}! Six parts like the real test. Read carefully and check your spelling!`;
+
+const PARK = `<div class="park" role="img" aria-label="A park: a girl reads under a tree, three ducks in the water, a boy rides a bike, an old man walks a dog, the sun, a boy eats an ice cream">
+  <div>🌳<br>👧📖</div><div class="pond">🦆🦆🦆</div><div>☀️</div>
+  <div>👦🚲</div><div>👴🐕</div><div>🧒🍦</div></div>`;
+
+function isBlank(p) { return typeof p !== "string"; }
+function blanksOf(E) { return E.sents.flat().filter(isBlank); }
+function shownWord(B) { return B.show || B.a[0]; }
+function redoing(E, i) { return mode !== "redo" || only[E.id].has(i); }
+function maxOf(E) { return mode === "redo" ? only[E.id].size : E.max; }
+function runMax() { return RUN.reduce((a, e) => a + maxOf(e), 0); }
+function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+
+function drawTally() {
+  document.getElementById("steps").innerHTML = RUN.map((e, i) => `<span class="step ${scores[e.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
+  document.getElementById("pts").textContent = mode === "redo" ? `${fmt(total())} of ${runMax()} right` : `${fmt(total())} points`;
+}
+
+function show() {
+  drawTally();
+  if (step >= RUN.length) return finish();
+  const E = RUN[step];
+  let body = "";
+  if (E.chips) body += `<div class="bank">${E.chips.map(w => `<span class="chip">${esc(w)}</span>`).join("")}</div>`;
+  if (E.example && mode === "full") body += `<p class="ex1"><b>Example:</b> ${esc(E.example)}</p>`;
+  if (E.story) body += `<div class="story"><p>${esc(E.story)}</p></div>`;
+  if (E.scene) body += PARK;
+  if (E.type === "cloze") {
+    let k = 0;
+    body += E.sents.map(s => {
+      let open = false;
+      const html = s.map(p => {
+        if (typeof p === "string") return esc(p);
+        const i = k++;
+        if (!redoing(E, i)) return `<span class="fill given">${esc(shownWord(p))}</span>`;
+        open = true;
+        return `<span class="fill ${E.wide ? "w" : ""}" data-k="${i}"><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="missing word"></span>`;
+      }).join("");
+      return open || mode === "full" ? `<p class="sent">${html}</p>` : "";
+    }).join("");
+  } else if (E.type === "pick") {
+    body += `<div class="items">${E.items.map((it, i) => !redoing(E, i) ? "" : `<div class="item dlg" data-i="${i}"><p>${esc(it.q)}</p><div class="tg">${it.opts.map(v => `<button type="button" class="tgb" aria-pressed="false" data-v="${esc(v)}">${esc(v)}</button>`).join("")}</div></div>`).join("")}</div>`;
+  } else if (E.type === "answers") {
+    body += `<div class="items">${E.items.map((it, i) => !redoing(E, i) ? "" : `<div class="short" data-i="${i}"><p class="how">${esc(it.q)}</p><input autocomplete="off" autocapitalize="sentences" autocorrect="off" spellcheck="false" aria-label="answer"></div>`).join("")}</div>`;
+    if (E.free && mode === "full") body += `<div class="free">${E.free.map((f, i) => `<label class="how" for="free${i}">${esc(f)}</label><textarea id="free${i}" autocapitalize="sentences" spellcheck="false"></textarea>`).join("")}</div>`;
+  }
+  card.innerHTML = `
+    <div class="ex-head"><b>${esc(E.title)}</b><small>${mode === "redo" ? `${maxOf(E)} to redo` : `${E.max} point${E.max > 1 ? "s" : ""}`}</small></div>
+    <p class="how">${mode === "redo" ? "Redo only the wrong ones: the green parts were already right. " : ""}${esc(E.how)}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="row"><button class="btn" id="go" type="button">Check</button></div>`;
+  wire(E);
+}
+
+function wire(E) {
+  const go = document.getElementById("go");
+  card.querySelectorAll(".item").forEach(it => it.querySelectorAll(".tgb").forEach(b => b.addEventListener("click", () => {
+    it.querySelectorAll(".tgb").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  })));
+  card.querySelectorAll("input").forEach((inp, idx, all) => inp.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); const nx = all[idx + 1]; if (nx) nx.focus(); else inp.blur(); }
+  }));
+  go.onclick = () => check(E);
+}
+
+function warnEmpty(fb) {
+  const empty = [...card.querySelectorAll("input:not([disabled]), textarea")].some(i => !i.value.trim());
+  if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Some answers are still empty. To check anyway, press Check again.</span></div>`; return true; }
+  return false;
+}
+
+function check(E) {
+  const fb = document.getElementById("fb");
+  let pts = 0;
+  const miss = new Set();
+  if (E.type === "cloze") {
+    if (warnEmpty(fb)) return;
+    const blanks = blanksOf(E);
+    card.querySelectorAll(".fill:not(.given)").forEach(f => {
+      const k = +f.dataset.k, B = blanks[k], inp = f.querySelector("input");
+      const g = grade(inp.value, B.a);
+      pts += g;
+      inp.disabled = true;
+      f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+      if (g < 1) { miss.add(k); f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(shownWord(B))}</span>`); wrongWords.push(shownWord(B)); }
+      items.push({ part: E.id, q: k + 1, skill: E.skill, tags: E.tags, expected: shownWord(B), given: inp.value.trim(), score: g, mode });
+    });
+  } else if (E.type === "pick") {
+    const its = [...card.querySelectorAll(".item")];
+    if (its.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Choose an answer for every question.</span></div>`; return; }
+    its.forEach(it => {
+      const i = +it.dataset.i, I = E.items[i];
+      const v = it.querySelector('[aria-pressed="true"]').dataset.v;
+      const ok = v === I.a; if (ok) pts++; else miss.add(i);
+      it.classList.add(ok ? "ok" : "no");
+      it.querySelectorAll(".tgb").forEach(b => b.disabled = true);
+      if (!ok) it.insertAdjacentHTML("beforeend", `<span class="why">Answer: <b>${esc(I.a)}</b>. ${esc(I.why)}</span>`);
+      items.push({ part: E.id, q: i + 1, skill: E.skill, tags: E.tags, expected: I.a, given: v, score: ok ? 1 : 0, mode, context: I.q });
+    });
+  } else if (E.type === "answers") {
+    if (warnEmpty(fb)) return;
+    card.querySelectorAll(".short").forEach(s => {
+      const i = +s.dataset.i, I = E.items[i], inp = s.querySelector("input");
+      const t = clean(inp.value);
+      const ok = I.key.every(alts => alts.some(w => t.includes(w)));
+      if (ok) pts++; else miss.add(i);
+      inp.disabled = true;
+      s.classList.add(ok ? "ok" : "no");
+      if (!ok) s.insertAdjacentHTML("beforeend", `<span class="fix">${esc(I.show)}</span>`);
+      items.push({ part: E.id, q: i + 1, skill: E.skill, tags: E.tags, expected: I.show, given: inp.value.trim(), score: ok ? 1 : 0, mode, context: I.q });
+    });
+    card.querySelectorAll(".free textarea").forEach((ta, i) => {
+      ta.disabled = true;
+      // her own sentences: saved for the parent, not marked
+      if (ta.value.trim()) items.push({ part: E.id, q: "free" + (i + 1), skill: "free writing", tags: ["writing", "free"], expected: "", given: ta.value.trim(), score: null, mode });
+    });
+  }
+  scores[E.id] = pts; misses[E.id] = miss;
+  drawTally();
+  const max = maxOf(E);
+  const say = pts === max ? "Hop hop! All right!" : pts >= max * 0.6 ? "Good job, keep going!" : "Don't worry, read and try again!";
+  const extra = E.type === "answers" && E.free && mode === "full" ? "<span>Your two sentences are saved: Dad will read them.</span>" : "";
+  fb.innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><div class="fbrow">${bunny("s" + (pts === max ? " hop" : ""))}<div><span class="say">${say}</span><strong>${fmt(pts)} of ${max}</strong>${miss.size && E.tip ? `<span>${esc(E.tip)}</span>` : ""}${extra}</div></div></div>`;
+  const go = document.getElementById("go");
+  go.textContent = step === RUN.length - 1 ? "See the result" : "Next part";
+  go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
+}
+
+function finish() {
+  const t = total(), m = runMax();
+  const words = [...new Set(wrongWords)];
+  const left = RUN.filter(e => misses[e.id] && misses[e.id].size);
+  const nLeft = left.reduce((a, e) => a + misses[e.id].size, 0);
+  APP.send({ exercise: EXERCISE, title: "Movers Reading and Writing 1", mode, startedAt, score: t, max: m,
+    parts: RUN.map(e => ({ id: e.id, title: e.title, score: scores[e.id] ?? 0, max: maxOf(e) })),
+    items: items.filter(i => i.mode === mode) });
+  const stars = t >= m * 0.9 ? 5 : t >= m * 0.75 ? 4 : t >= m * 0.6 ? 3 : t >= m * 0.4 ? 2 : 1;
+  const msg = mode === "redo" ? (nLeft ? "Some are still wrong: redo only those." : "Now they are all right. Well done!")
+    : t >= m * 0.85 ? "Excellent! You are ready for the test." : t >= m * 0.65 ? "Good! Redo the wrong ones and copy the words below." : "Read the stories again slowly, then redo the wrong ones.";
+  card.innerHTML = `<div class="end">
+    <div class="ex-head"><b>${mode === "redo" ? "Wrong ones again" : "Result"}</b><small>${m} points</small></div>
+    <div class="endtop">${bunny(nLeft ? "" : "hop")}<div><div class="big">${fmt(t)} / ${m}</div>
+    ${mode === "full" ? `<div aria-label="${stars} stars of 5" style="font-size:30px;letter-spacing:4px">${"⭐".repeat(stars)}${"☆".repeat(5 - stars)}</div>` : ""}</div></div>
+    <p>${msg}</p>
+    <table class="res">${RUN.map(e => `<tr><td>${esc(e.title)}</td><td>${fmt(scores[e.id] ?? 0)} / ${maxOf(e)}</td></tr>`).join("")}</table>
+    ${words.length ? `<p class="note">Copy these three times in your notebook:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : ""}
+    <div class="row">
+      ${nLeft ? `<button class="btn" id="redo" type="button">Redo only the wrong ones (${nLeft})</button>` : ""}
+      <button class="btn ${nLeft ? "ghost" : ""}" id="again" type="button">Do it all again</button>
+    </div></div>`;
+  const redo = document.getElementById("redo");
+  if (redo) redo.onclick = () => { only = {}; left.forEach(e => { only[e.id] = new Set(misses[e.id]); }); RUN = left; mode = "redo"; restart(); };
+  document.getElementById("again").onclick = () => { only = {}; RUN = EX; mode = "full"; restart(); };
+}
+
+function restart() { step = 0; scores = {}; misses = {}; wrongWords = []; items = []; startedAt = new Date().toISOString(); show(); window.scrollTo({ top: 0 }); }
+
+show();
+APP.status();
+</script>
+</body>
+</html>
