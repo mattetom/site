@@ -1,5 +1,5 @@
 // Results for the pages made before the shared engine (tests, games and quizzes imported from the
-// scuola-margherita repo). Those engines are not changed: this script watches the classes they put
+// private school repo). Those engines are not changed: this script watches the classes they put
 // on the answers and sends one result per finished run through APP.send (app.js).
 //   tests/exercises: .fill.ok|.half|.no (input + .fix), .item.ok|.no (pressed button, .why)
 //   quizzes/games:   .opt.right / .opt.wrong inside .opts, question in .q
