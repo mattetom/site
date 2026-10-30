@@ -13,3 +13,6 @@ hugo.linux
 /.hugo_build.lock
 # Local Netlify folder
 .netlify
+
+# npm deps of the Netlify functions
+node_modules/

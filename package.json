@@ -1,0 +1,8 @@
+{
+  "name": "matteotomasini-site",
+  "private": true,
+  "description": "Dependencies of the Netlify functions only. The site itself is built by Hugo.",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.7"
+  }
+}

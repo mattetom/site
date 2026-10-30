@@ -1,0 +1,281 @@
+{
+  "id": "cambridge-listening-1",
+  "title": "Movers Listening 1",
+  "topic": "At the doctor's and in town",
+  "voices": {
+    "R": "Daniel",
+    "F": "Moira",
+    "M": "Reed (English (UK))",
+    "G": "Flo (English (UK))",
+    "B": "Eddy (English (UK))"
+  },
+  "parts": [
+    {
+      "id": "p1",
+      "type": "match",
+      "title": "Part 1",
+      "how": "Listen and match. Tap a name, then tap the person. There is one example.",
+      "tip": "Listen for two things about each person: what they have got and what they are doing.",
+      "scene": "At the doctor's",
+      "names": ["Lily", "Hugo", "Julia", "Grace", "Charlie", "Zoe", "Dan"],
+      "people": [
+        { "id": "a", "who": "👧🏼", "has": ["🤧", "🧣"], "label": "girl with a scarf, she has got a cold" },
+        { "id": "b", "who": "👦🏽", "has": ["🤕", "📖"], "label": "boy with a bandage on his head, reading a comic" },
+        { "id": "c", "who": "👩🏻‍⚕️", "has": ["🌡️"], "label": "nurse with a thermometer" },
+        { "id": "d", "who": "👴🏼", "has": ["🦷", "🎩"], "label": "old man with a hat, he has got toothache" },
+        { "id": "e", "who": "👧🏾", "has": ["🤒", "🥛"], "label": "girl with a temperature, drinking" },
+        { "id": "f", "who": "👨🏻", "has": ["👂", "📱"], "label": "man with a phone, he has got earache" },
+        { "id": "g", "who": "👦🏼", "has": ["🎮"], "label": "boy playing a game" }
+      ],
+      "example": { "name": "Lily", "person": "a" },
+      "intro": [
+        ["R", "Part 1. Look at the picture. Listen and look. There is one example."]
+      ],
+      "exampleLines": [
+        ["F", "Look at all the people at the doctor's today!"],
+        ["B", "Yes, there are lots. Who's the girl with the scarf?"],
+        ["F", "Her name's Lily. She's got a bad cold."],
+        ["R", "Can you see Lily? This is an example. Now you listen and match."]
+      ],
+      "questions": [
+        { "q": 1, "answer": { "name": "Hugo", "person": "b" }, "skill": "describing people", "tags": ["health", "actions"],
+          "lines": [
+            ["B", "Who's that boy? The one with the comic."],
+            ["F", "With the bandage on his head?"],
+            ["B", "Yes, him."],
+            ["F", "That's Hugo. He fell off his bike yesterday."]
+          ] },
+        { "q": 2, "answer": { "name": "Grace", "person": "c" }, "skill": "describing people", "tags": ["health", "jobs"],
+          "lines": [
+            ["B", "And the woman with the thermometer. Is she a doctor?"],
+            ["F", "No, she isn't. She's a nurse."],
+            ["B", "What's her name?"],
+            ["F", "Grace. She's very kind."]
+          ] },
+        { "q": 3, "answer": { "name": "Charlie", "person": "d" }, "skill": "describing people", "tags": ["health", "clothes"],
+          "lines": [
+            ["B", "Look at that old man in the hat. Is he sad?"],
+            ["F", "No, he's got toothache. He's waiting for the dentist."],
+            ["B", "Do you know him?"],
+            ["F", "Yes, that's Charlie. He's Hugo's grandfather."]
+          ] },
+        { "q": 4, "answer": { "name": "Zoe", "person": "e" }, "skill": "describing people", "tags": ["health", "actions"],
+          "lines": [
+            ["B", "Who's the girl with the glass of milk?"],
+            ["F", "The girl with the temperature?"],
+            ["B", "Yes. She looks very hot."],
+            ["F", "That's Zoe. She's in my class at the swimming pool."]
+          ] },
+        { "q": 5, "answer": { "name": "Dan", "person": "f" }, "skill": "describing people", "tags": ["health", "family"],
+          "lines": [
+            ["B", "There's a man on the phone. Is he OK?"],
+            ["F", "Not really. He's got earache."],
+            ["B", "Is he Zoe's dad?"],
+            ["F", "Yes, he is. His name's Dan."]
+          ] }
+      ]
+    },
+    {
+      "id": "p2",
+      "type": "write",
+      "title": "Part 2",
+      "how": "Listen and write a word or a number. There is one example.",
+      "tip": "Names are spelled letter by letter: write every letter. Numbers can be in figures, like 34.",
+      "form": "The class trip",
+      "example": { "label": "Place", "value": "the museum" },
+      "intro": [
+        ["R", "Part 2. Listen and look. There is one example."]
+      ],
+      "exampleLines": [
+        ["F", "Hello, Tom. Are you going on a class trip?"],
+        ["B", "Yes, Mum. We're going to the museum in the city."],
+        ["R", "Can you see the answer? Now you listen and write."]
+      ],
+      "questions": [
+        { "q": 1, "label": "Day", "accept": ["thursday", "on thursday"], "show": "Thursday", "skill": "days", "tags": ["days"],
+          "lines": [
+            ["F", "When are you going? On Tuesday?"],
+            ["B", "No, Tuesday is our swimming day. We're going on Thursday."]
+          ] },
+        { "q": 2, "label": "Teacher's name: Mrs", "accept": ["grey"], "show": "Grey", "skill": "spelling", "tags": ["spelling", "names"],
+          "lines": [
+            ["F", "Which teacher is going with you?"],
+            ["B", "Mrs Grey."],
+            ["F", "How do you spell that?"],
+            ["B", "G. R. E. Y."]
+          ] },
+        { "q": 3, "label": "Number of children", "accept": ["34", "thirty-four", "thirty four"], "show": "34", "skill": "numbers", "tags": ["numbers"],
+          "lines": [
+            ["F", "How many children are going?"],
+            ["B", "Thirty-three. Oh no, wait. Thirty-four, because Sam is coming too."]
+          ] },
+        { "q": 4, "label": "Meet at the", "accept": ["bus station", "the bus station", "station"], "show": "bus station", "skill": "places", "tags": ["places", "town"],
+          "lines": [
+            ["F", "Where do you meet? At school?"],
+            ["B", "No. We meet at the bus station, next to the library."]
+          ] },
+        { "q": 5, "label": "Bring a", "accept": ["jacket", "a jacket"], "show": "jacket", "skill": "clothes", "tags": ["clothes", "weather"],
+          "lines": [
+            ["F", "Do you need an umbrella?"],
+            ["B", "No, it isn't going to rain. But the teacher says bring a jacket. It's cold in the morning."]
+          ] }
+      ]
+    },
+    {
+      "id": "p3",
+      "type": "letters",
+      "title": "Part 3",
+      "how": "Where did Peter's family go in town on Saturday? Listen and choose a letter for each person. There is one example.",
+      "tip": "Careful: people sometimes say a place and then change it. Listen to the end.",
+      "pictures": [
+        { "id": "A", "pic": "🏦", "label": "bank" },
+        { "id": "B", "pic": "🏥", "label": "hospital" },
+        { "id": "C", "pic": "📚", "label": "library" },
+        { "id": "D", "pic": "🏊", "label": "swimming pool" },
+        { "id": "E", "pic": "🛒", "label": "supermarket" },
+        { "id": "F", "pic": "🎬", "label": "cinema" },
+        { "id": "G", "pic": "☕", "label": "café" },
+        { "id": "H", "pic": "🏟️", "label": "sports centre" }
+      ],
+      "example": { "who": "Mum", "letter": "E" },
+      "intro": [
+        ["R", "Part 3. Peter is talking to his friend about his family. Where did each person go in town on Saturday? Listen and look. There is one example."]
+      ],
+      "exampleLines": [
+        ["G", "What did your family do on Saturday, Peter?"],
+        ["B", "Everybody went into town. Mum went to the supermarket. We needed lots of food for the weekend."],
+        ["R", "Can you see the letter E? Now you listen and write a letter in each box."]
+      ],
+      "questions": [
+        { "q": 1, "who": "Dad", "answer": "A", "skill": "places", "tags": ["places", "town"],
+          "lines": [
+            ["G", "And your dad? Did he go to the sports centre? He loves football."],
+            ["B", "He wanted to go, but it was closed. So he went to the bank."]
+          ] },
+        { "q": 2, "who": "his sister", "answer": "D", "skill": "places", "tags": ["places", "free time"],
+          "lines": [
+            ["G", "What about your sister? Did she go to the library?"],
+            ["B", "No, she didn't. She went to the swimming pool with her friends. She swims every Saturday."]
+          ] },
+        { "q": 3, "who": "Grandma", "answer": "C", "skill": "places", "tags": ["places", "town"],
+          "lines": [
+            ["G", "And your grandma?"],
+            ["B", "Grandma went to the library. She took back four books and got some new ones."]
+          ] },
+        { "q": 4, "who": "his uncle", "answer": "B", "skill": "places", "tags": ["places", "jobs", "health"],
+          "lines": [
+            ["G", "Is your uncle a doctor?"],
+            ["B", "Yes, he is. He went to the hospital because he works there on Saturdays."]
+          ] },
+        { "q": 5, "who": "his cousin", "answer": "F", "skill": "places", "tags": ["places", "free time"],
+          "lines": [
+            ["G", "And your cousin Daisy?"],
+            ["B", "She went to the cinema to see a film about pirates. After that, she wanted to go to the café, but it was too late."]
+          ] }
+      ]
+    },
+    {
+      "id": "p4",
+      "type": "tick",
+      "title": "Part 4",
+      "how": "Listen and tick the right picture. There is one example.",
+      "tip": "You often hear all three things. The right answer is the one they really mean: listen for 'no' and 'but'.",
+      "intro": [
+        ["R", "Part 4. Look at the pictures. Listen and look. There is one example."]
+      ],
+      "example": { "question": "What did Jack have for lunch?", "options": ["🍕", "🥪", "🍝"], "answer": 1 },
+      "exampleLines": [
+        ["R", "What did Jack have for lunch?"],
+        ["F", "Did you have pizza for lunch today, Jack?"],
+        ["B", "No, Mum. I had a sandwich. Pizza is on Fridays."],
+        ["R", "Can you see the tick? Now you listen and tick the box."]
+      ],
+      "questions": [
+        { "q": 1, "question": "What's the matter with Sam?", "options": ["🦷", "🤢", "👂"], "labels": ["toothache", "stomach-ache", "earache"], "answer": 1, "skill": "health", "tags": ["health"],
+          "lines": [
+            ["R", "One. What's the matter with Sam?"],
+            ["F", "Sam, have you got toothache again?"],
+            ["B", "No, my teeth are fine. I ate too much chocolate. I've got a stomach-ache."]
+          ] },
+        { "q": 2, "question": "How did Jill go to the hospital?", "options": ["🚌", "🚕", "🚲"], "labels": ["bus", "taxi", "bike"], "answer": 1, "skill": "transport", "tags": ["transport", "places"],
+          "lines": [
+            ["R", "Two. How did Jill go to the hospital?"],
+            ["M", "Did you take the bus to the hospital, Jill?"],
+            ["G", "No, the bus was late, and my leg hurt too much to ride my bike. Mum called a taxi."]
+          ] },
+        { "q": 3, "question": "What did the doctor give Vicky?", "options": ["💊", "🧃", "🩹"], "labels": ["medicine", "a drink", "a plaster"], "answer": 2, "skill": "health", "tags": ["health"],
+          "lines": [
+            ["R", "Three. What did the doctor give Vicky?"],
+            ["F", "Did the doctor give you some medicine, Vicky?"],
+            ["G", "No, I didn't need any. She gave me a drink of water and then she put a plaster on my knee."]
+          ] },
+        { "q": 4, "question": "What's the weather like now?", "options": ["☀️", "🌧️", "🌬️"], "labels": ["sunny", "rainy", "windy"], "answer": 0, "skill": "weather", "tags": ["weather"],
+          "lines": [
+            ["R", "Four. What's the weather like now?"],
+            ["B", "Is it still windy outside, Dad?"],
+            ["M", "No, the wind stopped and it didn't rain. Look, now it's sunny. Let's go to the park."]
+          ] },
+        { "q": 5, "question": "Where is Paul's dad now?", "options": ["🏪", "🅿️", "🏛️"], "labels": ["shop", "car park", "museum"], "answer": 1, "skill": "places", "tags": ["places", "town"],
+          "lines": [
+            ["R", "Five. Where is Paul's dad now?"],
+            ["G", "Paul, is your dad in the shop?"],
+            ["B", "He was in the shop. Now he's in the car park. He's waiting for us in the car."]
+          ] }
+      ]
+    },
+    {
+      "id": "p5",
+      "type": "colour",
+      "title": "Part 5",
+      "how": "Listen and colour and write. Tap a colour, then tap the thing in the picture. There is one example.",
+      "tip": "Listen for the place words: on, in, under, next to, at the top of.",
+      "colours": ["red", "blue", "green", "yellow", "orange", "pink", "purple", "brown", "black", "grey"],
+      "example": { "obj": "door", "colour": "red" },
+      "intro": [
+        ["R", "Part 5. Look at the picture. Listen and look. There is one example."]
+      ],
+      "exampleLines": [
+        ["G", "Can I colour this picture of the street?"],
+        ["M", "Yes, of course. First, colour the door of the house."],
+        ["G", "What colour?"],
+        ["M", "Red, please."],
+        ["R", "Can you see the red door? This is an example. Now you listen and colour and write."]
+      ],
+      "questions": [
+        { "q": 1, "obj": "birdRoof", "colour": "yellow", "skill": "prepositions", "tags": ["prepositions", "colours", "animals"],
+          "lines": [
+            ["M", "Can you see the two birds?"],
+            ["G", "Yes. One is in the tree and one is on the roof."],
+            ["M", "Colour the bird on the roof. Make it yellow."]
+          ] },
+        { "q": 2, "obj": "dogTree", "colour": "brown", "skill": "prepositions", "tags": ["prepositions", "colours", "animals"],
+          "lines": [
+            ["G", "There are two dogs too."],
+            ["M", "That's right. Colour the dog under the tree."],
+            ["G", "Brown?"],
+            ["M", "Yes, brown is good."]
+          ] },
+        { "q": 3, "obj": "sign", "write": ["bank"], "skill": "writing", "tags": ["writing", "places", "town"],
+          "lines": [
+            ["M", "Now I'd like you to write something."],
+            ["G", "OK. Where?"],
+            ["M", "On the sign above the shop. Write 'bank'."],
+            ["G", "So it's a bank, not a shop!"]
+          ] },
+        { "q": 4, "obj": "windowTop", "colour": "purple", "skill": "prepositions", "tags": ["prepositions", "colours", "home"],
+          "lines": [
+            ["G", "Can I colour a window?"],
+            ["M", "Yes. Colour the small window at the top of the house."],
+            ["G", "Purple?"],
+            ["M", "Purple. Great idea."]
+          ] },
+        { "q": 5, "obj": "bus", "colour": "green", "skill": "colours", "tags": ["colours", "transport"],
+          "lines": [
+            ["G", "And the bus? Can I make it orange?"],
+            ["M", "Buses here aren't orange. Colour it green."],
+            ["G", "OK, green. I love this picture!"]
+          ] }
+      ]
+    }
+  ]
+}

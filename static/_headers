@@ -1,3 +1,7 @@
 /.well-known/appspecific/com.tesla.3p.public-key.pem
   Content-Type: application/x-pem-file
   X-Content-Type-Options: none
+
+# Practice pages for the family (not linked anywhere): keep them out of search engines
+/allenamento-tlyp0q/*
+  X-Robots-Tag: noindex, nofollow, noarchive
