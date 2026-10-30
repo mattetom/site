@@ -13,16 +13,21 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <link rel="stylesheet" href="app.css">
 <style>
-.list { display: flex; flex-direction: column; gap: 12px; }
-.ex { display: flex; gap: 14px; align-items: center; text-decoration: none; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 16px; }
+.list { display: flex; flex-direction: column; gap: 10px; }
+.ex { display: flex; gap: 14px; align-items: center; text-decoration: none; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 12px 14px; }
 .ex:active { transform: scale(.99); }
-.ex .ico { font-size: 44px; flex: none; width: 60px; text-align: center; }
+.ex .ico { font-size: 38px; flex: none; width: 52px; text-align: center; }
 .ex div { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.ex b { font-family: var(--display); font-size: 21px; color: var(--blue); }
-.ex .when { font-family: var(--mono); font-size: 13px; color: var(--red); font-weight: 700; }
-.ex .best { font-size: 15px; color: var(--ink-soft); }
+.ex b { font-family: var(--display); font-size: 19px; color: var(--blue); }
+.ex .best { font-size: 14px; color: var(--ink-soft); }
 .ex .best.done { color: var(--ok); font-weight: 700; }
-.group { margin: 6px 0 0; font-family: var(--display); font-size: 18px; color: var(--ink-soft); }
+.kind { align-self: flex-start; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--blue-bg); color: var(--blue); }
+.kind.review, .kind.summary { background: var(--sun-bg); color: var(--ink); }
+.kind.game { background: var(--ok-bg); color: var(--ok); }
+.kind.test { background: var(--red-bg); color: var(--red); }
+h2.group { margin: 14px 0 2px; font-family: var(--display); font-weight: 800; font-size: 22px; }
+h2.group.next { color: var(--red); }
+.testhead { margin: 8px 0 0; font-weight: 700; font-size: 16px; }
 </style>
 </head>
 <body>
@@ -35,27 +40,53 @@
       <p class="sub">Choose an exercise. Your results are saved, so we can see what to practise more.</p>
     </div>
   </header>
-  <div class="list" id="list"></div>
+  <div class="list" id="list"><p class="note">Loading...</p></div>
   <p class="sync" id="sync"></p>
 </div>
 <script src="app.js"></script>
 <script>
-// newest first; "when" = the school test it prepares for
-const EXERCISES = [
-  { group: "This week", id: "inglese-to-be-have-got-2", href: "inglese-to-be-have-got-2/", ico: "🪄", title: "To be and have got 2", when: "English test: Monday 2 November", max: 30 },
-  { group: "This week", id: "cambridge-listening-1", href: "cambridge-listening-1/", ico: "🎧", title: "Movers Listening 1", when: "Cambridge Listening test: Tuesday 3 November", max: 25 }
-];
+// The list comes from catalog.json, written by strumenti/pubblica_allenamento.py (repo scuola-margherita).
+const KIND = { exercise: "Exercises", test: "Practice test", game: "Game", review: "Review sheet", summary: "Summary" };
+const SUBJECTS = ["English", "Cambridge", "Science", "Geography", "History", "Maths", "Italiano"];
+const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const { esc, fmt } = APP;
+
 document.getElementById("hb").innerHTML = APP.bunny("");
-if (APP.name()) document.getElementById("title").innerHTML = `Hi <span>${APP.esc(APP.name())}!</span>`;
-const best = APP.bests();
-let lastGroup = null;
-document.getElementById("list").innerHTML = EXERCISES.map(e => {
+if (APP.name()) document.getElementById("title").innerHTML = `Hi <span>${esc(APP.name())}!</span>`;
+
+function dayLabel(iso) { const d = new Date(iso + "T12:00:00"); return `${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}`; }
+function localToday() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; }
+function card(e, best) {
   const b = best[e.id];
-  const g = e.group !== lastGroup ? `<p class="group">${APP.esc(e.group)}</p>` : "";
-  lastGroup = e.group;
-  const res = b && b.score != null ? `<span class="best done">Best: ${APP.fmt(b.score)} / ${b.max} &middot; done ${b.times} time${b.times > 1 ? "s" : ""}</span>` : `<span class="best">Not done yet</span>`;
-  return `${g}<a class="ex" href="${e.href}${APP.carry()}"><span class="ico">${e.ico}</span><div><b>${APP.esc(e.title)}</b><span class="when">${APP.esc(e.when)}</span>${res}</div></a>`;
-}).join("");
+  const res = e.kind === "summary" || e.kind === "review" ? ""
+    : b && b.score != null ? `<span class="best done">Best: ${fmt(b.score)} / ${b.max} &middot; done ${b.times} time${b.times > 1 ? "s" : ""}</span>` : `<span class="best">Not done yet</span>`;
+  return `<a class="ex" href="${e.id}/${APP.carry()}"><span class="ico">${e.ico || "📘"}</span><div><span class="kind ${e.kind}">${KIND[e.kind] || esc(e.kind)}</span><b>${esc(e.title)}</b>${res}</div></a>`;
+}
+
+fetch("catalog.json").then(r => r.json()).then(items => {
+  const best = APP.bests();
+  const today = localToday();
+  // material for a school test stays on top until the day of the test
+  const next = items.filter(e => e.test && e.test >= today).sort((a, b) => a.test.localeCompare(b.test));
+  let html = "";
+  if (next.length) {
+    html += `<h2 class="group next">Next tests</h2>`;
+    let last = null;
+    next.forEach(e => {
+      const k = e.test + (e.testLabel || "");
+      if (k !== last) html += `<p class="testhead">${esc(e.testLabel || "Test")}: ${dayLabel(e.test)}</p>`;
+      last = k;
+      html += card(e, best);
+    });
+  }
+  const rest = items.filter(e => !next.includes(e));
+  const others = [...new Set(rest.map(e => e.subject))].filter(s => !SUBJECTS.includes(s));
+  [...SUBJECTS, ...others].filter(s => rest.some(e => e.subject === s)).forEach(s => {
+    html += `<h2 class="group">${esc(s)}</h2>` + rest.filter(e => e.subject === s).map(e => card(e, best)).join("");
+  });
+  document.getElementById("list").innerHTML = html;
+}).catch(() => { document.getElementById("list").innerHTML = `<p class="note">Oops, the list did not load. Check the internet and reload.</p>`; });
 APP.status();
 </script>
 </body>

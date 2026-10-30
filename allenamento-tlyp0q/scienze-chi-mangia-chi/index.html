@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en" data-exercise="scienze-chi-mangia-chi" data-subject="Science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+</head>
+<body>
+<a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
+<title>Chi Mangia Chi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: a meadow page; one question card at a time; progress is a row of "links" (chain rings) that turn green or red */
+:root {
+  --meadow: #eef5e4;
+  --meadow-deep: #dcebc8;
+  --card: #fffdf7;
+  --ink: #23331c;
+  --ink-soft: #5b6b50;
+  --line: #d3dfc3;
+  --leaf: #3f8f3a;
+  --leaf-bg: #e2f2dc;
+  --sun: #e9a400;
+  --sun-bg: #fff2cc;
+  --berry: #b8324f;
+  --berry-bg: #fbe4ea;
+  --soil: #8a5a3b;
+  --soil-bg: #f3e6dc;
+  --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --meadow: #121b10; --meadow-deep: #1b2817; --card: #1d2a19; --ink: #eef4e6; --ink-soft: #aab99c;
+    --line: #2f4228; --leaf: #7fd27a; --leaf-bg: #1f3a1c; --sun: #ffc640; --sun-bg: #3a3014;
+    --berry: #ff8fa6; --berry-bg: #3c1b24; --soil: #d9a27c; --soil-bg: #3a2a1f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --meadow: #121b10; --meadow-deep: #1b2817; --card: #1d2a19; --ink: #eef4e6; --ink-soft: #aab99c;
+  --line: #2f4228; --leaf: #7fd27a; --leaf-bg: #1f3a1c; --sun: #ffc640; --sun-bg: #3a3014;
+  --berry: #ff8fa6; --berry-bg: #3c1b24; --soil: #d9a27c; --soil-bg: #3a2a1f; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: linear-gradient(180deg, var(--meadow) 0%, var(--meadow) 70%, var(--meadow-deep) 100%);
+  background-color: var(--meadow);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 19px;
+  line-height: 1.5;
+  min-height: 100vh;
+  padding-inline: 16px;
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 4px; }
+.eyebrow { font-family: var(--display); font-weight: 500; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--soil); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 9vw, 56px); line-height: 1; margin: 0; text-wrap: balance; }
+h1 .a { color: var(--leaf); }
+h1 .b { color: var(--sun); }
+.sub { color: var(--ink-soft); margin: 4px 0 0; font-size: 16px; max-width: 58ch; }
+
+.links { display: flex; flex-wrap: wrap; gap: 3px; }
+.ring { width: 16px; height: 11px; border-radius: 6px; border: 3px solid var(--line); }
+.ring.ok { border-color: var(--leaf); }
+.ring.no { border-color: var(--berry); }
+.ring.now { background: var(--sun); border-color: var(--sun); }
+
+.card { background: var(--card); border: 2px solid var(--line); border-radius: 22px; padding: 22px 20px; display: flex; flex-direction: column; gap: 16px; }
+.round { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.round b { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--leaf); }
+.round small { color: var(--ink-soft); font-size: 14px; font-variant-numeric: tabular-nums; }
+.how { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.q { margin: 0; font-size: 23px; font-weight: 700; line-height: 1.35; text-wrap: balance; }
+.q small { display: block; font-weight: 400; font-size: 16px; color: var(--ink-soft); }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.opt {
+  font: inherit; font-size: 18px; text-align: left; cursor: pointer; padding: 12px 14px; border-radius: 14px;
+  border: 2px solid var(--line); background: var(--card); color: var(--ink); display: flex; gap: 10px; align-items: center;
+}
+.opt .k { font-family: var(--display); font-weight: 700; color: var(--leaf); min-width: 1.1em; }
+.opt:hover:not(:disabled) { border-color: var(--leaf); background: var(--leaf-bg); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--leaf); background: var(--leaf-bg); }
+.opt.wrong { border-color: var(--berry); background: var(--berry-bg); }
+button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+
+/* chain builder */
+.chain { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chain .slot, .chain .sunbox {
+  min-width: 0; flex: 1 1 110px; min-height: 64px; border-radius: 14px; border: 2px dashed var(--line);
+  display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 6px 8px; text-align: center;
+}
+.chain .sunbox { border-style: solid; border-color: var(--sun); background: var(--sun-bg); }
+.chain .slot.filled { border-style: solid; border-color: var(--leaf); background: var(--leaf-bg); }
+.chain .slot.bad { border-color: var(--berry); background: var(--berry-bg); }
+.chain .arrow { font-family: var(--display); font-weight: 700; color: var(--soil); font-size: 22px; }
+.chain b { font-size: 17px; }
+.chain span.it { font-size: 13px; color: var(--ink-soft); }
+.chain .role { font-size: 12px; color: var(--soil); text-transform: uppercase; letter-spacing: .05em; }
+.deck { display: flex; flex-wrap: wrap; gap: 10px; }
+.deck .opt { flex: 1 1 140px; flex-direction: column; align-items: flex-start; gap: 0; }
+.deck .opt span.it { font-size: 14px; color: var(--ink-soft); }
+.deck .opt.used { visibility: hidden; }
+
+.btn { font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; padding: 11px 18px; border-radius: 14px; border: 2px solid var(--leaf); background: var(--leaf); color: var(--card); }
+.btn.ghost { background: transparent; color: var(--leaf); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.next { display: flex; justify-content: flex-end; }
+
+.fb { border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; font-size: 16px; }
+.fb.ok { background: var(--leaf-bg); border: 2px solid var(--leaf); }
+.fb.no { background: var(--berry-bg); border: 2px solid var(--berry); }
+.fb strong { font-size: 17px; }
+.fb .src { font-size: 14px; color: var(--ink-soft); }
+
+.end { display: flex; flex-direction: column; gap: 12px; }
+.big { font-family: var(--display); font-weight: 700; font-size: 62px; line-height: 1; color: var(--leaf); font-variant-numeric: tabular-nums; }
+.miss { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
+.miss b { display: block; }
+.tip { margin: 0; color: var(--ink-soft); font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: grow .25s ease-out; }
+  @keyframes grow { from { transform: scale(.985); } to { transform: none; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Science · Grade 4 · Ecosystems</div>
+    <h1>Chi <span class="a">mangia</span> <span class="b">chi</span></h1>
+    <p class="sub">Ecology, ecosystems e food chain. Domande in inglese come a scuola, spiegazioni in italiano.</p>
+  </header>
+  <div class="links" id="links" aria-label="Avanzamento"></div>
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+
+<script>
+const ROUNDS = {
+  live:  { name: "Round 1: Living or non-living?", how: "Living = vivente (nasce, cresce, si nutre, muore). Non-living = non vivente." },
+  role:  { name: "Round 2: What is its role?", how: "Producer, primary consumer, secondary consumer o decomposer?" },
+  chain: { name: "Round 3: Build the food chain", how: "Tocca le carte nell'ordine giusto. Le frecce puntano verso chi mangia." },
+  words: { name: "Round 4: Words", how: "Scegli la risposta giusta." },
+  tf:    { name: "Round 5: True or False", how: "True = vero, False = falso." }
+};
+const LIVE = ["Living", "Non-living"];
+const ROLES = ["Producer", "Primary consumer", "Secondary consumer", "Decomposer"];
+const TF = ["True", "False"];
+
+const QS = [
+  { r: "live", q: "a mushroom", it: "un fungo", a: "Living", why: "I funghi (fungi) sono esseri viventi, anche se non sono ne piante ne animali.", src: "Quaderno, Ecology" },
+  { r: "live", q: "a rock", it: "una roccia", a: "Non-living", why: "La roccia non nasce, non cresce e non si nutre: e un elemento non vivente.", src: "Quaderno, Ecology" },
+  { r: "live", q: "bacteria", it: "i batteri", a: "Living", why: "I batteri sono microrganismi: viventi piccolissimi, si vedono solo al microscopio.", src: "Quaderno, Ecology" },
+  { r: "live", q: "sunlight", it: "la luce del Sole", a: "Non-living", why: "La luce e un elemento non vivente, ma senza di lei le piante non possono fare la fotosintesi.", src: "Quaderno, Ecology" },
+  { r: "live", q: "snow", it: "la neve", a: "Non-living", why: "La neve e acqua ghiacciata: non vivente, anche se si scioglie e cambia.", src: "Scheda Explore an ecosystem" },
+  { r: "live", q: "an earthworm", it: "un lombrico", a: "Living", why: "Il lombrico e un animale, e aiuta i decompositori.", src: "Scheda The Food Chain" },
+  { r: "live", q: "the soil", it: "il suolo", a: "Non-living", why: "Il suolo (soil) e non vivente, anche se dentro vivono tanti esseri viventi.", src: "Quaderno, Ecology" },
+
+  { r: "role", q: "grass", it: "l'erba", a: "Producer", why: "L'erba e una pianta: si fa il cibo da sola con la fotosintesi.", src: "Scheda The Food Chain" },
+  { r: "role", q: "a rabbit that eats grass", it: "un coniglio che mangia l'erba", a: "Primary consumer", why: "Mangia i produttori: e un consumatore primario, erbivoro.", src: "Scheda The Food Chain" },
+  { r: "role", q: "a fox that eats rabbits", it: "una volpe che mangia conigli", a: "Secondary consumer", why: "Mangia un consumatore primario: e un consumatore secondario.", src: "Scheda The Food Chain" },
+  { r: "role", q: "fungi and bacteria that break down dead leaves", it: "funghi e batteri che decompongono foglie morte", a: "Decomposer", why: "I decompositori riportano le sostanze nutritive nel suolo.", src: "Scheda The Food Chain" },
+  { r: "role", q: "an oak tree", it: "una quercia", a: "Producer", why: "Anche gli alberi sono piante: fanno la fotosintesi, quindi sono produttori.", src: "Scheda The Food Chain" },
+  { r: "role", q: "a caterpillar that eats leaves", it: "un bruco che mangia foglie", a: "Primary consumer", why: "Le foglie sono di una pianta: il bruco e un consumatore primario.", src: "Scheda The Food Chain" },
+  { r: "role", q: "an eagle that eats marmots", it: "un'aquila che mangia marmotte", a: "Secondary consumer", why: "La marmotta mangia l'erba (primario), l'aquila mangia la marmotta: secondario.", src: "Scheda Explore an ecosystem" },
+
+  { r: "chain", place: "Meadow (prato)", cards: [["grass", "erba"], ["grasshopper", "cavalletta"], ["frog", "rana"]], why: "L'erba fa il cibo con il Sole, la cavalletta mangia l'erba, la rana mangia la cavalletta.", src: "Scheda The Food Chain" },
+  { r: "chain", place: "Forest (bosco)", cards: [["leaves", "foglie"], ["caterpillar", "bruco"], ["robin", "pettirosso"]], why: "Le foglie sono il produttore, il bruco le mangia, il pettirosso mangia il bruco.", src: "Scheda The Food Chain" },
+  { r: "chain", place: "Sea (mare)", cards: [["tiny algae", "alghe piccolissime"], ["krill", "krill"], ["whale", "balena"]], why: "Le alghe fanno la fotosintesi, il krill (piccoli gamberetti) le mangia, la balena mangia il krill.", src: "Scheda The Food Chain" },
+  { r: "chain", place: "Mountain (montagna)", cards: [["grass", "erba"], ["marmot", "marmotta"], ["eagle", "aquila"]], why: "La marmotta mangia l'erba e i fiori del prato; il suo vero cacciatore e l'aquila reale.", src: "Scheda Explore an ecosystem" },
+
+  { r: "words", q: "Ecology is the science that studies...", o: ["only animals", "living organisms, their environment and the relationships between them", "rocks and volcanoes"], a: "living organisms, their environment and the relationships between them", why: "E la definizione del quaderno: viventi, ambiente e relazioni.", src: "Quaderno, Ecology" },
+  { r: "words", q: "In Greek, oikos means...", o: ["home or environment", "study", "a group of connected parts"], a: "home or environment", why: "Oikos = casa, ambiente. Logos = studio. Systema = gruppo di parti collegate.", src: "Quaderno, Ecology" },
+  { r: "words", q: "An ecologist is...", o: ["a scientist who studies ecology", "an animal that eats plants", "a type of ecosystem"], a: "a scientist who studies ecology", why: "L'ecologo e lo scienziato che studia l'ecologia.", src: "Quaderno, Ecology" },
+  { r: "words", q: "An ecosystem is made up of...", o: ["only plants and animals", "living things, non-living things and their relationships", "only water and soil"], a: "living things, non-living things and their relationships", why: "Le tre parti: viventi, non viventi e relazioni.", src: "Quaderno, Ecology" },
+  { r: "words", q: "Plants make their own food through...", o: ["photosynthesis", "decomposition", "hunting"], a: "photosynthesis", why: "Fotosintesi: le piante usano l'energia della luce del Sole.", src: "Scheda The Food Chain" },
+  { r: "words", q: "An omnivore eats...", o: ["only plants", "only meat", "plants and meat"], a: "plants and meat", why: "Onnivoro = mangia di tutto. Erbivoro = solo vegetali. Carnivoro = carne.", src: "Scheda The Food Chain" },
+  { r: "words", q: "Which food chain is written correctly?", o: ["grass → rabbit → fox", "fox → rabbit → grass", "rabbit → grass → fox"], a: "grass → rabbit → fox", why: "Le frecce puntano verso chi mangia, cioe verso chi riceve l'energia.", src: "Scheda The Food Chain" },
+
+  { r: "tf", q: "The arrows in a food chain point towards the organism that receives the energy.", a: "True", why: "Sono le parole della scheda: la freccia va verso chi mangia.", src: "Scheda Explore an ecosystem" },
+  { r: "tf", q: "Primary consumers eat secondary consumers.", a: "False", why: "Al contrario: i secondari mangiano i primari. I primari mangiano le piante.", src: "Scheda The Food Chain" },
+  { r: "tf", q: "Decomposers return nutrients to the soil.", a: "True", why: "Funghi e batteri decompongono i resti e restituiscono le sostanze nutritive al suolo.", src: "Scheda The Food Chain" },
+  { r: "tf", q: "Earthworms and some insects help the decomposers.", a: "True", why: "Lo dice la scheda: lombrichi e alcuni insetti aiutano la decomposizione.", src: "Scheda The Food Chain" },
+  { r: "tf", q: "Primary consumers are generally carnivores.", a: "False", why: "I consumatori primari sono di solito erbivori: mangiano piante.", src: "Scheda The Food Chain" },
+  { r: "tf", q: "A forest, a pond and a meadow are examples of ecosystems.", a: "True", why: "Sono gli esempi scritti sul quaderno.", src: "Quaderno, Ecosystem" }
+];
+
+let order = QS.map((_, i) => i);
+let pos = 0;
+let results = {};
+let picked = [];
+let shuffled = [];
+const card = document.getElementById("card");
+const linksEl = document.getElementById("links");
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function shuffle(a) { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } if (b.every((x, i) => x === a[i])) b.reverse(); return b; }
+const ROLE_LABEL = ["Producer", "Primary consumer", "Secondary consumer"];
+
+function drawLinks() {
+  linksEl.innerHTML = order.map((qi, i) => {
+    const st = results[qi] === true ? "ok" : results[qi] === false ? "no" : "";
+    return `<span class="ring ${st} ${i === pos ? "now" : ""}"></span>`;
+  }).join("");
+}
+
+function show() {
+  drawLinks();
+  if (pos >= order.length) return finish();
+  const qi = order[pos], Q = QS[qi], R = ROUNDS[Q.r];
+  let qtext = "", body = "";
+  if (Q.r === "chain") {
+    picked = [];
+    shuffled = shuffle(Q.cards.map((_, i) => i));
+    qtext = `${esc(Q.place)}: build the food chain.`;
+    body = `<div class="chain" id="chain"></div><div class="deck" id="deck"></div>
+      <div class="row"><button class="btn" id="check" disabled>Controlla</button><button class="btn ghost" id="undo">Togli l'ultima</button></div>`;
+  } else {
+    const opts = Q.r === "live" ? LIVE : Q.r === "role" ? ROLES : Q.r === "tf" ? TF : Q.o;
+    qtext = Q.it ? `${esc(Q.q)}<small>${esc(Q.it)}</small>` : esc(Q.q);
+    const two = opts.length <= 4 && opts.every(o => o.length < 22);
+    body = `<div class="opts ${two ? "two" : ""}">${opts.map((o, i) => `<button class="opt" data-v="${esc(o)}"><span class="k">${"ABCD"[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
+  }
+  card.innerHTML = `
+    <div class="round"><b>${R.name}</b><small>${pos + 1} / ${order.length}</small></div>
+    <p class="how">${R.how}</p>
+    <p class="q">${qtext}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="next"><button class="btn" id="nx" hidden>Avanti</button></div>`;
+  if (Q.r === "chain") drawChain(Q);
+  card.querySelectorAll(".opts .opt").forEach(b => b.addEventListener("click", () => answer(b.dataset.v === answerOf(Q), b)));
+  document.getElementById("nx").addEventListener("click", () => { pos++; show(); window.scrollTo({ top: 0 }); });
+}
+
+function answerOf(Q) { return Q.a; }
+
+function drawChain(Q, checked) {
+  const chain = document.getElementById("chain"), deck = document.getElementById("deck");
+  let html = `<div class="sunbox"><b>sunlight</b><span class="it">luce del Sole</span></div>`;
+  for (let i = 0; i < Q.cards.length; i++) {
+    const c = picked[i] !== undefined ? Q.cards[picked[i]] : null;
+    const bad = checked && picked[i] !== i;
+    html += `<span class="arrow" aria-hidden="true">→</span><div class="slot ${c ? "filled" : ""} ${bad ? "bad" : ""}">${c ? `<b>${esc(c[0])}</b><span class="it">${esc(c[1])}</span>` : ""}${checked ? `<span class="role">${ROLE_LABEL[i]}</span>` : ""}</div>`;
+  }
+  chain.innerHTML = html;
+  if (checked) { deck.innerHTML = ""; return; }
+  deck.innerHTML = shuffled.map(ci => `<button class="opt ${picked.includes(ci) ? "used" : ""}" data-c="${ci}"><b>${esc(Q.cards[ci][0])}</b><span class="it">${esc(Q.cards[ci][1])}</span></button>`).join("");
+  deck.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => { picked.push(+b.dataset.c); drawChain(Q); }));
+  const check = document.getElementById("check"), undo = document.getElementById("undo");
+  check.disabled = picked.length < Q.cards.length;
+  check.onclick = () => {
+    const ok = picked.every((ci, i) => ci === i);
+    check.hidden = true; undo.hidden = true;
+    drawChain(Q, true);
+    answer(ok, null);
+  };
+  undo.onclick = () => { picked.pop(); drawChain(Q); };
+}
+
+function answer(ok, btn) {
+  const qi = order[pos], Q = QS[qi];
+  results[qi] = ok;
+  card.querySelectorAll(".opts .opt").forEach(b => { b.disabled = true; if (b.dataset.v === Q.a) b.classList.add("right"); });
+  if (btn && !ok) btn.classList.add("wrong");
+  const right = Q.r === "chain" ? "sunlight → " + Q.cards.map(c => c[0]).join(" → ") : Q.a;
+  document.getElementById("fb").innerHTML = ok
+    ? `<div class="fb ok"><strong>Giusto!</strong><span>${esc(Q.why)}</span><span class="src">${esc(Q.src)}</span></div>`
+    : `<div class="fb no"><strong>La risposta giusta e: ${esc(right)}</strong><span>${esc(Q.why)}</span><span class="src">Rileggi: ${esc(Q.src)}</span></div>`;
+  const nx = document.getElementById("nx");
+  nx.hidden = false;
+  nx.textContent = pos === order.length - 1 ? "Vedi il risultato" : "Avanti";
+  nx.focus();
+  drawLinks();
+}
+
+function finish() {
+  const good = order.filter(qi => results[qi] === true).length;
+  const missed = order.filter(qi => results[qi] === false);
+  let best = null;
+  try {
+    const prev = Number(localStorage.getItem("cmc-best") || 0);
+    if (order.length === QS.length && good > prev) localStorage.setItem("cmc-best", String(good));
+    best = Math.max(prev, order.length === QS.length ? good : 0) || null;
+  } catch (e) { best = null; }
+  const msg = good === order.length ? "Catena perfetta! Hai capito tutto."
+    : good >= order.length * 0.8 ? "Benissimo! Ripassa solo queste."
+    : "Buon inizio! Rileggi le schede e riprova.";
+  card.innerHTML = `
+    <div class="round"><b>Risultato</b><small>${order.length} domande</small></div>
+    <div class="end">
+      <div class="big">${good} / ${order.length}</div>
+      <p>${msg}</p>
+      ${best ? `<p class="tip">Il tuo record sul giro completo: ${best} su ${QS.length}</p>` : ""}
+      ${missed.length ? `<ul class="miss">${missed.map(qi => { const Q = QS[qi]; const qt = Q.r === "chain" ? Q.place : Q.q; const r = Q.r === "chain" ? "sunlight → " + Q.cards.map(c => c[0]).join(" → ") : Q.a; return `<li><b>${esc(qt)}</b>Risposta: ${esc(r)}</li>`; }).join("")}</ul>` : ""}
+      <div class="row">
+        ${missed.length ? `<button class="btn" id="again-miss">Rifai le sbagliate</button>` : ""}
+        <button class="btn ghost" id="again-all">Ricomincia da capo</button>
+      </div>
+      <p class="tip">Ricorda: la freccia va verso chi mangia. Erba → coniglio → volpe.</p>
+    </div>`;
+  const am = document.getElementById("again-miss");
+  if (am) am.addEventListener("click", () => { order = missed.slice(); missed.forEach(qi => delete results[qi]); pos = 0; show(); });
+  document.getElementById("again-all").addEventListener("click", () => { order = QS.map((_, i) => i); results = {}; pos = 0; show(); });
+}
+
+function start(data) {
+  if (data && Array.isArray(data.order)) { order = data.order; pos = data.pos || 0; results = data.results || {}; }
+  show();
+}
+window.claude?.hot?.snapshot?.(() => ({ order, pos, results }));
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+
+<script src="../app.js"></script>
+<script src="../track.js"></script>
+<script>document.getElementById("allen-back").href = "../" + APP.carry();</script>
+</body>
+</html>

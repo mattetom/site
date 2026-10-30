@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en" data-exercise="inglese-ripasso-to-be-have-got" data-subject="English">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+<meta charset="utf-8">
+<title>English review: to be and have got</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@500;600;700&display=swap">
+<style>
+@page { size: A4; margin: 11mm 12mm; }
+:root {
+  --ink: #22304d; --soft: #5d6886; --line: #b9c3da;
+  --red: #d2453a; --blue: #2f6fd0; --green: #2f9a5a; --violet: #7a4fc4; --sun: #f1b52e;
+  --blue-bg: #e6efff; --green-bg: #e3f5ea; --red-bg: #fde8e5; --violet-bg: #efe8fb; --sun-bg: #fff4d4; --pink: #f6b9c5;
+}
+* { box-sizing: border-box; }
+body { font-family: "Atkinson Hyperlegible", Verdana, sans-serif; color: var(--ink); font-size: 12pt; line-height: 1.35; margin: 0; }
+h1, h2, h3, .fred { font-family: "Fredoka", "Trebuchet MS", sans-serif; }
+h1 { font-size: 24pt; font-weight: 700; margin: 0; line-height: 1.05; }
+h1 .r { color: var(--red); }
+h2 { font-size: 14pt; font-weight: 600; margin: 0 0 4px; }
+h3 { font-size: 13pt; font-weight: 600; margin: 0 0 3px; }
+p { margin: 0; }
+.page-break { break-before: page; }
+
+/* header with the rabbit */
+.top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.top .t { flex: 1; }
+.top .sub { color: var(--soft); font-size: 12pt; margin-top: 2px; }
+.rabbit { width: 26mm; height: 26mm; flex: none; }
+.rabbit.s { width: 17mm; height: 17mm; }
+
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 8px; }
+.row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px; }
+.card { border-radius: 14px; padding: 7px 11px; break-inside: avoid; }
+.card.blue { background: var(--blue-bg); border: 2px solid var(--blue); }
+.card.green { background: var(--green-bg); border: 2px solid var(--green); }
+.card.red { background: var(--red-bg); border: 2px solid var(--red); }
+.card.violet { background: var(--violet-bg); border: 2px solid var(--violet); }
+.card.sun { background: var(--sun-bg); border: 2px solid var(--sun); }
+.big { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 17pt; line-height: 1.1; }
+.it { color: var(--soft); font-size: 11pt; }
+.big .it { font-family: "Atkinson Hyperlegible", Verdana, sans-serif; font-weight: 400; font-size: 13pt; }
+.ex-s { font-style: italic; margin-top: 3px; }
+.v { color: var(--red); font-weight: 700; }
+.badge { display: inline-block; font-family: "Fredoka", sans-serif; font-weight: 700; color: #fff; border-radius: 999px; padding: 0 9px; font-size: 11pt; margin-right: 4px; }
+.badge.bg { background: var(--green); } .badge.br { background: var(--red); } .badge.bb { background: var(--blue); }
+.list { font-size: 12pt; line-height: 1.5; margin-top: 2px; }
+.list div { white-space: nowrap; }
+
+.magic { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13pt; margin-top: 3px; }
+.magic span { white-space: nowrap; }
+.gone { color: var(--soft); text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+.apo { color: var(--red); font-weight: 700; font-size: 15pt; }
+
+/* the rabbit's tips */
+.tips { display: flex; gap: 8px; align-items: flex-start; break-inside: avoid; }
+.bubble { flex: 1; position: relative; background: var(--sun-bg); border: 2px solid var(--sun); border-radius: 16px; padding: 7px 12px; }
+.bubble::before { content: ""; position: absolute; left: -11px; top: 16px; border: 10px solid transparent; border-right-color: var(--sun); border-left: 0; }
+.bubble h3 { color: #9a6a00; }
+.bubble ul { margin: 0; padding-left: 18px; }
+.bubble li { margin: 0 0 3px; }
+.no { color: var(--soft); text-decoration: line-through; text-decoration-color: var(--red); }
+
+/* exercises */
+.fields { display: flex; gap: 18px; margin: 0 0 8px; font-size: 11.5pt; }
+.fields span { flex: 1; border-bottom: 1.5px dotted var(--line); padding-bottom: 2px; }
+.ex { break-inside: avoid; margin: 0 0 6px; border: 2px solid var(--line); border-radius: 14px; padding: 4px 12px 4px; }
+.ex h2 { display: flex; align-items: center; gap: 8px; margin: 0; }
+.num { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 12pt; flex: none; }
+.how { color: var(--soft); font-size: 11pt; margin: -3px 0 1px; }
+.bank { display: inline-flex; gap: 10px; border: 2px dashed var(--blue); border-radius: 999px; padding: 1px 14px; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 13pt; margin-bottom: 3px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+.ex p { line-height: 1.8; }
+.b { display: inline-block; min-width: 20mm; border-bottom: 1.5px solid var(--ink); height: 1.2em; vertical-align: baseline; }
+.b.l { min-width: 72mm; }
+.b.xl { min-width: 100mm; }
+.o { font-family: "Fredoka", sans-serif; font-weight: 600; color: var(--blue); }
+.stars { display: flex; align-items: center; gap: 10px; border-radius: 14px; background: var(--violet-bg); padding: 6px 12px; break-inside: avoid; }
+.stars .s { font-size: 22pt; color: var(--violet); letter-spacing: 6px; }
+.top .st { text-align: center; font-size: 10.5pt; line-height: 1.2; color: var(--violet); font-family: "Fredoka", sans-serif; font-weight: 600; }
+.top .st .s { font-size: 17pt; letter-spacing: 4px; line-height: 1; }
+
+/* page 3 */
+.key p, .key li { margin: 0 0 3px; font-size: 10.3pt; line-height: 1.35; }
+.key ul { margin: 0 0 4px; padding-left: 18px; }
+.key h1 { font-size: 16pt; margin-bottom: 4px; }
+.note { font-size: 10pt; color: var(--soft); }
+</style>
+</head>
+<body>
+<a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bunny" viewBox="0 0 100 100">
+    <ellipse cx="36" cy="22" rx="8" ry="21" fill="#fff" stroke="#22304d" stroke-width="3" transform="rotate(-12 36 22)"/>
+    <ellipse cx="36" cy="24" rx="3.5" ry="14" fill="#f6b9c5" transform="rotate(-12 36 24)"/>
+    <ellipse cx="62" cy="22" rx="8" ry="21" fill="#fff" stroke="#22304d" stroke-width="3" transform="rotate(12 62 22)"/>
+    <ellipse cx="62" cy="24" rx="3.5" ry="14" fill="#f6b9c5" transform="rotate(12 62 24)"/>
+    <ellipse cx="50" cy="82" rx="27" ry="16" fill="#fff" stroke="#22304d" stroke-width="3"/>
+    <circle cx="50" cy="57" r="22" fill="#fff" stroke="#22304d" stroke-width="3"/>
+    <circle cx="42" cy="53" r="3.6" fill="#22304d"/>
+    <circle cx="58" cy="53" r="3.6" fill="#22304d"/>
+    <circle cx="43.3" cy="51.7" r="1.2" fill="#fff"/>
+    <circle cx="59.3" cy="51.7" r="1.2" fill="#fff"/>
+    <ellipse cx="34" cy="62" rx="5" ry="3.5" fill="#f6a3b4"/>
+    <ellipse cx="66" cy="62" rx="5" ry="3.5" fill="#f6a3b4"/>
+    <path d="M47.5 59 L52.5 59 L50 62 Z" fill="#d2453a"/>
+    <path d="M40 64 Q50 77 60 64 Z" fill="#d2453a" stroke="#22304d" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M45 70 Q50 67.5 55 70 Q50 74 45 70 Z" fill="#f6b9c5"/>
+  </symbol>
+</svg>
+
+<!-- PAGE 1: LEARN -->
+<div class="top">
+  <svg class="rabbit" aria-hidden="true"><use href="#bunny"/></svg>
+  <div class="t">
+    <h1>TO BE and <span class="r">HAVE GOT</span></h1>
+    <div class="sub">Hi Margherita! Two very important verbs. Read them, say them out loud, then try page 2.</div>
+  </div>
+</div>
+
+<div class="row2">
+  <div class="card blue">
+    <div class="big">TO BE <span class="it">= essere</span></div>
+    <p>Who you are, how old you are, how you feel, where you are.</p>
+    <p class="ex-s">I'm nine. She's a teacher. We're at the park.</p>
+  </div>
+  <div class="card red">
+    <div class="big">HAVE GOT <span class="it">= avere</span></div>
+    <p>Things, animals, family, hair and eyes.</p>
+    <p class="ex-s">I've got two rabbits. She's got long hair.</p>
+  </div>
+</div>
+
+<h2>TO BE in three ways</h2>
+<div class="row3">
+  <div class="card green">
+    <h3><span class="badge bg">YES</span>affirmative</h3>
+    <div class="list">
+      <div>I <span class="v">am</span> = I<span class="v">'m</span></div>
+      <div>you <span class="v">are</span> = you<span class="v">'re</span></div>
+      <div>he / she / it <span class="v">is</span> = he<span class="v">'s</span></div>
+      <div>we <span class="v">are</span> = we<span class="v">'re</span></div>
+      <div>they <span class="v">are</span> = they<span class="v">'re</span></div>
+    </div>
+  </div>
+  <div class="card red">
+    <h3><span class="badge br">NO</span>negative</h3>
+    <div class="list">
+      <div>I<span class="v">'m not</span></div>
+      <div>you <span class="v">aren't</span></div>
+      <div>he / she / it <span class="v">isn't</span></div>
+      <div>we <span class="v">aren't</span></div>
+      <div>they <span class="v">aren't</span></div>
+    </div>
+  </div>
+  <div class="card blue">
+    <h3><span class="badge bb">?</span>question</h3>
+    <div class="list">
+      <div><span class="v">Am</span> I ...?</div>
+      <div><span class="v">Are</span> you ...?</div>
+      <div><span class="v">Is</span> he / she / it ...?</div>
+      <div><span class="v">Are</span> we ...?</div>
+      <div><span class="v">Are</span> they ...?</div>
+    </div>
+  </div>
+</div>
+
+<div class="row2">
+  <div class="card violet">
+    <h3>The magic apostrophe <span class="apo">'</span></h3>
+    <p>It takes the place of the letter that goes away.</p>
+    <div class="magic">
+      <span>I <span class="gone">a</span>m = I<span class="apo">'</span>m</span>
+      <span>is n<span class="gone">o</span>t = isn<span class="apo">'</span>t</span>
+      <span>are n<span class="gone">o</span>t = aren<span class="apo">'</span>t</span>
+    </div>
+  </div>
+  <div class="card sun">
+    <h3>Short answers</h3>
+    <p>Are you tired? <b>Yes, I am.</b> / <b>No, I'm not.</b></p>
+    <p>Is she tall? <b>Yes, she is.</b> / <b>No, she isn't.</b></p>
+    <p>Are they at home? <b>Yes, they are.</b> / <b>No, they aren't.</b></p>
+  </div>
+</div>
+
+<h2>HAVE GOT</h2>
+<div class="row2">
+  <div class="card red">
+    <div class="list">
+      <div>I / you / we / they <span class="v">have got</span> = I<span class="v">'ve got</span></div>
+      <div>he / she / it <span class="v">has got</span> = she<span class="v">'s got</span></div>
+    </div>
+    <p class="ex-s">I've got two rabbits. My sister has got a bike.</p>
+  </div>
+  <div class="card red" style="background:#fff">
+    <p class="it" style="margin-bottom:2px">If you have studied it in class:</p>
+    <div class="list">
+      <div>No: I <span class="v">haven't got</span> a cat. She <span class="v">hasn't got</span> a dog.</div>
+      <div>?: <span class="v">Have</span> you <span class="v">got</span> a cat? Yes, I <span class="v">have</span>. / No, I <span class="v">haven't</span>.</div>
+    </div>
+  </div>
+</div>
+
+<div class="tips">
+  <svg class="rabbit s" aria-hidden="true"><use href="#bunny"/></svg>
+  <div class="bubble">
+    <h3>Watch out!</h3>
+    <ul>
+      <li>Age: I <b>am</b> nine years old. <span class="no">I have nine years.</span></li>
+      <li>Rabbits: I <b>have got</b> two rabbits. <span class="no">I am two rabbits.</span> (I'm not a rabbit!)</li>
+      <li><b>My</b> brother, <b>my</b> mum, <b>my</b> birthday: <b>is</b>. My brother <b>is</b> two.</li>
+      <li>Spell it well: <b>aren't</b> · <b>isn't</b> · <b>I'm</b> · <b>rabbit</b> (two b) · <b>engineer</b></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PAGE 2: PLAY -->
+<div class="page-break"></div>
+<div class="top" style="margin-bottom:4px">
+  <svg class="rabbit s" aria-hidden="true" style="width:13mm;height:13mm"><use href="#bunny"/></svg>
+  <div class="t">
+    <h1 style="font-size:20pt">Your turn!</h1>
+    <div class="sub">Take your time. Look at page 1 only if you really need it.</div>
+  </div>
+  <div class="st">At the end,<br>colour the stars:<br><b class="s">&#9734;&#9734;&#9734;</b></div>
+</div>
+<div class="fields"><span>Name:</span><span>Date:</span></div>
+
+<div class="ex">
+  <h2><span class="num">1</span>Am, is or are? <span class="bank" style="margin:0 0 0 6px"><span>am</span><span>is</span><span>are</span></span></h2>
+  <div class="cols">
+    <p>a) My cat <span class="b"></span> black and white.</p>
+    <p>b) I <span class="b"></span> in grade 4.</p>
+    <p>c) My grandparents <span class="b"></span> from Sicily.</p>
+    <p>d) Halloween <span class="b"></span> next week!</p>
+    <p>e) Tom and I <span class="b"></span> best friends.</p>
+    <p>f) It <span class="b"></span> cold today.</p>
+  </div>
+</div>
+
+<div class="ex">
+  <h2><span class="num">2</span>Use the magic apostrophe</h2>
+  <p class="how">Write the short form.</p>
+  <div class="cols">
+    <p>a) I am <span class="b"></span></p>
+    <p>d) they are not <span class="b"></span></p>
+    <p>b) she is <span class="b"></span></p>
+    <p>e) I have got <span class="b"></span></p>
+    <p>c) he is not <span class="b"></span></p>
+    <p>f) he has got <span class="b"></span></p>
+  </div>
+</div>
+
+<div class="ex">
+  <h2><span class="num">3</span>To be or have got?</h2>
+  <p class="how">Circle the right one.</p>
+  <div class="cols">
+    <p>a) I <span class="o">am / have got</span> nine years old.</p>
+    <p>b) My sister <span class="o">is / has got</span> long hair.</p>
+    <p>c) We <span class="o">are / have got</span> a big garden.</p>
+    <p>d) My rabbits <span class="o">are / have got</span> very small.</p>
+  </div>
+  <p>e) He <span class="o">is / has got</span> a new bike.</p>
+</div>
+
+<div class="ex">
+  <h2><span class="num">4</span>Say NO!</h2>
+  <p class="how">Make the sentence negative.</p>
+  <p>a) I am hungry. <span class="b l"></span></p>
+  <p>b) We are at school. <span class="b l"></span></p>
+  <p>c) The dog is in the garden. <span class="b l"></span></p>
+</div>
+
+<div class="ex">
+  <h2><span class="num">5</span>Detective time: find the mistake!</h2>
+  <p class="how">Each sentence has one mistake. Write the right sentence.</p>
+  <p>a) My brother are ten years old. <span class="b l"></span></p>
+  <p>b) I have eight years old. <span class="b l"></span></p>
+  <p>c) They arent at home. <span class="b l"></span></p>
+  <p>d) She have got a cat. <span class="b l"></span></p>
+</div>
+
+<div class="ex">
+  <h2><span class="num">6</span>Ask and answer</h2>
+  <p class="how">Write the question, then the short answer.</p>
+  <p>a) you / tired? (yes) <span class="b l"></span></p>
+  <p>b) your dad / tall? (no) <span class="b l"></span></p>
+</div>
+
+
+<script src="../app.js"></script>
+<script src="../track.js"></script>
+<script>document.getElementById("allen-back").href = "../" + APP.carry();</script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" data-exercise="inglese-peter-pan-quiz" data-subject="English">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+</head>
+<body>
+<a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
+<title>Peter Pan Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Andika:wght@400;700&display=swap">
+<style>
+/* Layout: one column "storybook" card over a sky; one question at a time, progress as a row of stars */
+:root {
+  --sky: #dcefff;
+  --sky-deep: #b9dcf7;
+  --card: #ffffff;
+  --ink: #1d2b45;
+  --ink-soft: #52627e;
+  --line: #c9d9ea;
+  --leaf: #2f8a4a;
+  --leaf-bg: #e3f4e7;
+  --berry: #c2335b;
+  --berry-bg: #fbe6ec;
+  --dust: #e0a419;
+  --dust-bg: #fff4d6;
+  --pick: #2c6fb7;
+  --pick-bg: #e6f0fb;
+  --display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Andika", "Verdana", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sky: #0f1a33; --sky-deep: #172645; --card: #1a2a4a; --ink: #eef3fb; --ink-soft: #a9b8d2;
+    --line: #2e4269; --leaf: #6fd08d; --leaf-bg: #183a2a; --berry: #ff8aa8; --berry-bg: #3f1d2c;
+    --dust: #ffcc4d; --dust-bg: #3a3017; --pick: #8cc0ff; --pick-bg: #1f3a63; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sky: #0f1a33; --sky-deep: #172645; --card: #1a2a4a; --ink: #eef3fb; --ink-soft: #a9b8d2;
+  --line: #2e4269; --leaf: #6fd08d; --leaf-bg: #183a2a; --berry: #ff8aa8; --berry-bg: #3f1d2c;
+  --dust: #ffcc4d; --dust-bg: #3a3017; --pick: #8cc0ff; --pick-bg: #1f3a63; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: linear-gradient(180deg, var(--sky-deep), var(--sky) 40%);
+  background-color: var(--sky);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.5;
+  min-height: 100vh;
+  padding-inline: 16px;
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 2px; }
+.eyebrow { font-family: var(--display); font-weight: 600; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 8vw, 48px); line-height: 1; margin: 0; text-wrap: balance; }
+h1 span { color: var(--dust); }
+.sub { color: var(--ink-soft); margin: 4px 0 0; font-size: 16px; }
+
+.stars { display: flex; flex-wrap: wrap; gap: 4px; }
+.star { width: 14px; height: 14px; border-radius: 50%; background: var(--line); }
+.star.ok { background: var(--leaf); }
+.star.no { background: var(--berry); }
+.star.now { outline: 3px solid var(--dust); outline-offset: 1px; }
+
+.card {
+  background: var(--card); border: 2px solid var(--line); border-radius: 20px;
+  padding: 22px 20px; display: flex; flex-direction: column; gap: 16px;
+}
+.round { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.round b { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--pick); }
+.round small { color: var(--ink-soft); font-size: 14px; }
+.how { margin: 0; font-size: 15px; color: var(--ink-soft); }
+.q { font-size: 22px; line-height: 1.4; margin: 0; font-weight: 700; text-wrap: pretty; }
+.q .gap { display: inline-block; min-width: 80px; border-bottom: 3px dotted var(--ink-soft); }
+
+.opts { display: grid; gap: 10px; }
+.opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.opt {
+  font: inherit; font-size: 18px; text-align: left; color: var(--ink);
+  background: var(--card); border: 2px solid var(--line); border-radius: 14px;
+  padding: 12px 14px; cursor: pointer; display: flex; gap: 10px; align-items: center; min-width: 0;
+}
+.opts.three .opt { justify-content: center; text-align: center; font-family: var(--display); font-weight: 600; }
+.opt .k { font-family: var(--display); font-weight: 800; color: var(--pick); flex: none; }
+.opt:hover:not(:disabled) { border-color: var(--pick); background: var(--pick-bg); }
+.opt:focus-visible, .btn:focus-visible, input:focus-visible { outline: 3px solid var(--dust); outline-offset: 2px; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--leaf); background: var(--leaf-bg); }
+.opt.wrong { border-color: var(--berry); background: var(--berry-bg); }
+
+.typein { display: flex; gap: 10px; flex-wrap: wrap; }
+.typein input {
+  flex: 1 1 180px; min-width: 0; font: inherit; font-size: 20px; color: var(--ink); background: var(--card);
+  border: 2px solid var(--line); border-radius: 14px; padding: 10px 14px;
+}
+
+.btn {
+  font-family: var(--display); font-weight: 800; font-size: 19px; border: 0; border-radius: 14px;
+  padding: 10px 20px; cursor: pointer; background: var(--pick); color: var(--card);
+}
+.btn.ghost { background: transparent; color: var(--pick); border: 2px solid var(--pick); }
+.btn[hidden] { display: none; }
+
+.fb { border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; font-size: 17px; }
+.fb.ok { background: var(--leaf-bg); }
+.fb.no { background: var(--berry-bg); }
+.fb strong { font-family: var(--display); font-size: 20px; }
+.fb.ok strong { color: var(--leaf); }
+.fb.no strong { color: var(--berry); }
+.fb .pg { font-size: 14px; color: var(--ink-soft); }
+.next { display: flex; justify-content: flex-end; }
+
+.end { text-align: center; align-items: center; }
+.big { font-family: var(--display); font-weight: 800; font-size: 64px; line-height: 1; color: var(--dust); font-variant-numeric: tabular-nums; }
+.end p { margin: 0; }
+.end .row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.miss { text-align: left; width: 100%; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.miss li { background: var(--dust-bg); border-radius: 12px; padding: 10px 12px; font-size: 16px; }
+.miss li b { display: block; }
+.tip { font-size: 15px; color: var(--ink-soft); }
+@media (max-width: 420px) {
+  .q { font-size: 20px; }
+  .opts.three { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: pop .25s ease-out; }
+  @keyframes pop { from { transform: translateY(6px); opacity: .6; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Verifica di inglese, lunedi 5 ottobre</div>
+    <h1>Peter Pan <span>Quiz</span></h1>
+    <p class="sub">Allenati sul libro delle vacanze. Domande in inglese, come nella verifica.</p>
+  </header>
+  <div class="stars" id="stars" aria-label="Avanzamento"></div>
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+
+<script>
+const ROUNDS = {
+  rw: { name: "Round 1: Right, Wrong or Doesn't say?", how: "Right = il libro dice cosi. Wrong = il libro dice il contrario. Doesn't say = il libro non ne parla." },
+  mc: { name: "Round 2: Choose A, B or C", how: "Scegli la parola giusta." },
+  gap: { name: "Round 3: One word", how: "Scrivi UNA parola in inglese per completare la frase." },
+  who: { name: "Round 4: Who says it?", how: "Chi dice questa frase nel libro?" }
+};
+const WHO = ["Peter", "Wendy", "Captain Hook", "Smee", "Tootles", "Mrs. Darling"];
+const RW = ["Right", "Wrong", "Doesn't say"];
+
+const QS = [
+  { r: "rw", q: "The Darling family lives at house number 14.", a: "Right", why: "Si, i Darling abitano al numero 14, a Londra.", p: 7 },
+  { r: "rw", q: "Nana is a lady.", a: "Wrong", why: "Nana e la bambinaia, ma e un grande cane: Nana isn't a lady, she is a big dog.", p: 7 },
+  { r: "rw", q: "Wendy sews Peter's shadow on his foot.", a: "Right", why: "Peter non riesce ad attaccarla e Wendy gliela cuce al piede.", p: 10 },
+  { r: "rw", q: "There are eight Lost Boys.", a: "Wrong", why: "I Lost Boys sono sei: Tootles, Nibs, Slightly, Curly e i due gemelli.", p: 19 },
+  { r: "rw", q: "Tinker Bell likes Wendy.", a: "Wrong", why: "Tink e gelosa: doesn't like Wendy, e infatti dice ai Lost Boys di colpirla.", p: 26 },
+  { r: "rw", q: "Tiger Lily has got a little brother.", a: "Doesn't say", why: "Il libro non parla di fratelli di Tiger Lily: dice solo che e la bella principessa degli Indiani.", p: 19 },
+  { r: "rw", q: "Captain Hook has got curly black hair.", a: "Right", why: "Hook ha capelli neri ricci, occhi azzurri tristi e un uncino al braccio.", p: 19 },
+
+  { r: "mc", q: "Peter comes back to Wendy's house to find his ___.", o: ["hat", "shadow", "medicine"], a: "shadow", why: "Nana gli aveva strappato l'ombra (shadow) e Mrs. Darling l'aveva chiusa nel cassettone.", p: 10 },
+  { r: "mc", q: "To fly, the children need ___.", o: ["wings", "water", "fairy dust"], a: "fairy dust", why: "Peter soffia la polvere di fata (fairy dust) sui bambini.", p: 17 },
+  { r: "mc", q: "The crocodile goes TICK TICK TICK because it swallowed a ___.", o: ["clock", "drum", "bell"], a: "clock", why: "Il coccodrillo ha inghiottito una sveglia (clock). Quando si ferma, mangia Hook.", p: 20 },
+  { r: "mc", q: "Who shoots Wendy with an arrow?", o: ["Slightly", "Tootles", "Captain Hook"], a: "Tootles", why: "Tootles: \"It is my arrow\". Tinker Bell gli aveva detto di colpire il \"Wendy bird\".", p: 27 },
+  { r: "mc", q: "Peter goes home from Marooners' Rock in the Never Bird's ___.", o: ["nest", "kite", "ship"], a: "nest", why: "Usa il nido (nest) come barca e la camicia come vela. Il kite e quello di Wendy!", p: 39 },
+  { r: "mc", q: "In chapter 4, who wins the fight, the pirates or the Indians?", o: ["the Indians", "the pirates", "nobody"], a: "the pirates", why: "Hook attacca gli Indiani e vince: Hook wins the fight. I pirati suonano il tamburo.", p: 41 },
+  { r: "mc", q: "What does Hook put in Peter's cup?", o: ["milk", "fairy dust", "yellow poison"], a: "yellow poison", why: "Hook mette veleno giallo (yellow poison) nella medicina di Peter.", p: 47 },
+  { r: "mc", q: "How does Tinker Bell get better?", o: ["The children clap their hands", "Peter sings a song", "Wendy gives her medicine"], a: "The children clap their hands", why: "Tutti i bambini che credono nelle fate battono le mani (clap) e Tink guarisce.", p: 48 },
+  { r: "mc", q: "At the end, Mrs. Darling wants ___ new children.", o: ["three", "six", "eight"], a: "six", why: "I Darling adottano i sei Lost Boys.", p: 59 },
+  { r: "mc", q: "Wendy grows up and has a daughter. Her name is ___.", o: ["Jane", "Tiger Lily", "Nana"], a: "Jane", why: "La figlia di Wendy e Jane, e poi Jane ha una figlia, Margaret.", p: 60 },
+
+  { r: "gap", q: "Peter is a small boy who never wants to grow ___.", a: ["up"], why: "Grow up = crescere. Peter never wants to grow up.", p: 7 },
+  { r: "gap", q: "The Lost Boys live in the Home Under the ___.", a: ["ground"], why: "La casa sotto terra: the Home Under the Ground.", p: 20 },
+  { r: "gap", q: "Wendy flies away from the rock with a ___.", a: ["kite"], why: "Un aquilone: a kite.", p: 31 },
+  { r: "gap", q: "The princess of the Indians is Tiger ___.", a: ["lily"], why: "Tiger Lily.", p: 19 },
+  { r: "gap", q: "Peter doesn't want to go to ___ or to an office.", a: ["school"], why: "Peter non vuole andare a scuola (school), ne in ufficio, ne diventare un uomo.", p: 59 },
+  { r: "gap", q: "Wendy can go to Neverland in the ___ to help Peter clean.", a: ["spring"], why: "In primavera: in the spring, per le pulizie. Ma non puo restare a vivere con lui.", p: 60 },
+
+  { r: "who", q: "\"Do you believe in fairies? Clap your hands!\"", a: "Peter", why: "Lo chiede Peter a tutti i bambini che sognano, per salvare Tink.", p: 48 },
+  { r: "who", q: "\"I have no arm because I fight with Peter!\"", a: "Captain Hook", why: "Hook ha perso il braccio combattendo con Peter, e il coccodrillo se l'e mangiato.", p: 20 },
+  { r: "who", q: "\"It is my arrow.\"", a: "Tootles", why: "Tootles ammette di aver colpito Wendy, e Peter si arrabbia.", p: 28 },
+  { r: "who", q: "\"Can she be our mother too?\"", a: "Smee", why: "Smee lo chiede a Hook quando sente che i Lost Boys hanno una mamma.", p: 30 },
+  { r: "who", q: "\"I am not going with you, Wendy.\"", a: "Peter", why: "Peter non torna a Londra con gli altri: non vuole crescere.", p: 40 },
+  { r: "who", q: "\"Peter, I can love you as a man.\"", a: "Wendy", why: "Lo dice Wendy, ma Peter risponde che non vuole diventare un uomo.", p: 59 }
+];
+
+let order = QS.map((_, i) => i);
+let pos = 0;
+let results = {};   // index -> true/false
+const card = document.getElementById("card");
+const starsEl = document.getElementById("stars");
+
+function esc(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function norm(s) { return s.trim().toLowerCase().replace(/[^a-z]/g, ""); }
+
+function drawStars() {
+  starsEl.innerHTML = order.map((qi, i) => {
+    const st = results[qi] === true ? "ok" : results[qi] === false ? "no" : "";
+    return `<span class="star ${st} ${i === pos ? "now" : ""}"></span>`;
+  }).join("");
+}
+
+function show() {
+  drawStars();
+  if (pos >= order.length) return finish();
+  const qi = order[pos], Q = QS[qi], R = ROUNDS[Q.r];
+  let body = "";
+  if (Q.r === "rw") {
+    body = `<div class="opts three">${RW.map(o => `<button class="opt" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`;
+  } else if (Q.r === "who") {
+    body = `<div class="opts three">${WHO.map(o => `<button class="opt" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`;
+  } else if (Q.r === "mc") {
+    body = `<div class="opts">${Q.o.map((o, i) => `<button class="opt" data-v="${esc(o)}"><span class="k">${"ABC"[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
+  } else {
+    body = `<form class="typein" id="f"><input id="ans-${qi}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="La tua parola" placeholder="una parola"><button class="btn" type="submit">Controlla</button></form>`;
+  }
+  const qtext = Q.r === "gap" ? esc(Q.q).replace("___", '<span class="gap"></span>') : esc(Q.q).replace("___", "_____");
+  card.innerHTML = `
+    <div class="round"><b>${R.name}</b><small>${pos + 1} / ${order.length}</small></div>
+    <p class="how">${R.how}</p>
+    <p class="q">${qtext}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="next"><button class="btn" id="nx" hidden>Avanti</button></div>`;
+  card.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => answer(b.dataset.v, b)));
+  const f = document.getElementById("f");
+  if (f) {
+    const inp = f.querySelector("input");
+    inp.focus();
+    f.addEventListener("submit", e => { e.preventDefault(); if (inp.value.trim()) answer(inp.value, null); });
+  }
+  document.getElementById("nx").addEventListener("click", () => { pos++; show(); window.scrollTo({ top: 0 }); });
+}
+
+function answer(v, btn) {
+  const qi = order[pos], Q = QS[qi];
+  const ok = Q.r === "gap" ? Q.a.includes(norm(v)) : v === Q.a;
+  results[qi] = ok;
+  card.querySelectorAll(".opt").forEach(b => {
+    b.disabled = true;
+    if (b.dataset.v === Q.a) b.classList.add("right");
+  });
+  if (btn && !ok) btn.classList.add("wrong");
+  const f = document.getElementById("f");
+  if (f) { f.querySelectorAll("input,button").forEach(x => x.disabled = true); }
+  const right = Q.r === "gap" ? Q.a[0] : Q.a;
+  document.getElementById("fb").innerHTML = ok
+    ? `<div class="fb ok"><strong>Bravissima!</strong><span>${esc(Q.why)}</span><span class="pg">Libro, pagina ${Q.p}</span></div>`
+    : `<div class="fb no"><strong>La risposta giusta e: ${esc(right)}</strong><span>${esc(Q.why)}</span><span class="pg">Rileggi il libro a pagina ${Q.p}</span></div>`;
+  const nx = document.getElementById("nx");
+  nx.hidden = false;
+  nx.textContent = pos === order.length - 1 ? "Vedi il risultato" : "Avanti";
+  nx.focus();
+  drawStars();
+}
+
+function finish() {
+  const done = order.filter(qi => results[qi] !== undefined);
+  const good = order.filter(qi => results[qi] === true).length;
+  const missed = order.filter(qi => results[qi] === false);
+  let best = null;
+  try {
+    if (order.length === QS.length) {
+      const prev = Number(localStorage.getItem("pp-best") || 0);
+      if (good > prev) localStorage.setItem("pp-best", String(good));
+      best = Math.max(prev, good);
+    } else { best = Number(localStorage.getItem("pp-best") || 0) || null; }
+  } catch (e) { best = null; }
+  const msg = good === order.length ? "Tutte giuste! Sei pronta per lunedi."
+    : good >= order.length * 0.8 ? "Benissimo! Ripassa solo queste e sei pronta."
+    : "Buon inizio! Rileggi le pagine indicate e riprova.";
+  card.innerHTML = `
+    <div class="round"><b>Risultato</b><small>${done.length} domande</small></div>
+    <div class="end card" style="border:0;padding:0">
+      <div class="big">${good} / ${order.length}</div>
+      <p>${msg}</p>
+      ${best && order.length === QS.length ? `<p class="tip">Il tuo record: ${best} su ${QS.length}</p>` : ""}
+      ${missed.length ? `<ul class="miss">${missed.map(qi => { const Q = QS[qi]; const r = Q.r === "gap" ? Q.a[0] : Q.a; return `<li><b>${esc(Q.q.replace("___", "_____"))}</b>Risposta: ${esc(r)}. Pagina ${Q.p}.</li>`; }).join("")}</ul>` : ""}
+      <div class="row">
+        ${missed.length ? `<button class="btn" id="again-miss">Rifai le sbagliate</button>` : ""}
+        <button class="btn ghost" id="again-all">Ricomincia da capo</button>
+      </div>
+      <p class="tip">Nella verifica leggi bene ogni frase due volte prima di rispondere.</p>
+    </div>`;
+  const am = document.getElementById("again-miss");
+  if (am) am.addEventListener("click", () => { order = missed.slice(); missed.forEach(qi => delete results[qi]); pos = 0; show(); });
+  document.getElementById("again-all").addEventListener("click", () => { order = QS.map((_, i) => i); results = {}; pos = 0; show(); });
+}
+
+show();
+</script>
+
+<script src="../app.js"></script>
+<script src="../track.js"></script>
+<script>document.getElementById("allen-back").href = "../" + APP.carry();</script>
+</body>
+</html>

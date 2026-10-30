@@ -1,0 +1,143 @@
+[
+ {
+  "id": "inglese-to-be-have-got-2",
+  "subject": "English",
+  "kind": "exercise",
+  "ico": "🪄",
+  "title": "To be and have got 2",
+  "test": "2026-11-02",
+  "testLabel": "English test"
+ },
+ {
+  "id": "inglese-ripasso-to-be-have-got",
+  "subject": "English",
+  "kind": "review",
+  "ico": "📒",
+  "title": "Review: to be and have got",
+  "test": "2026-11-02",
+  "testLabel": "English test"
+ },
+ {
+  "id": "inglese-to-be-have-got-1",
+  "subject": "English",
+  "kind": "exercise",
+  "ico": "🧩",
+  "title": "To be and have got 1",
+  "test": "2026-11-02",
+  "testLabel": "English test"
+ },
+ {
+  "id": "cambridge-listening-1",
+  "subject": "Cambridge",
+  "kind": "exercise",
+  "ico": "🎧",
+  "title": "Movers Listening 1",
+  "test": "2026-11-03",
+  "testLabel": "Cambridge Listening test"
+ },
+ {
+  "id": "inglese-peter-pan-quiz",
+  "subject": "English",
+  "kind": "game",
+  "ico": "🧚",
+  "title": "Peter Pan quiz"
+ },
+ {
+  "id": "inglese-peter-pan-ripasso",
+  "subject": "English",
+  "kind": "review",
+  "ico": "🏴‍☠️",
+  "title": "Peter Pan: ripasso"
+ },
+ {
+  "id": "inglese-peter-pan-summary",
+  "subject": "English",
+  "kind": "summary",
+  "ico": "📖",
+  "title": "Peter Pan: summary"
+ },
+ {
+  "id": "inglese-peter-pan-storia",
+  "subject": "English",
+  "kind": "summary",
+  "ico": "📖",
+  "title": "Peter Pan: la storia"
+ },
+ {
+  "id": "scienze-ripasso-regni",
+  "subject": "Science",
+  "kind": "review",
+  "ico": "🐢",
+  "title": "Review: kingdoms and animals"
+ },
+ {
+  "id": "scienze-verifica-1",
+  "subject": "Science",
+  "kind": "test",
+  "ico": "🌿",
+  "title": "Practice test: ecology and food chains"
+ },
+ {
+  "id": "scienze-chi-mangia-chi",
+  "subject": "Science",
+  "kind": "game",
+  "ico": "🦊",
+  "title": "Chi mangia chi"
+ },
+ {
+  "id": "scienze-ocean-ecosystem",
+  "subject": "Science",
+  "kind": "review",
+  "ico": "🐠",
+  "title": "Explore an ecosystem: the ocean"
+ },
+ {
+  "id": "scienze-ecology-ecosystem",
+  "subject": "Science",
+  "kind": "summary",
+  "ico": "🌍",
+  "title": "Ecology and ecosystem"
+ },
+ {
+  "id": "scienze-catena-alimentare",
+  "subject": "Science",
+  "kind": "summary",
+  "ico": "🔗",
+  "title": "The food chain"
+ },
+ {
+  "id": "geografia-verifica-1",
+  "subject": "Geography",
+  "kind": "test",
+  "ico": "🌐",
+  "title": "Practice test: grid, time zones, climate"
+ },
+ {
+  "id": "geografia-missione-reticolo",
+  "subject": "Geography",
+  "kind": "game",
+  "ico": "🧭",
+  "title": "Missione Reticolo"
+ },
+ {
+  "id": "geografia-reticolo",
+  "subject": "Geography",
+  "kind": "summary",
+  "ico": "🗺️",
+  "title": "The geographic grid"
+ },
+ {
+  "id": "geografia-greenwich-fusi",
+  "subject": "Geography",
+  "kind": "summary",
+  "ico": "🕐",
+  "title": "Greenwich and time zones"
+ },
+ {
+  "id": "geografia-zone-climatiche",
+  "subject": "Geography",
+  "kind": "summary",
+  "ico": "☀️",
+  "title": "Climate zones"
+ }
+]
