@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en" data-exercise="scienze-verifica-1" data-subject="Science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+</head>
+<body>
+<a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
+<title>Verifica di Scienze</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: the same meadow world as "Chi mangia chi"; one exercise per card, inline write-in blanks, a score tally that grows like a plant stem */
+:root {
+  --meadow: #eef5e4;
+  --meadow-deep: #dcebc8;
+  --card: #fffdf7;
+  --ink: #23331c;
+  --ink-soft: #5b6b50;
+  --line: #c9d8b6;
+  --leaf: #3f8f3a;
+  --leaf-bg: #e2f2dc;
+  --sun: #e9a400;
+  --sun-bg: #fff2cc;
+  --berry: #b8324f;
+  --berry-bg: #fbe4ea;
+  --soil: #8a5a3b;
+  --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --meadow: #121b10; --meadow-deep: #1b2817; --card: #1d2a19; --ink: #eef4e6; --ink-soft: #aab99c;
+    --line: #34492c; --leaf: #7fd27a; --leaf-bg: #1f3a1c; --sun: #ffc640; --sun-bg: #3a3014;
+    --berry: #ff8fa6; --berry-bg: #3c1b24; --soil: #d9a27c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --meadow: #121b10; --meadow-deep: #1b2817; --card: #1d2a19; --ink: #eef4e6; --ink-soft: #aab99c;
+  --line: #34492c; --leaf: #7fd27a; --leaf-bg: #1f3a1c; --sun: #ffc640; --sun-bg: #3a3014;
+  --berry: #ff8fa6; --berry-bg: #3c1b24; --soil: #d9a27c; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: linear-gradient(180deg, var(--meadow) 0%, var(--meadow) 70%, var(--meadow-deep) 100%);
+  background-color: var(--meadow);
+  color: var(--ink); font-family: var(--body); font-size: 19px; line-height: 1.5;
+  min-height: 100vh; padding-inline: 16px; padding-block: 20px 40px;
+}
+.wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 4px; }
+.eyebrow { font-family: var(--display); font-weight: 500; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--soil); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(36px, 8.5vw, 52px); line-height: 1; margin: 0; text-wrap: balance; }
+h1 span { color: var(--leaf); }
+.sub { color: var(--ink-soft); margin: 4px 0 0; font-size: 16px; max-width: 58ch; }
+
+.tally { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.steps { display: flex; gap: 6px; }
+.step { width: 30px; height: 30px; border-radius: 50%; border: 3px solid var(--line); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 14px; color: var(--ink-soft); background: var(--card); }
+.step.done { border-color: var(--leaf); background: var(--leaf-bg); color: var(--leaf); }
+.step.now { border-color: var(--sun); background: var(--sun-bg); color: var(--ink); }
+.pts { margin-left: auto; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--leaf); font-variant-numeric: tabular-nums; }
+
+.card { background: var(--card); border: 2px solid var(--line); border-radius: 22px; padding: 22px 20px; display: flex; flex-direction: column; gap: 14px; }
+.ex-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.ex-head b { font-family: var(--display); font-weight: 700; font-size: 22px; color: var(--leaf); }
+.ex-head small { color: var(--ink-soft); font-size: 15px; font-variant-numeric: tabular-nums; }
+.how { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+.bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border: 2px dashed var(--leaf); border-radius: 14px; }
+.chip { font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--leaf-bg); color: var(--ink); }
+.chip.used { text-decoration: line-through; opacity: .45; }
+
+.sent { margin: 0; line-height: 2.3; font-size: 19px; }
+.fill { display: inline-flex; align-items: baseline; gap: 1px; white-space: nowrap; }
+.fill .pre { font-weight: 700; color: var(--soil); }
+.fill input {
+  font: inherit; font-weight: 700; line-height: 1.3; width: 9.5em; max-width: 60vw; padding: 1px 6px; border: 0; border-bottom: 2.5px solid var(--ink-soft);
+  background: var(--meadow); color: var(--ink); border-radius: 6px 6px 0 0;
+}
+.fill input:focus { outline: none; border-bottom-color: var(--sun); background: var(--sun-bg); }
+.fill.ok input { border-bottom-color: var(--leaf); background: var(--leaf-bg); }
+.fill.half input { border-bottom-color: var(--sun); background: var(--sun-bg); }
+.fill.no input { border-bottom-color: var(--berry); background: var(--berry-bg); text-decoration: line-through; }
+.fix { font-weight: 700; color: var(--leaf); margin-left: 4px; font-size: 16px; }
+
+.items { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.item { border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.item.ok { border-color: var(--leaf); background: var(--leaf-bg); }
+.item.no { border-color: var(--berry); background: var(--berry-bg); }
+.item b { font-size: 19px; }
+.item .tg { display: flex; gap: 8px; flex-wrap: wrap; }
+.tgb { font: inherit; font-size: 16px; cursor: pointer; padding: 6px 12px; border-radius: 10px; border: 2px solid var(--line); background: var(--card); color: var(--ink); }
+.tgb[aria-pressed="true"] { border-color: var(--leaf); background: var(--leaf); color: var(--card); }
+
+.chain { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chain .slot, .chain .sunbox { flex: 1 1 110px; min-width: 0; min-height: 60px; border-radius: 14px; border: 2px dashed var(--line); display: grid; place-items: center; padding: 6px; text-align: center; font-weight: 700; }
+.chain .sunbox { border-style: solid; border-color: var(--sun); background: var(--sun-bg); }
+.chain .slot.filled { border-style: solid; border-color: var(--ink-soft); }
+.chain .slot.ok { border-color: var(--leaf); background: var(--leaf-bg); }
+.chain .slot.no { border-color: var(--berry); background: var(--berry-bg); }
+.chain .arrow { font-family: var(--display); font-weight: 700; color: var(--soil); font-size: 22px; }
+.deck { display: flex; flex-wrap: wrap; gap: 10px; }
+.card-btn { font: inherit; font-weight: 700; cursor: pointer; padding: 10px 16px; border-radius: 14px; border: 2px solid var(--line); background: var(--card); color: var(--ink); }
+.card-btn:hover { border-color: var(--leaf); }
+.card-btn.used { visibility: hidden; }
+
+.three { display: flex; flex-direction: column; gap: 10px; }
+.three .fill input { width: 14em; }
+
+button:focus-visible, input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn { font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; padding: 11px 18px; border-radius: 14px; border: 2px solid var(--leaf); background: var(--leaf); color: var(--card); }
+.btn.ghost { background: transparent; color: var(--leaf); }
+.btn[disabled] { opacity: .5; cursor: default; }
+.fb { border-radius: 14px; padding: 12px 14px; font-size: 16px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--leaf-bg); border: 2px solid var(--leaf); }
+.fb.mid { background: var(--sun-bg); border: 2px solid var(--sun); }
+.fb strong { font-size: 18px; }
+
+.end { display: flex; flex-direction: column; gap: 12px; }
+.big { font-family: var(--display); font-weight: 700; font-size: 64px; line-height: 1; color: var(--leaf); font-variant-numeric: tabular-nums; }
+.grade { font-family: var(--display); font-size: 24px; font-weight: 700; }
+table.res { border-collapse: collapse; width: 100%; font-size: 16px; }
+table.res td { padding: 6px 4px; border-bottom: 1px solid var(--line); }
+table.res td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+.copy { display: flex; flex-wrap: wrap; gap: 8px; }
+.copy span { font-weight: 700; padding: 4px 10px; border-radius: 10px; background: var(--sun-bg); border: 2px solid var(--sun); }
+.tip { margin: 0; color: var(--ink-soft); font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: grow .25s ease-out; }
+  @keyframes grow { from { transform: scale(.985); } to { transform: none; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Science · Grade 4 · Verifica di prova</div>
+    <h1>Verifica di <span>Scienze</span></h1>
+    <p class="sub">Ecology, ecosystems e food chain. Sei esercizi, 30 punti. Scrivi le parole con attenzione: conta anche come le scrivi.</p>
+  </header>
+  <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+
+<script>
+// Each blank: a = accepted answers (lowercase). pre = first letter shown (exercise with hints).
+const EX = [
+  { id: "e1", type: "cloze", title: "1. Ecology and ecosystems", max: 8,
+    how: "Scrivi nei buchi le parole del riquadro. Ogni parola si usa una volta.",
+    bank: ["organisms", "ecologist", "relationships", "study", "science", "non-living", "home", "environment"],
+    sents: [
+      ["Ecology is the ", { a: ["science"] }, " that studies living ", { a: ["organisms"] }, ", the ", { a: ["environment"] }, " in which they live and the ", { a: ["relationships"] }, " between them."],
+      ["The word ecology comes from Greek: oikos = ", { a: ["home"] }, " or environment, logos = ", { a: ["study"] }, "."],
+      ["An ", { a: ["ecologist"] }, " is a scientist who studies ecology."],
+      ["An ecosystem is made up of living organisms, ", { a: ["non-living", "nonliving", "non living"] }, " things and the relationships between them."]
+    ] },
+  { id: "e2", type: "cloze", title: "2. The food chain", max: 9,
+    how: "Qui le parole non ci sono: c'e solo la prima lettera. Scrivi il resto della parola.",
+    sents: [
+      ["Plants are ", { pre: "p", a: ["producers"] }, ". They make their own food through ", { pre: "p", a: ["photosynthesis"] }, ", using energy from ", { pre: "s", a: ["sunlight"] }, "."],
+      ["Primary consumers eat producers. They are generally ", { pre: "h", a: ["herbivores"] }, "."],
+      ["Secondary consumers can be ", { pre: "c", a: ["carnivores"], g: "co" }, " or ", { pre: "o", a: ["omnivores"], g: "co" }, "."],
+      ["", { pre: "F", a: ["fungi"] }, " and ", { pre: "b", a: ["bacteria"] }, " are decomposers: they break down dead plants and animals and return ", { pre: "n", a: ["nutrients"] }, " to the soil."]
+    ] },
+  { id: "e3", type: "cloze", title: "3. The arrows", max: 3,
+    how: "La frase della scheda sulle frecce. C'e la prima lettera come aiuto.",
+    sents: [["The arrows show the ", { pre: "d", a: ["direction"] }, " in which ", { pre: "m", a: ["matter"] }, " and ", { pre: "e", a: ["energy"] }, " move."]] },
+  { id: "e4", type: "chain", title: "4. Build a food chain", max: 3,
+    how: "Tocca le carte nell'ordine giusto. Ricorda: la freccia va verso chi mangia.",
+    cards: ["seeds", "mouse", "owl"] },
+  { id: "e5", type: "sort", title: "5. Living or non-living?", max: 4,
+    how: "Per ogni cosa scegli Living (vivente) o Non-living (non vivente).",
+    items: [["fungi", "Living"], ["soil", "Non-living"], ["bacteria", "Living"], ["light", "Non-living"]] },
+  { id: "e6", type: "three", title: "6. Three ecosystems", max: 3,
+    how: "Scrivi tre esempi di ecosistema in inglese. Valgono quelli del quaderno e anche altri.",
+    ok: ["forest", "pond", "meadow", "sea", "ocean", "lake", "river", "mountain", "mountains", "desert", "grassland", "savanna", "jungle", "rainforest", "wetland", "coral reef", "swamp", "tundra", "beach"] }
+];
+
+let step = 0;
+let scores = {};      // id -> points
+let wrongWords = [];  // correct spellings to copy
+const card = document.getElementById("card");
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function clean(s) { return s.trim().toLowerCase().replace(/\s+/g, " ").replace(/[.,;!]+$/, ""); }
+function dist(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++)
+    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+// 1 = right, 0.5 = one letter off (spelling), 0 = wrong
+function grade(typed, accepted) {
+  const t = clean(typed);
+  if (!t) return 0;
+  if (accepted.includes(t)) return 1;
+  if (accepted.some(a => a.length >= 4 && dist(t, a) <= (a.length >= 9 ? 2 : 1))) return 0.5;
+  return 0;
+}
+function fmt(n) { return String(n).replace(".", ","); }
+function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+
+function drawTally() {
+  document.getElementById("steps").innerHTML = EX.map((e, i) => `<span class="step ${scores[e.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
+  document.getElementById("pts").textContent = `${fmt(total())} punti`;
+}
+
+function show() {
+  drawTally();
+  if (step >= EX.length) return finish();
+  const E = EX[step];
+  let body = "";
+  if (E.type === "cloze") {
+    let k = 0;
+    if (E.bank) body += `<div class="bank" id="bank">${E.bank.map(w => `<span class="chip" data-w="${esc(w)}">${esc(w)}</span>`).join("")}</div>`;
+    body += E.sents.map(s => `<p class="sent">${s.map(p => typeof p === "string" ? esc(p)
+      : `<span class="fill" data-k="${k}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${k++}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="parola mancante"></span>`).join("")}</p>`).join("");
+  } else if (E.type === "chain") {
+    body = `<div class="chain" id="chain"></div><div class="deck" id="deck"></div><div class="row"><button class="btn ghost" id="undo" type="button">Togli l'ultima</button></div>`;
+  } else if (E.type === "sort") {
+    body = `<div class="items">${E.items.map(([w], i) => `<div class="item" data-i="${i}"><b>${esc(w)}</b><div class="tg">${["Living", "Non-living"].map(v => `<button type="button" class="tgb" aria-pressed="false" data-v="${v}">${v}</button>`).join("")}</div></div>`).join("")}</div>`;
+  } else if (E.type === "three") {
+    body = `<div class="three">${[0, 1, 2].map(i => `<span class="fill" data-k="${i}"><span class="pre">${i + 1}.&nbsp;</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="ecosistema ${i + 1}"></span>`).join("")}</div>`;
+  }
+  card.innerHTML = `
+    <div class="ex-head"><b>${esc(E.title)}</b><small>${E.max} punti</small></div>
+    <p class="how">${esc(E.how)}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="row"><button class="btn" id="go" type="button">Controlla</button></div>`;
+  wire(E);
+  const first = card.querySelector("input"); if (first) first.focus();
+}
+
+let picked = [];
+let order = [];
+function wire(E) {
+  const go = document.getElementById("go");
+  if (E.type === "cloze" && E.bank) {
+    const upd = () => {
+      const typed = [...card.querySelectorAll("input")].map(i => clean(i.value));
+      card.querySelectorAll(".chip").forEach(c => c.classList.toggle("used", typed.includes(c.dataset.w)));
+    };
+    card.querySelectorAll("input").forEach(i => i.addEventListener("input", upd));
+  }
+  if (E.type === "chain") {
+    picked = []; order = E.cards.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+    if (order.every((x, i) => x === i)) order.reverse();
+    drawChain(E);
+    document.getElementById("undo").onclick = () => { picked.pop(); drawChain(E); };
+  }
+  if (E.type === "sort") {
+    card.querySelectorAll(".item").forEach(it => it.querySelectorAll(".tgb").forEach(b => b.addEventListener("click", () => {
+      it.querySelectorAll(".tgb").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    })));
+  }
+  card.querySelectorAll("input").forEach((inp, idx, all) => inp.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); const nx = all[idx + 1]; if (nx) nx.focus(); else go.click(); }
+  }));
+  go.onclick = () => check(E);
+}
+
+function drawChain(E, done) {
+  let html = `<div class="sunbox">sunlight</div>`;
+  for (let i = 0; i < E.cards.length; i++) {
+    const c = picked[i] !== undefined ? E.cards[picked[i]] : "";
+    const st = done ? (picked[i] === i ? "ok" : "no") : (c ? "filled" : "");
+    html += `<span class="arrow" aria-hidden="true">→</span><div class="slot ${st}">${esc(c)}</div>`;
+  }
+  document.getElementById("chain").innerHTML = html;
+  const deck = document.getElementById("deck");
+  if (done) { deck.innerHTML = ""; return; }
+  deck.innerHTML = order.map(ci => `<button type="button" class="card-btn ${picked.includes(ci) ? "used" : ""}" data-c="${ci}">${esc(E.cards[ci])}</button>`).join("");
+  deck.querySelectorAll(".card-btn").forEach(b => b.addEventListener("click", () => { if (picked.length < E.cards.length) { picked.push(+b.dataset.c); drawChain(E); } }));
+}
+
+function check(E) {
+  const fb = document.getElementById("fb");
+  let pts = 0;
+  if (E.type === "cloze") {
+    const blanks = E.sents.flat().filter(p => typeof p !== "string");
+    const empty = [...card.querySelectorAll("input")].some(i => !i.value.trim());
+    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Ci sono ancora buchi vuoti. Se vuoi controllare lo stesso, premi di nuovo Controlla.</span></div>`; return; }
+    const usedGroup = {};
+    card.querySelectorAll(".fill").forEach(f => {
+      const B = blanks[+f.dataset.k], inp = f.querySelector("input");
+      let acc = B.a;
+      if (B.g) { // words that can go in either order (carnivores / omnivores)
+        const grp = blanks.filter(x => x.g === B.g).flatMap(x => x.a).filter(w => !(usedGroup[B.g] || []).includes(w));
+        acc = grp;
+      }
+      // she may retype the first letter too: try both "p"+"roducers" and "producers"
+      const cands = B.pre ? [B.pre + inp.value, inp.value] : [inp.value];
+      const typed = cands.reduce((best, c) => grade(c, acc) > grade(best, acc) ? c : best, cands[0]);
+      let g = grade(typed, acc);
+      let right = acc.find(a => dist(clean(typed), a) <= (a.length >= 9 ? 2 : 1)) || B.a[0];
+      if (B.g && g > 0) (usedGroup[B.g] = usedGroup[B.g] || []).push(right);
+      if (g === 0) right = B.a[0];
+      pts += g;
+      inp.disabled = true;
+      f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+      if (g < 1) { f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(right)}</span>`); wrongWords.push(right); }
+    });
+  } else if (E.type === "chain") {
+    if (picked.length < E.cards.length) { fb.innerHTML = `<div class="fb mid"><span>Metti tutte e tre le carte nella catena.</span></div>`; return; }
+    pts = picked.filter((ci, i) => ci === i).length;
+    drawChain(E, true);
+    document.getElementById("undo").hidden = true;
+    if (pts < 3) fb.dataset.extra = "La catena giusta e: sunlight → seeds → mouse → owl. I semi sono il produttore, il topo il consumatore primario, il gufo il secondario.";
+  } else if (E.type === "sort") {
+    const items = [...card.querySelectorAll(".item")];
+    if (items.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Scegli una risposta per ogni cosa.</span></div>`; return; }
+    items.forEach(it => {
+      const [w, a] = E.items[+it.dataset.i];
+      const v = it.querySelector('[aria-pressed="true"]').dataset.v;
+      const ok = v === a; if (ok) pts++;
+      it.classList.add(ok ? "ok" : "no");
+      it.querySelectorAll(".tgb").forEach(b => b.disabled = true);
+      if (!ok) it.insertAdjacentHTML("beforeend", `<span class="fix">${esc(w)} = ${a}</span>`);
+    });
+  } else if (E.type === "three") {
+    const seen = [];
+    card.querySelectorAll(".fill").forEach(f => {
+      const inp = f.querySelector("input"); const t = clean(inp.value);
+      const pool = E.ok.filter(w => !seen.includes(w));
+      let g = grade(t, pool);
+      const right = pool.find(w => dist(t, w) <= (w.length >= 9 ? 2 : 1));
+      if (g > 0) seen.push(right);
+      pts += g; inp.disabled = true;
+      f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+      if (g === 0.5) { f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(right)}</span>`); wrongWords.push(right); }
+      if (g === 0) f.insertAdjacentHTML("beforeend", `<span class="fix">${t && E.ok.includes(t) ? "gia scritto sopra" : "per esempio forest, pond, meadow"}</span>`);
+    });
+  }
+  scores[E.id] = pts;
+  drawTally();
+  const msg = pts === E.max ? "Perfetto!" : pts >= E.max * 0.6 ? "Bene!" : "Riguarda le parole in verde.";
+  fb.innerHTML = `<div class="fb ${pts >= E.max * 0.6 ? "good" : "mid"}"><strong>${msg} ${fmt(pts)} su ${E.max}</strong>${E.type === "cloze" || E.type === "three" ? `<span>Verde = giusta. Giallo = quasi, attenta all'ortografia (mezzo punto). Rosso = sbagliata. Accanto trovi come si scrive.</span>` : ""}${fb.dataset.extra ? `<span>${esc(fb.dataset.extra)}</span>` : ""}</div>`;
+  const go = document.getElementById("go");
+  go.textContent = step === EX.length - 1 ? "Vedi il risultato" : "Esercizio successivo";
+  go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
+  go.focus();
+}
+
+function finish() {
+  const t = total(), voto = Math.round((t / 3) * 2) / 2;
+  let best = null;
+  try { const prev = Number(localStorage.getItem("ver-sci-1-best") || 0); if (t > prev) localStorage.setItem("ver-sci-1-best", String(t)); best = Math.max(prev, t); } catch (e) { best = null; }
+  const words = [...new Set(wrongWords)];
+  const msg = t >= 27 ? "Bravissima! Sei pronta per la verifica vera." : t >= 21 ? "Bene! Ripassa le parole qui sotto e riprova." : "Rileggi i riassunti, rifai il gioco Chi mangia chi e poi riprova.";
+  card.innerHTML = `
+    <div class="ex-head"><b>Risultato</b><small>30 punti in tutto</small></div>
+    <div class="end">
+      <div class="big">${fmt(t)} / 30</div>
+      <div class="grade">Voto: ${fmt(voto)}</div>
+      <p>${msg}</p>
+      <table class="res">${EX.map(e => `<tr><td>${esc(e.title)}</td><td>${fmt(scores[e.id] ?? 0)} / ${e.max}</td></tr>`).join("")}</table>
+      ${words.length ? `<p class="tip">Parole da ricopiare tre volte sul quaderno:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="tip">Nessuna parola sbagliata: ortografia perfetta!</p>`}
+      ${best ? `<p class="tip">Il tuo record: ${fmt(best)} su 30</p>` : ""}
+      <div class="row"><button class="btn" id="again" type="button">Rifai la verifica</button></div>
+    </div>`;
+  document.getElementById("again").onclick = () => { step = 0; scores = {}; wrongWords = []; show(); window.scrollTo({ top: 0 }); };
+}
+
+show();
+</script>
+
+<script src="../app.js"></script>
+<script src="../track.js"></script>
+<script>document.getElementById("allen-back").href = "../" + APP.carry();</script>
+</body>
+</html>

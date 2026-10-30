@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en" data-exercise="geografia-verifica-1" data-subject="Geography">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+</head>
+<body>
+<a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
+<title>Verifica di Geografia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: the same nautical chart as "Missione Reticolo" (graticule background, buoys); one exercise per logbook card, inline write-in blanks, steps as a strip of buoys */
+:root {
+  --sea: #e4f1f4;
+  --sea-line: #c3dde4;
+  --card: #ffffff;
+  --ink: #12304a;
+  --ink-soft: #4d6a80;
+  --line: #cfe0e8;
+  --chart: #1f6f8b;
+  --chart-bg: #e2f0f5;
+  --buoy: #e8692c;
+  --buoy-bg: #fde9de;
+  --land: #3d8b4f;
+  --land-bg: #e1f2e4;
+  --miss: #c23b50;
+  --miss-bg: #fbe5e8;
+  --sun: #f2b632;
+  --sun-bg: #fff3d6;
+  --display: "Rubik", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Lexend", "Verdana", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Menlo", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sea: #0c1d2b; --sea-line: #173247; --card: #132a3d; --ink: #e9f3f8; --ink-soft: #9fb8c9;
+    --line: #23415a; --chart: #6cc3e0; --chart-bg: #173a50; --buoy: #ff9a62; --buoy-bg: #3e2418;
+    --land: #72cf87; --land-bg: #173826; --miss: #ff8a9a; --miss-bg: #3d1b23; --sun: #ffd166; --sun-bg: #3a3014; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sea: #0c1d2b; --sea-line: #173247; --card: #132a3d; --ink: #e9f3f8; --ink-soft: #9fb8c9;
+  --line: #23415a; --chart: #6cc3e0; --chart-bg: #173a50; --buoy: #ff9a62; --buoy-bg: #3e2418;
+  --land: #72cf87; --land-bg: #173826; --miss: #ff8a9a; --miss-bg: #3d1b23; --sun: #ffd166; --sun-bg: #3a3014; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--sea);
+  background-image:
+    linear-gradient(var(--sea-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--sea-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.5;
+  min-height: 100vh; padding-inline: 16px; padding-block: 20px 40px;
+}
+.wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 4px; }
+.eyebrow { font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: .06em; color: var(--chart); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 8.5vw, 52px); line-height: 1; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h1 span { color: var(--buoy); }
+.sub { color: var(--ink-soft); margin: 4px 0 0; font-size: 16px; max-width: 58ch; }
+
+.tally { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.steps { display: flex; gap: 6px; }
+.step { width: 30px; height: 30px; border-radius: 50%; border: 3px solid var(--line); display: grid; place-items: center; font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--ink-soft); background: var(--card); }
+.step.done { border-color: var(--land); background: var(--land-bg); color: var(--land); }
+.step.now { border-color: var(--buoy); background: var(--buoy-bg); color: var(--ink); }
+.pts { margin-left: auto; font-family: var(--mono); font-weight: 700; font-size: 17px; color: var(--chart); font-variant-numeric: tabular-nums; }
+
+.card { background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 22px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.ex-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.ex-head b { font-family: var(--display); font-weight: 800; font-size: 22px; color: var(--chart); }
+.ex-head small { color: var(--ink-soft); font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.how { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+.bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border: 2px dashed var(--chart); border-radius: 14px; }
+.chip { font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--chart-bg); color: var(--ink); }
+.chip.used { text-decoration: line-through; opacity: .45; }
+
+.sent { margin: 0; line-height: 2.3; font-size: 18px; }
+.fill { display: inline-flex; align-items: baseline; gap: 1px; white-space: nowrap; }
+.fill .pre { font-weight: 700; color: var(--buoy); }
+.fill input {
+  font: inherit; font-weight: 700; line-height: 1.3; width: 9.5em; max-width: 58vw; padding: 1px 6px; border: 0; border-bottom: 2.5px solid var(--ink-soft);
+  background: var(--sea); color: var(--ink); border-radius: 6px 6px 0 0;
+}
+.fill input:focus { outline: none; border-bottom-color: var(--buoy); background: var(--buoy-bg); }
+.fill.ok input { border-bottom-color: var(--land); background: var(--land-bg); }
+.fill.half input { border-bottom-color: var(--sun); background: var(--sun-bg); }
+.fill.no input { border-bottom-color: var(--miss); background: var(--miss-bg); text-decoration: line-through; }
+.fix { font-weight: 700; color: var(--land); margin-left: 4px; font-size: 16px; }
+
+/* map exercise */
+.map { width: 100%; max-width: 100%; height: auto; display: block; }
+.map .ocean { fill: var(--chart-bg); stroke: var(--ink-soft); stroke-width: 1; }
+.map .grat { stroke: var(--sea-line); stroke-width: .7; }
+.map .main { stroke: var(--ink); stroke-width: 1.8; }
+.map .lbl { fill: var(--buoy); font-family: var(--mono); font-weight: 700; font-size: 15px; }
+.map .cmp { fill: var(--ink-soft); font-family: var(--mono); font-size: 9px; }
+.mrows { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.mrow { font: inherit; text-align: left; cursor: pointer; display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 12px; border: 2px dashed var(--line); background: var(--card); color: var(--ink); min-height: 48px; }
+.mrow .let { font-family: var(--mono); font-weight: 700; color: var(--buoy); font-size: 18px; width: 1.2em; }
+.mrow .nm { font-weight: 700; }
+.mrow .nm:empty::before { content: "tocca un nome qui sotto"; font-weight: 400; color: var(--ink-soft); font-size: 14px; }
+.mrow.active { border-style: solid; border-color: var(--buoy); background: var(--buoy-bg); }
+.mrow.filled { border-style: solid; border-color: var(--ink-soft); }
+.mrow.ok { border-style: solid; border-color: var(--land); background: var(--land-bg); }
+.mrow.no { border-style: solid; border-color: var(--miss); background: var(--miss-bg); }
+.mrow .fix { margin-left: auto; font-size: 14px; }
+.deck { display: flex; flex-wrap: wrap; gap: 8px; }
+.card-btn { font: inherit; font-weight: 700; font-size: 16px; cursor: pointer; padding: 8px 14px; border-radius: 12px; border: 2px solid var(--line); background: var(--card); color: var(--ink); }
+.card-btn:hover { border-color: var(--chart); }
+.card-btn.used { visibility: hidden; }
+
+/* circle / true-false */
+.items { display: flex; flex-direction: column; gap: 10px; }
+.item { border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.item.ok { border-color: var(--land); background: var(--land-bg); }
+.item.no { border-color: var(--miss); background: var(--miss-bg); }
+.item p { margin: 0; font-size: 18px; }
+.item .tg { display: flex; gap: 8px; flex-wrap: wrap; }
+.tgb { font: inherit; font-size: 17px; font-weight: 600; cursor: pointer; padding: 6px 14px; border-radius: 999px; border: 2px solid var(--line); background: var(--card); color: var(--ink); }
+.tgb[aria-pressed="true"] { border-color: var(--chart); background: var(--chart); color: var(--card); }
+.why { font-size: 15px; color: var(--ink); }
+
+button:focus-visible, input:focus-visible { outline: 3px solid var(--buoy); outline-offset: 2px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn { font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; padding: 11px 18px; border-radius: 14px; border: 2px solid var(--chart); background: var(--chart); color: var(--card); }
+.btn.ghost { background: transparent; color: var(--chart); }
+.fill.given { font-weight: 700; color: var(--land); }
+.fb { border-radius: 14px; padding: 12px 14px; font-size: 16px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--land-bg); border: 2px solid var(--land); }
+.fb.mid { background: var(--sun-bg); border: 2px solid var(--sun); }
+.fb strong { font-size: 18px; }
+
+.end { display: flex; flex-direction: column; gap: 12px; }
+.big { font-family: var(--display); font-weight: 800; font-size: 64px; line-height: 1; color: var(--chart); font-variant-numeric: tabular-nums; }
+.grade { font-family: var(--display); font-size: 24px; font-weight: 800; }
+table.res { border-collapse: collapse; width: 100%; font-size: 16px; }
+table.res td { padding: 6px 4px; border-bottom: 1px solid var(--line); }
+table.res td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; font-family: var(--mono); }
+.copy { display: flex; flex-wrap: wrap; gap: 8px; }
+.copy span { font-weight: 700; padding: 4px 10px; border-radius: 10px; background: var(--buoy-bg); border: 2px solid var(--buoy); }
+.tip { margin: 0; color: var(--ink-soft); font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: grow .25s ease-out; }
+  @keyframes grow { from { transform: scale(.985); } to { transform: none; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GEOGRAPHY CLIL · GRADE 4 · VERIFICA DI PROVA</div>
+    <h1>Verifica di <span>Geografia</span></h1>
+    <p class="sub">Reticolo geografico, Greenwich e fusi orari, zone climatiche. Sei esercizi, 30 punti. Scrivi le parole con attenzione: conta anche come le scrivi.</p>
+  </header>
+  <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+
+<script>
+// Each blank: a = accepted answers (lowercase). pre = first letter shown (exercise with hints).
+const LINES = ["Equator", "Prime Meridian", "Tropic of Cancer", "Tropic of Capricorn", "Arctic Circle", "Antarctic Circle"];
+const EX = [
+  { id: "e1", type: "cloze", title: "1. The geographic grid", max: 8,
+    how: "Scrivi nei buchi le parole del riquadro. Ogni parola si usa una volta.",
+    bank: ["Greenwich", "degrees", "parallels", "hemispheres", "horizontal", "coordinates", "Equator", "meridians"],
+    sents: [
+      ["The geographic grid is made up of imaginary ", { a: ["horizontal"] }, " and vertical lines."],
+      ["The horizontal lines are called ", { a: ["parallels"] }, ". The vertical lines are called ", { a: ["meridians"] }, "."],
+      ["The ", { a: ["equator"] }, " divides the Earth into the Northern and Southern ", { a: ["hemispheres"] }, "."],
+      ["The Prime Meridian passes through ", { a: ["greenwich"] }, ", near London."],
+      ["Latitude and longitude are the geographic ", { a: ["coordinates"] }, " of a place. They are measured in ", { a: ["degrees"] }, "."]
+    ] },
+  { id: "e2", type: "map", title: "2. Name the lines on the map", max: 6,
+    how: "Tocca una lettera, poi il nome giusto. Per cambiare, tocca di nuovo la lettera.",
+    // letter -> index in LINES
+    rows: [["A", 2], ["B", 5], ["C", 1], ["D", 0], ["E", 4], ["F", 3]] },
+  { id: "e3", type: "cloze", title: "3. Greenwich and GMT", max: 5,
+    how: "Qui le parole non ci sono: c'e solo la prima lettera. Scrivi il resto della parola.",
+    sents: [
+      ["In 1884 the Prime Meridian was fixed at the ", { pre: "R", a: ["royal"] }, " ", { pre: "O", a: ["observatory"] }, " in Greenwich."],
+      ["GMT means Greenwich ", { pre: "M", a: ["mean"] }, " Time."],
+      ["The Earth is divided into 24 time ", { pre: "z", a: ["zones"] }, " because it ", { pre: "r", a: ["rotates"] }, " once every 24 hours."]
+    ] },
+  { id: "e4", type: "cloze", title: "4. Climate zones", max: 5,
+    how: "Anche qui c'e solo la prima lettera. Scrivi il resto della parola.",
+    sents: [
+      ["The area between the Tropic of Cancer and the Tropic of Capricorn is the ", { pre: "T", a: ["tropical"] }, " Zone: it is hot all year."],
+      ["Near the poles there are the ", { pre: "P", a: ["polar"] }, " Zones: they are very cold."],
+      ["The ", { pre: "T", a: ["temperate"] }, " Zones have four ", { pre: "s", a: ["seasons"] }, "."],
+      ["The seasons change because of the ", { pre: "r", a: ["revolution"] }, " of the Earth around the Sun."]
+    ] },
+  { id: "e5", type: "pick", title: "5. Circle the correct answer", max: 3,
+    how: "Come nella REVISION: scegli la risposta giusta.",
+    items: [
+      { q: "Latitude is measured from the ...", opts: ["Equator", "Prime Meridian"], a: "Equator",
+        why: "La latitudine dice quanto un posto e a nord o a sud dell'Equatore. Dal Prime Meridian si misura la longitudine." },
+      { q: "Meridians are ...", opts: ["full circles", "semicircles"], a: "semicircles",
+        why: "I meridiani vanno da un polo all'altro: sono mezze circonferenze. I paralleli invece sono cerchi interi." },
+      { q: "It is 10:00 in Greenwich. In New York (GMT-5) it is ...", opts: ["5:00", "15:00"], a: "5:00",
+        why: "GMT-5 vuol dire 5 ore indietro: si toglie. 10 - 5 = 5:00 del mattino." }
+    ] },
+  { id: "e6", type: "pick", title: "6. True or False", max: 3,
+    how: "Come nella REVISION: T se e vero, F se e falso.",
+    items: [
+      { q: "All meridians have the same length.", opts: ["T", "F"], a: "T",
+        why: "Vero: vanno tutti dal Polo Nord al Polo Sud, quindi sono lunghi uguali." },
+      { q: "The Equator is a climate zone.", opts: ["T", "F"], a: "F",
+        why: "Falso: l'Equatore e una linea. La zona intorno all'Equatore si chiama Tropical (Equatorial) Zone." },
+      { q: "21:00 is the same as 9 PM.", opts: ["T", "F"], a: "T",
+        why: "Vero: 21:00 e di sera, quindi PM. AM e solo per le ore prima di mezzogiorno." }
+    ] }
+];
+
+let mode = "full";    // "full" = whole test, "redo" = only what she got wrong
+let RUN = EX;         // exercises in this run
+let only = {};        // redo: id -> Set of item indices to redo
+let step = 0;
+let scores = {};      // id -> points
+let misses = {};      // id -> Set of item indices not fully right in this run
+let wrongWords = [];  // correct spellings to copy
+const card = document.getElementById("card");
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function clean(s) { return s.trim().toLowerCase().replace(/\s+/g, " ").replace(/[.,;!]+$/, ""); }
+function dist(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++)
+    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+// 1 = right, 0.5 = one letter off (two for long words), 0 = wrong
+function grade(typed, accepted) {
+  const t = clean(typed);
+  if (!t) return 0;
+  if (accepted.includes(t)) return 1;
+  if (accepted.some(a => a.length >= 4 && dist(t, a) <= (a.length >= 9 ? 2 : 1))) return 0.5;
+  return 0;
+}
+function fmt(n) { return String(n).replace(".", ","); }
+function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+function blanksOf(E) { return E.sents.flat().filter(p => typeof p !== "string"); }
+// the word as written on the sheets (capitals for names)
+function shownWord(E, B) {
+  return (E.bank || []).find(w => w.toLowerCase() === B.a[0]) || (B.pre && B.pre === B.pre.toUpperCase() ? B.a[0][0].toUpperCase() + B.a[0].slice(1) : B.a[0]);
+}
+function redoing(E, i) { return mode !== "redo" || only[E.id].has(i); }
+function maxOf(E) { return mode === "redo" ? only[E.id].size : E.max; }
+function runMax() { return RUN.reduce((a, e) => a + maxOf(e), 0); }
+
+const MAP_SVG = `<svg class="map" viewBox="-20 -14 400 212" role="img" aria-label="Carta del mondo con sei linee segnate dalle lettere A, B, C, D, E, F">
+  <rect class="ocean" x="0" y="0" width="360" height="180"/>
+  <g class="grat">
+    <line x1="0" x2="360" y1="30" y2="30"/><line x1="0" x2="360" y1="60" y2="60"/><line x1="0" x2="360" y1="120" y2="120"/><line x1="0" x2="360" y1="150" y2="150"/>
+    <line y1="0" y2="180" x1="60" x2="60"/><line y1="0" y2="180" x1="120" x2="120"/><line y1="0" y2="180" x1="240" x2="240"/><line y1="0" y2="180" x1="300" x2="300"/>
+  </g>
+  <g class="main">
+    <line x1="0" x2="360" y1="23.4" y2="23.4"/><line x1="0" x2="360" y1="66.6" y2="66.6"/><line x1="0" x2="360" y1="90" y2="90"/>
+    <line x1="0" x2="360" y1="113.4" y2="113.4"/><line x1="0" x2="360" y1="156.6" y2="156.6"/><line y1="0" y2="180" x1="180" x2="180"/>
+  </g>
+  <g class="lbl">
+    <text x="-16" y="28.4">E</text><text x="-16" y="71.6">A</text><text x="-16" y="95">D</text>
+    <text x="-16" y="118.4">F</text><text x="-16" y="161.6">B</text><text x="185" y="-2">C</text>
+  </g>
+  <g class="cmp">
+    <text x="174" y="-4" text-anchor="end">N</text><text x="180" y="194" text-anchor="middle">S</text>
+    <text x="364" y="93">E</text><text x="-4" y="93" text-anchor="end">W</text>
+  </g>
+</svg>`;
+
+function drawTally() {
+  document.getElementById("steps").innerHTML = RUN.map((e, i) => `<span class="step ${scores[e.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
+  document.getElementById("pts").textContent = mode === "redo" ? `${fmt(total())} su ${runMax()} giuste` : `${fmt(total())} punti`;
+}
+
+function show() {
+  drawTally();
+  if (step >= RUN.length) return finish();
+  const E = RUN[step];
+  let body = "";
+  if (E.type === "cloze") {
+    const blanks = blanksOf(E);
+    const given = blanks.filter((B, i) => !redoing(E, i)).map(B => B.a[0]);
+    if (E.bank) body += `<div class="bank" id="bank">${E.bank.map(w => `<span class="chip ${given.includes(w.toLowerCase()) ? "used" : ""}" data-w="${esc(w.toLowerCase())}">${esc(w)}</span>`).join("")}</div>`;
+    let k = 0;
+    body += E.sents.map(s => {
+      let open = false;
+      const html = s.map(p => {
+        if (typeof p === "string") return esc(p);
+        const i = k++;
+        if (!redoing(E, i)) return `<span class="fill given" data-w="${esc(p.a[0])}">${esc(shownWord(E, p))}</span>`;
+        open = true;
+        return `<span class="fill" data-k="${i}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="parola mancante"></span>`;
+      }).join("");
+      return open ? `<p class="sent">${html}</p>` : "";
+    }).join("");
+  } else if (E.type === "map") {
+    body = `${MAP_SVG}<div class="mrows" id="mrows"></div><div class="deck" id="deck"></div>`;
+  } else if (E.type === "pick") {
+    body = `<div class="items">${E.items.map((it, i) => !redoing(E, i) ? "" : `<div class="item" data-i="${i}"><p>${esc(it.q)}</p><div class="tg">${it.opts.map(v => `<button type="button" class="tgb" aria-pressed="false" data-v="${esc(v)}">${esc(v)}</button>`).join("")}</div></div>`).join("")}</div>`;
+  }
+  card.innerHTML = `
+    <div class="ex-head"><b>${esc(E.title)}</b><small>${mode === "redo" ? `${maxOf(E)} da rifare` : `${E.max} punti`}</small></div>
+    <p class="how">${mode === "redo" ? "Rifai solo quelle sbagliate: le parti in verde erano gia giuste. " : ""}${esc(E.how)}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="row"><button class="btn" id="go" type="button">Controlla</button></div>`;
+  wire(E);
+  const first = card.querySelector("input"); if (first) first.focus();
+}
+
+let mapPick = [];
+let active = 0;
+function wire(E) {
+  const go = document.getElementById("go");
+  if (E.type === "cloze" && E.bank) {
+    const upd = () => {
+      const typed = [...card.querySelectorAll("input")].map(i => clean(i.value)).concat([...card.querySelectorAll(".fill.given")].map(g => g.dataset.w));
+      card.querySelectorAll(".chip").forEach(c => c.classList.toggle("used", typed.includes(c.dataset.w)));
+    };
+    card.querySelectorAll("input").forEach(i => i.addEventListener("input", upd));
+  }
+  if (E.type === "map") {
+    mapPick = E.rows.map(([, right], r) => redoing(E, r) ? null : right);
+    active = mapPick.findIndex(v => v === null);
+    drawMap(E);
+  }
+  if (E.type === "pick") {
+    card.querySelectorAll(".item").forEach(it => it.querySelectorAll(".tgb").forEach(b => b.addEventListener("click", () => {
+      it.querySelectorAll(".tgb").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    })));
+  }
+  card.querySelectorAll("input").forEach((inp, idx, all) => inp.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); const nx = all[idx + 1]; if (nx) nx.focus(); else go.click(); }
+  }));
+  go.onclick = () => check(E);
+}
+
+function drawMap(E, done) {
+  document.getElementById("mrows").innerHTML = E.rows.map(([L, right], r) => {
+    const v = mapPick[r];
+    const locked = !redoing(E, r);
+    const st = locked ? "ok" : done ? (v === right ? "ok" : "no") : (r === active ? "active" : v !== null ? "filled" : "");
+    const fix = done && !locked && v !== right ? `<span class="fix">${esc(LINES[right])}</span>` : "";
+    return `<button type="button" class="mrow ${st}" data-r="${r}" ${done || locked ? "disabled" : ""}><span class="let">${L}</span><span class="nm">${v !== null ? esc(LINES[v]) : ""}</span>${fix}</button>`;
+  }).join("");
+  const deck = document.getElementById("deck");
+  if (done) { deck.innerHTML = ""; return; }
+  deck.innerHTML = LINES.map((n, i) => `<button type="button" class="card-btn ${mapPick.includes(i) ? "used" : ""}" data-c="${i}">${esc(n)}</button>`).join("");
+  document.querySelectorAll(".mrow:not([disabled])").forEach(b => b.addEventListener("click", () => {
+    const r = +b.dataset.r; mapPick[r] = null; active = r; drawMap(E);
+  }));
+  deck.querySelectorAll(".card-btn").forEach(b => b.addEventListener("click", () => {
+    if (active < 0) return;
+    mapPick[active] = +b.dataset.c;
+    active = mapPick.findIndex(v => v === null);
+    drawMap(E);
+  }));
+}
+
+function check(E) {
+  const fb = document.getElementById("fb");
+  let pts = 0;
+  const miss = new Set();
+  const notes = [];
+  if (E.type === "cloze") {
+    const blanks = blanksOf(E);
+    const empty = [...card.querySelectorAll("input")].some(i => !i.value.trim());
+    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Ci sono ancora buchi vuoti. Se vuoi controllare lo stesso, premi di nuovo Controlla.</span></div>`; return; }
+    card.querySelectorAll(".fill:not(.given)").forEach(f => {
+      const k = +f.dataset.k, B = blanks[k], inp = f.querySelector("input");
+      // she may retype the first letter too: try both "R"+"oyal" and "Royal"
+      const cands = B.pre ? [B.pre + inp.value, inp.value] : [inp.value];
+      const typed = cands.reduce((best, c) => grade(c, B.a) > grade(best, B.a) ? c : best, cands[0]);
+      const g = grade(typed, B.a);
+      const shown = shownWord(E, B);
+      pts += g;
+      inp.disabled = true;
+      f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+      if (g < 1) { miss.add(k); f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(shown)}</span>`); wrongWords.push(shown); }
+    });
+  } else if (E.type === "map") {
+    if (mapPick.some(v => v === null)) { fb.innerHTML = `<div class="fb mid"><span>Dai un nome a tutte le lettere.</span></div>`; return; }
+    E.rows.forEach(([, right], r) => { if (!redoing(E, r)) return; if (mapPick[r] === right) pts++; else miss.add(r); });
+    drawMap(E, true);
+    if (miss.size) notes.push("Dall'alto in basso: Arctic Circle, Tropic of Cancer, Equator, Tropic of Capricorn, Antarctic Circle. La linea verticale e il Prime Meridian.");
+  } else if (E.type === "pick") {
+    const items = [...card.querySelectorAll(".item")];
+    if (items.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Scegli una risposta per ogni frase.</span></div>`; return; }
+    items.forEach(it => {
+      const i = +it.dataset.i, I = E.items[i];
+      const v = it.querySelector('[aria-pressed="true"]').dataset.v;
+      const ok = v === I.a; if (ok) pts++; else miss.add(i);
+      it.classList.add(ok ? "ok" : "no");
+      it.querySelectorAll(".tgb").forEach(b => b.disabled = true);
+      if (!ok) it.insertAdjacentHTML("beforeend", `<span class="why">${esc(I.why)}</span>`);
+    });
+  }
+  scores[E.id] = pts;
+  misses[E.id] = miss;
+  drawTally();
+  const max = maxOf(E);
+  const msg = pts === max ? "Perfetto!" : pts >= max * 0.6 ? "Bene!" : E.type === "cloze" ? "Riguarda le parole in verde." : "Leggi le spiegazioni.";
+  fb.innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><strong>${msg} ${fmt(pts)} su ${max}</strong>${E.type === "cloze" ? `<span>Verde = giusta. Giallo = quasi, attenta all'ortografia (mezzo punto). Rosso = sbagliata. Accanto trovi come si scrive.</span>` : ""}${notes.map(n => `<span>${esc(n)}</span>`).join("")}</div>`;
+  const go = document.getElementById("go");
+  go.textContent = step === RUN.length - 1 ? "Vedi il risultato" : "Esercizio successivo";
+  go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
+  go.focus();
+}
+
+function finish() {
+  const t = total();
+  const words = [...new Set(wrongWords)];
+  const left = RUN.filter(e => misses[e.id] && misses[e.id].size);
+  const nLeft = left.reduce((a, e) => a + misses[e.id].size, 0);
+  let top;
+  if (mode === "full") {
+    const voto = Math.round((t / 3) * 2) / 2;
+    let best = null;
+    try { const prev = Number(localStorage.getItem("ver-geo-1-best") || 0); if (t > prev) localStorage.setItem("ver-geo-1-best", String(t)); best = Math.max(prev, t); } catch (e) { best = null; }
+    const msg = t >= 27 ? "Bravissima! Sei pronta per la verifica vera." : t >= 21 ? "Bene! Ripassa le parole qui sotto e riprova." : "Rileggi i riassunti, rifai il gioco Missione Reticolo e poi riprova.";
+    top = `<div class="ex-head"><b>Risultato</b><small>30 punti in tutto</small></div>
+      <div class="big">${fmt(t)} / 30</div>
+      <div class="grade">Voto: ${fmt(voto)}</div>
+      <p>${msg}</p>
+      ${best ? `<p class="tip">Il tuo record: ${fmt(best)} su 30</p>` : ""}`;
+  } else {
+    const m = runMax();
+    top = `<div class="ex-head"><b>Ripasso delle sbagliate</b><small>${m} da rifare</small></div>
+      <div class="big">${fmt(t)} / ${m}</div>
+      <p>${nLeft ? "Ancora qualcuna da sistemare: rifai solo quelle." : "Adesso sono tutte giuste. Bravissima!"}</p>`;
+  }
+  card.innerHTML = `
+    <div class="end">
+      ${top}
+      <table class="res">${RUN.map(e => `<tr><td>${esc(e.title)}</td><td>${fmt(scores[e.id] ?? 0)} / ${maxOf(e)}</td></tr>`).join("")}</table>
+      ${words.length ? `<p class="tip">Parole da ricopiare tre volte sul quaderno:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="tip">Nessuna parola sbagliata: ortografia perfetta!</p>`}
+      <div class="row">
+        ${nLeft ? `<button class="btn" id="redo" type="button">Rifai solo le sbagliate (${nLeft})</button>` : ""}
+        <button class="btn ${nLeft ? "ghost" : ""}" id="again" type="button">Rifai tutta la verifica</button>
+      </div>
+    </div>`;
+  const redo = document.getElementById("redo");
+  if (redo) redo.onclick = () => {
+    only = {};
+    left.forEach(e => { only[e.id] = new Set(misses[e.id]); });
+    RUN = left; mode = "redo"; restart();
+  };
+  document.getElementById("again").onclick = () => { only = {}; RUN = EX; mode = "full"; restart(); };
+}
+
+function restart() { step = 0; scores = {}; misses = {}; wrongWords = []; show(); window.scrollTo({ top: 0 }); }
+
+show();
+</script>
+
+<script src="../app.js"></script>
+<script src="../track.js"></script>
+<script>document.getElementById("allen-back").href = "../" + APP.carry();</script>
+</body>
+</html>

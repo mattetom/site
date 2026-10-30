@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en" data-exercise="geografia-missione-reticolo" data-subject="Geography">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+</head>
+<body>
+<a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
+<title>Missione Reticolo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a single "navigator's logbook" card floating on a graticule (parallels and meridians with real degree labels); one question at a time, progress as a strip of buoys */
+:root {
+  --sea: #e4f1f4;
+  --sea-line: #c3dde4;
+  --card: #ffffff;
+  --ink: #12304a;
+  --ink-soft: #4d6a80;
+  --line: #cfe0e8;
+  --chart: #1f6f8b;
+  --chart-bg: #e2f0f5;
+  --buoy: #e8692c;
+  --buoy-bg: #fde9de;
+  --land: #3d8b4f;
+  --land-bg: #e1f2e4;
+  --miss: #c23b50;
+  --miss-bg: #fbe5e8;
+  --sun: #f2b632;
+  --display: "Rubik", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Lexend", "Verdana", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Menlo", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sea: #0c1d2b; --sea-line: #173247; --card: #132a3d; --ink: #e9f3f8; --ink-soft: #9fb8c9;
+    --line: #23415a; --chart: #6cc3e0; --chart-bg: #173a50; --buoy: #ff9a62; --buoy-bg: #3e2418;
+    --land: #72cf87; --land-bg: #173826; --miss: #ff8a9a; --miss-bg: #3d1b23; --sun: #ffd166; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sea: #0c1d2b; --sea-line: #173247; --card: #132a3d; --ink: #e9f3f8; --ink-soft: #9fb8c9;
+  --line: #23415a; --chart: #6cc3e0; --chart-bg: #173a50; --buoy: #ff9a62; --buoy-bg: #3e2418;
+  --land: #72cf87; --land-bg: #173826; --miss: #ff8a9a; --miss-bg: #3d1b23; --sun: #ffd166; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--sea);
+  background-image:
+    linear-gradient(var(--sea-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--sea-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.5;
+  min-height: 100vh;
+  padding-inline: 16px;
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 660px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 4px; }
+.eyebrow { font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: .06em; color: var(--chart); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 9vw, 54px); line-height: 1; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h1 span { color: var(--buoy); }
+.sub { color: var(--ink-soft); margin: 4px 0 0; font-size: 16px; max-width: 58ch; }
+
+.buoys { display: flex; flex-wrap: wrap; gap: 5px; }
+.buoy { width: 14px; height: 14px; border-radius: 50% 50% 4px 4px; background: var(--line); }
+.buoy.ok { background: var(--land); }
+.buoy.no { background: var(--miss); }
+.buoy.now { outline: 3px solid var(--buoy); outline-offset: 1px; }
+
+.card {
+  background: var(--card); border: 2px solid var(--line); border-radius: 18px;
+  padding: 22px 20px; display: flex; flex-direction: column; gap: 16px;
+}
+.round { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.round b { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--chart); }
+.round small { font-family: var(--mono); color: var(--ink-soft); font-size: 14px; font-variant-numeric: tabular-nums; }
+.how { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.q { margin: 0; font-size: 22px; font-weight: 600; line-height: 1.35; text-wrap: balance; }
+.q .mono { font-family: var(--mono); font-weight: 700; color: var(--buoy); white-space: nowrap; }
+
+.mapbox { border: 2px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--chart-bg); }
+.mapbox svg { display: block; width: 100%; height: auto; }
+
+.opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.opts.two { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.opt {
+  font: inherit; font-size: 18px; text-align: left; cursor: pointer;
+  padding: 12px 14px; border-radius: 12px; border: 2px solid var(--line);
+  background: var(--card); color: var(--ink); display: flex; gap: 10px; align-items: center;
+}
+.opt .k { font-family: var(--mono); font-weight: 700; color: var(--chart); min-width: 1.2em; }
+.opt:hover:not(:disabled) { border-color: var(--chart); background: var(--chart-bg); }
+.opt:focus-visible, .btn:focus-visible, input:focus-visible { outline: 3px solid var(--buoy); outline-offset: 2px; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--land); background: var(--land-bg); }
+.opt.wrong { border-color: var(--miss); background: var(--miss-bg); }
+
+.typein { display: flex; gap: 10px; flex-wrap: wrap; }
+.typein input {
+  font-family: var(--mono); font-size: 26px; font-weight: 700; width: 9ch; padding: 8px 12px;
+  border-radius: 12px; border: 2px solid var(--line); background: var(--card); color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.clock {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: stretch;
+}
+.clock div {
+  flex: 1 1 140px; min-width: 0; border: 2px solid var(--line); border-radius: 12px; padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 2px; background: var(--chart-bg);
+}
+.clock span { font-size: 14px; color: var(--ink-soft); }
+.clock strong { font-family: var(--mono); font-size: 28px; font-variant-numeric: tabular-nums; }
+.clock .unknown strong { color: var(--buoy); }
+
+.btn {
+  font: inherit; font-weight: 600; font-size: 17px; cursor: pointer; padding: 11px 18px;
+  border-radius: 12px; border: 2px solid var(--chart); background: var(--chart); color: var(--card);
+}
+.btn.ghost { background: transparent; color: var(--chart); }
+.next { display: flex; justify-content: flex-end; }
+
+.fb { border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; font-size: 16px; }
+.fb.ok { background: var(--land-bg); border: 2px solid var(--land); }
+.fb.no { background: var(--miss-bg); border: 2px solid var(--miss); }
+.fb strong { font-size: 17px; }
+.fb .src { font-size: 14px; color: var(--ink-soft); }
+
+.end { display: flex; flex-direction: column; gap: 12px; }
+.big { font-family: var(--display); font-weight: 800; font-size: 60px; line-height: 1; color: var(--chart); font-variant-numeric: tabular-nums; }
+.miss { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
+.miss b { display: block; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.tip { margin: 0; color: var(--ink-soft); font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: rise .25s ease-out; }
+  @keyframes rise { from { transform: translateY(6px); } to { transform: none; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GEOGRAPHY CLIL · GRADE 4 · 0° N 0° E</div>
+    <h1>Missione <span>Reticolo</span></h1>
+    <p class="sub">Paralleli, meridiani, Greenwich, fusi orari e zone climatiche. Domande in inglese come a scuola, spiegazioni in italiano.</p>
+  </header>
+  <div class="buoys" id="buoys" aria-label="Avanzamento"></div>
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+
+<script>
+const ROUNDS = {
+  map:   { name: "Round 1: Read the map", how: "Guarda la carta: che cos'e la linea (o la zona) colorata?" },
+  words: { name: "Round 2: Words", how: "Scegli il significato giusto." },
+  tf:    { name: "Round 3: True or False", how: "True = vero, False = falso." },
+  time:  { name: "Round 4: Time machine", how: "Scrivi l'ora (per esempio 7:00 o 19:00). Est = +, ovest = -." },
+  zone:  { name: "Round 5: Climate zones", how: "Tropical, Temperate o Polar?" },
+  timeq: { name: "Round 4: Time machine", how: "Scegli la risposta giusta." },
+  zoneq: { name: "Round 5: Climate zones", how: "Scegli la risposta giusta." },
+  hemi:  { name: "Round 6: Coordinates", how: "In quali emisferi si trova?" }
+};
+const LINES = ["Equator", "Tropic of Cancer", "Tropic of Capricorn", "Arctic Circle", "Antarctic Circle", "Prime Meridian"];
+const ZONES = ["Tropical Zone", "Temperate Zone", "Polar Zone"];
+const HEMIS = ["Northern + Eastern", "Northern + Western", "Southern + Eastern", "Southern + Western"];
+
+// map: hl = line to highlight (lat number, or "pm" for Prime Meridian); band = [lat1, lat2] zone to fill
+const QS = [
+  { r: "map", hl: 0, q: "What is the orange line?", o: LINES, a: "Equator", why: "L'Equatore e il parallelo 0°: divide la Terra in emisfero nord e sud.", src: "Scheda Representing the World" },
+  { r: "map", hl: 23.4, q: "What is the orange line?", o: LINES, a: "Tropic of Cancer", why: "Il Tropico del Cancro sta a 23°26' Nord: e il limite nord della zona tropicale. Cancro = in alto.", src: "Scheda Climate through latitude" },
+  { r: "map", hl: -66.6, q: "What is the orange line?", o: LINES, a: "Antarctic Circle", why: "Il Circolo polare antartico sta a 66°33' Sud: sotto c'e la zona polare sud.", src: "Scheda Climate through latitude" },
+  { r: "map", hl: "pm", q: "What is the orange line?", o: LINES, a: "Prime Meridian", why: "E il meridiano di Greenwich, 0° di longitudine: separa l'emisfero est da quello ovest.", src: "Scheda Fun fact" },
+  { r: "map", hl: -23.4, q: "What is the orange line?", o: LINES, a: "Tropic of Capricorn", why: "Il Tropico del Capricorno sta a 23°26' Sud: e il limite sud della zona tropicale.", src: "Scheda Climate through latitude" },
+  { r: "map", hl: 66.6, q: "What is the orange line?", o: LINES, a: "Arctic Circle", why: "Il Circolo polare artico sta a 66°33' Nord: sopra c'e la zona polare nord.", src: "Scheda Climate through latitude" },
+  { r: "map", band: [23.4, -23.4], q: "What is the coloured zone?", o: ZONES, a: "Tropical Zone", why: "Tra i due Tropici c'e la zona tropicale (o equatoriale): fa caldo tutto l'anno.", src: "Revision, Climate zones" },
+  { r: "map", band: [23.4, 66.6], q: "What is the coloured zone?", o: ZONES, a: "Temperate Zone", why: "Tra Tropico del Cancro e Circolo artico c'e la zona temperata nord, quella dell'Italia: quattro stagioni.", src: "Revision, Climate zones" },
+
+  { r: "words", q: "Parallels are...", o: ["vertical imaginary lines", "horizontal imaginary lines", "real lines painted on the Earth"], a: "horizontal imaginary lines", why: "I paralleli sono orizzontali. Sono immaginari: non esistono davvero sulla Terra.", src: "Revision A" },
+  { r: "words", q: "Meridians go from...", o: ["the North Pole to the South Pole", "east to west", "the Equator to the Tropics"], a: "the North Pole to the South Pole", why: "I meridiani sono mezzi cerchi da polo a polo, e si incontrano ai poli.", src: "Scheda Representing the World" },
+  { r: "words", q: "Latitude tells us how far a place is...", o: ["east or west of Greenwich", "north or south of the Equator", "from the sea"], a: "north or south of the Equator", why: "La latitudine va da 0° all'Equatore a 90° ai poli, verso nord o verso sud.", src: "Revision A" },
+  { r: "words", q: "Longitude tells us how far a place is...", o: ["east or west of the Prime Meridian", "north or south of the Equator", "from the North Pole"], a: "east or west of the Prime Meridian", why: "La longitudine parte da 0° a Greenwich e arriva a 180° Est e 180° Ovest.", src: "Revision A" },
+  { r: "words", q: "How many parallels are there?", o: ["90", "180", "360"], a: "180", why: "I paralleli sono 180, i meridiani 360.", src: "Revision C" },
+  { r: "words", q: "How many meridians are there?", o: ["180", "24", "360"], a: "360", why: "I meridiani sono 360 e sono tutti lunghi uguali.", src: "Revision C" },
+  { r: "words", q: "In which year did the world choose Greenwich for the Prime Meridian?", o: ["1884", "1492", "1984"], a: "1884", why: "Nel 1884 un accordo internazionale scelse il Royal Observatory di Greenwich.", src: "Scheda Fun fact" },
+  { r: "words", q: "Latitude and longitude together are called...", o: ["time zones", "geographic coordinates", "hemispheres"], a: "geographic coordinates", why: "Sono le coordinate geografiche: le usano anche il GPS e le mappe del telefono.", src: "Scheda Representing the World" },
+
+  { r: "tf", q: "Parallels get smaller near the poles.", o: ["True", "False"], a: "True", why: "Sono cerchi interi, ma diventano piu piccoli verso i poli.", src: "Scheda Representing the World" },
+  { r: "tf", q: "All meridians have the same length.", o: ["True", "False"], a: "True", why: "Vanno tutti da un polo all'altro, quindi sono lunghi uguali.", src: "Scheda Representing the World" },
+  { r: "tf", q: "Meridians meet at the Equator.", o: ["True", "False"], a: "False", why: "I meridiani si incontrano ai poli, non all'Equatore.", src: "Revision B" },
+  { r: "tf", q: "The Earth has 24 time zones because it rotates once every 24 hours.", o: ["True", "False"], a: "True", why: "Un giro in 24 ore, quindi 24 fusi. Non 12!", src: "Scheda GMT" },
+  { r: "tf", q: "Time zones follow the meridians perfectly.", o: ["True", "False"], a: "False", why: "I paesi adattano i fusi ai loro confini, e alcuni usano l'ora legale.", src: "Scheda GMT" },
+  { r: "tf", q: "At the Royal Observatory you can stand with one foot in the Eastern Hemisphere and one in the Western Hemisphere.", o: ["True", "False"], a: "True", why: "C'e una linea di metallo sul pavimento: un piede di qua, uno di la.", src: "Scheda Fun fact" },
+  { r: "tf", q: "When you move west, you add one hour every 15 degrees.", o: ["True", "False"], a: "False", why: "Verso ovest si toglie (subtract). Verso est si aggiunge (add).", src: "Scheda GMT" },
+
+  { r: "time", gmt: "12:00", place: "Rome", off: 1, a: 13 * 60, why: "Roma e GMT+1: 12 + 1 = 13:00.", src: "Scheda GMT" },
+  { r: "time", gmt: "12:00", place: "New York", off: -5, a: 7 * 60, why: "Attenta al meno! New York e GMT-5: 12 - 5 = 7:00 del mattino. Con il meno si toglie.", src: "Revision D" },
+  { r: "time", gmt: "10:00", place: "Tokyo", off: 9, a: 19 * 60, why: "Tokyo e GMT+9: 10 + 9 = 19:00, cioe le 7 di sera (7 pm).", src: "Scheda GMT" },
+  { r: "time", gmt: "16:00", place: "New York", off: -5, a: 11 * 60, why: "GMT-5: 16 - 5 = 11:00 del mattino.", src: "Scheda GMT" },
+  { r: "time", gmt: "8:00", place: "a city in GMT+4", off: 4, a: 12 * 60, why: "GMT+4: 8 + 4 = 12:00, mezzogiorno.", src: "Scheda GMT" },
+  { r: "time", gmt: "3:00", place: "a city in GMT-3", off: -3, a: 0, why: "GMT-3: 3 - 3 = 0:00, mezzanotte (midnight).", src: "Revision B" },
+  { r: "timeq", q: "In Tokyo it is 21:00. Is it am or pm?", o: ["am (morning)", "pm (afternoon and evening)"], a: "pm (afternoon and evening)", why: "Dopo mezzogiorno e pm: 21:00 = 9 pm, le 9 di sera. Am e solo la mattina.", src: "Revision B" },
+
+  { r: "zone", q: "A town at 10° North", o: ZONES, a: "Tropical Zone", why: "10° Nord sta tra l'Equatore e il Tropico del Cancro (23°): zona tropicale.", src: "Revision, Climate zones" },
+  { r: "zone", q: "Italy, at about 42° North", o: ZONES, a: "Temperate Zone", why: "L'Italia sta tra il Tropico del Cancro e il Circolo artico: zona temperata, con quattro stagioni.", src: "Scheda Climate through latitude" },
+  { r: "zone", q: "A place at 75° North", o: ZONES, a: "Polar Zone", why: "75° Nord e sopra il Circolo polare artico (66°): zona polare.", src: "Revision, Climate zones" },
+  { r: "zone", q: "A place at 45° South", o: ZONES, a: "Temperate Zone", why: "45° Sud sta tra il Tropico del Capricorno e il Circolo antartico: zona temperata sud.", src: "Revision, Climate zones" },
+  { r: "zoneq", q: "Which climate zone is the hottest?", o: ["the Equator", "the Tropical (Equatorial) Zone", "the Temperate Zone"], a: "the Tropical (Equatorial) Zone", why: "La domanda chiede una ZONA. L'Equatore e una linea, non una zona: la zona piu calda e quella tropicale.", src: "Revision D" },
+  { r: "zoneq", q: "Why do the Temperate Zones have four seasons?", o: ["Because the Earth rotates in 24 hours", "Because the Earth goes around the Sun and its axis is tilted", "Because they are near the poles"], a: "Because the Earth goes around the Sun and its axis is tilted", why: "Servono due cose: la rivoluzione intorno al Sole e l'asse inclinato. La rotazione di 24 ore fa il giorno e la notte.", src: "Revision D" },
+
+  { r: "hemi", q: "Buenos Aires: 34° S, 58° W", o: HEMIS, a: "Southern + Western", why: "S = sud, W = ovest di Greenwich. E l'esempio della scheda.", src: "Scheda Latitude and longitude" },
+  { r: "hemi", q: "Rome: 42° N, 12° E", o: HEMIS, a: "Northern + Eastern", why: "N = nord dell'Equatore, E = est di Greenwich.", src: "Scheda Representing the World" },
+  { r: "hemi", q: "A boat at 20° S, 40° E", o: HEMIS, a: "Southern + Eastern", why: "20° S e sotto l'Equatore; 40° E e a destra di Greenwich.", src: "Revision C" },
+  { r: "hemi", q: "A plane at 35° N, 80° W", o: HEMIS, a: "Northern + Western", why: "35° N sopra l'Equatore, 80° W a sinistra di Greenwich.", src: "Revision C" }
+];
+
+let order = QS.map((_, i) => i);
+let pos = 0;
+let results = {};
+const card = document.getElementById("card");
+const buoysEl = document.getElementById("buoys");
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function hhmm(m) { const h = Math.floor(m / 60), mm = m % 60; return h + ":" + String(mm).padStart(2, "0"); }
+function parseTime(s) {
+  s = s.trim().toLowerCase().replace(/\s+/g, "");
+  if (["midnight", "mezzanotte"].includes(s)) return 0;
+  if (["noon", "mezzogiorno"].includes(s)) return 720;
+  const m = s.match(/^(\d{1,2})(?:[:.](\d{2}))?(am|pm)?$/);
+  if (!m) return null;
+  let h = +m[1]; const mm = m[2] ? +m[2] : 0;
+  if (h > 24 || mm > 59) return null;
+  if (m[3] === "pm" && h < 12) h += 12;
+  if (m[3] === "am" && h === 12) h = 0;
+  return ((h * 60 + mm) % 1440);
+}
+
+// Equirectangular chart: x = lon (-180..180) -> 0..360, y = lat (90..-90) -> 0..180
+function mapSVG(Q) {
+  const y = lat => 90 - lat;
+  const minor = [];
+  for (let la = -60; la <= 60; la += 30) minor.push(`<line x1="0" x2="360" y1="${y(la)}" y2="${y(la)}" class="g"/>`);
+  for (let lo = -150; lo <= 150; lo += 30) minor.push(`<line y1="0" y2="180" x1="${lo + 180}" x2="${lo + 180}" class="g"/>`);
+  const main = [66.6, 23.4, 0, -23.4, -66.6].map(la => `<line x1="0" x2="360" y1="${y(la)}" y2="${y(la)}" class="m"/>`);
+  main.push(`<line y1="0" y2="180" x1="180" x2="180" class="m"/>`);
+  let band = "";
+  if (Q.band) { const a = y(Math.max(...Q.band)), b = y(Math.min(...Q.band)); band = `<rect x="0" y="${a}" width="360" height="${b - a}" class="band"/>`; }
+  let hl = "";
+  if (Q.hl === "pm") hl = `<line y1="0" y2="180" x1="180" x2="180" class="hl"/>`;
+  else if (typeof Q.hl === "number") hl = `<line x1="0" x2="360" y1="${y(Q.hl)}" y2="${y(Q.hl)}" class="hl"/>`;
+  return `<svg viewBox="-28 -12 400 204" role="img" aria-label="Carta con paralleli e meridiani">
+    <style>
+      .g{stroke:var(--sea-line);stroke-width:.6}
+      .m{stroke:var(--ink-soft);stroke-width:.9;stroke-dasharray:3 2}
+      .hl{stroke:var(--buoy);stroke-width:3.2;stroke-linecap:round}
+      .band{fill:var(--buoy);fill-opacity:.32}
+      .t{fill:var(--ink-soft);font:600 8px var(--mono)}
+      .frame{fill:none;stroke:var(--ink-soft);stroke-width:1}
+    </style>
+    <rect x="0" y="0" width="360" height="180" fill="var(--chart-bg)"/>
+    ${band}${minor.join("")}${main.join("")}${hl}
+    <rect x="0" y="0" width="360" height="180" class="frame"/>
+    <text x="180" y="-3" text-anchor="middle" class="t">N 90°</text>
+    <text x="180" y="190" text-anchor="middle" class="t">S 90°</text>
+    <text x="-4" y="93" text-anchor="end" class="t">0°</text>
+    <text x="-4" y="${y(60) + 3}" text-anchor="end" class="t">60°N</text>
+    <text x="-4" y="${y(-60) + 3}" text-anchor="end" class="t">60°S</text>
+    <text x="364" y="93" class="t">W↔E</text>
+  </svg>`;
+}
+
+function drawBuoys() {
+  buoysEl.innerHTML = order.map((qi, i) => {
+    const st = results[qi] === true ? "ok" : results[qi] === false ? "no" : "";
+    return `<span class="buoy ${st} ${i === pos ? "now" : ""}"></span>`;
+  }).join("");
+}
+
+function show() {
+  drawBuoys();
+  if (pos >= order.length) return finish();
+  const qi = order[pos], Q = QS[qi], R = ROUNDS[Q.r];
+  let lead = "", body = "", qtext = esc(Q.q || "");
+  if (Q.r === "map") lead = `<div class="mapbox">${mapSVG(Q)}</div>`;
+  if (Q.r === "time") {
+    qtext = `It is <span class="mono">${esc(Q.gmt)}</span> in Greenwich. What time is it in ${esc(Q.place)}?`;
+    lead = `<div class="clock"><div><span>Greenwich (GMT)</span><strong>${esc(Q.gmt)}</strong></div><div class="unknown"><span>${esc(Q.place)} (GMT${Q.off > 0 ? "+" : ""}${Q.off})</span><strong>?</strong></div></div>`;
+    body = `<form class="typein" id="f"><input id="ans-${qi}" inputmode="text" autocomplete="off" spellcheck="false" aria-label="L'ora" placeholder="0:00"><button class="btn" type="submit">Controlla</button></form>`;
+  } else {
+    const two = Q.o.length <= 4 && Q.o.every(o => o.length < 26);
+    body = `<div class="opts ${two ? "two" : ""}">${Q.o.map((o, i) => `<button class="opt" data-v="${esc(o)}"><span class="k">${"ABCDEF"[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
+  }
+  card.innerHTML = `
+    <div class="round"><b>${R.name}</b><small>${pos + 1} / ${order.length}</small></div>
+    <p class="how">${R.how}</p>
+    <p class="q">${qtext}</p>
+    ${lead}
+    ${body}
+    <div id="fb"></div>
+    <div class="next"><button class="btn" id="nx" hidden>Avanti</button></div>`;
+  card.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => answer(b.dataset.v, b)));
+  const f = document.getElementById("f");
+  if (f) {
+    const inp = f.querySelector("input");
+    inp.focus();
+    f.addEventListener("submit", e => {
+      e.preventDefault();
+      const v = parseTime(inp.value);
+      if (v === null) { document.getElementById("fb").innerHTML = `<div class="fb no"><span>Scrivi l'ora cosi: 7:00, 19:00 oppure 7 pm.</span></div>`; return; }
+      answer(v, null);
+    });
+  }
+  document.getElementById("nx").addEventListener("click", () => { pos++; show(); window.scrollTo({ top: 0 }); });
+}
+
+function answer(v, btn) {
+  const qi = order[pos], Q = QS[qi];
+  const ok = v === Q.a;
+  results[qi] = ok;
+  card.querySelectorAll(".opt").forEach(b => { b.disabled = true; if (b.dataset.v === Q.a) b.classList.add("right"); });
+  if (btn && !ok) btn.classList.add("wrong");
+  const f = document.getElementById("f");
+  if (f) f.querySelectorAll("input,button").forEach(x => x.disabled = true);
+  if (Q.r === "time") card.querySelector(".clock .unknown strong").textContent = hhmm(Q.a);
+  const right = Q.r === "time" ? hhmm(Q.a) : Q.a;
+  document.getElementById("fb").innerHTML = ok
+    ? `<div class="fb ok"><strong>Rotta giusta!</strong><span>${esc(Q.why)}</span><span class="src">${esc(Q.src)}</span></div>`
+    : `<div class="fb no"><strong>La risposta giusta e: ${esc(right)}</strong><span>${esc(Q.why)}</span><span class="src">Rileggi: ${esc(Q.src)}</span></div>`;
+  const nx = document.getElementById("nx");
+  nx.hidden = false;
+  nx.textContent = pos === order.length - 1 ? "Vedi il risultato" : "Avanti";
+  nx.focus();
+  drawBuoys();
+}
+
+function finish() {
+  const good = order.filter(qi => results[qi] === true).length;
+  const missed = order.filter(qi => results[qi] === false);
+  let best = null;
+  try {
+    const prev = Number(localStorage.getItem("mr-best") || 0);
+    if (order.length === QS.length && good > prev) localStorage.setItem("mr-best", String(good));
+    best = Math.max(prev, order.length === QS.length ? good : 0) || null;
+  } catch (e) { best = null; }
+  const msg = good === order.length ? "Tutte giuste! Sei una vera navigatrice."
+    : good >= order.length * 0.8 ? "Benissimo! Ripassa solo queste e sei pronta."
+    : "Buon viaggio! Rileggi le schede indicate e riprova.";
+  card.innerHTML = `
+    <div class="round"><b>Arrivo in porto</b><small>${order.length} domande</small></div>
+    <div class="end">
+      <div class="big">${good} / ${order.length}</div>
+      <p>${msg}</p>
+      ${best ? `<p class="tip">Il tuo record sul giro completo: ${best} su ${QS.length}</p>` : ""}
+      ${missed.length ? `<ul class="miss">${missed.map(qi => { const Q = QS[qi]; const qt = Q.r === "time" ? `${Q.gmt} GMT, ${Q.place}` : Q.q; const r = Q.r === "time" ? hhmm(Q.a) : Q.a; return `<li><b>${esc(qt)}</b>Risposta: ${esc(r)}</li>`; }).join("")}</ul>` : ""}
+      <div class="row">
+        ${missed.length ? `<button class="btn" id="again-miss">Rifai le sbagliate</button>` : ""}
+        <button class="btn ghost" id="again-all">Ricomincia da capo</button>
+      </div>
+      <p class="tip">Trucco per i fusi: est = + (aggiungi), ovest = - (togli). Con GMT-5 si toglie sempre.</p>
+    </div>`;
+  const am = document.getElementById("again-miss");
+  if (am) am.addEventListener("click", () => { order = missed.slice(); missed.forEach(qi => delete results[qi]); pos = 0; show(); });
+  document.getElementById("again-all").addEventListener("click", () => { order = QS.map((_, i) => i); results = {}; pos = 0; show(); });
+}
+
+function start(data) {
+  if (data && Array.isArray(data.order)) { order = data.order; pos = data.pos || 0; results = data.results || {}; }
+  show();
+}
+window.claude?.hot?.snapshot?.(() => ({ order, pos, results }));
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+
+<script src="../app.js"></script>
+<script src="../track.js"></script>
+<script>document.getElementById("allen-back").href = "../" + APP.carry();</script>
+</body>
+</html>
