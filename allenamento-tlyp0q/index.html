@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="icon.png">
+<title>My Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="app.css">
+<style>
+.list { display: flex; flex-direction: column; gap: 12px; }
+.ex { display: flex; gap: 14px; align-items: center; text-decoration: none; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 16px; }
+.ex:active { transform: scale(.99); }
+.ex .ico { font-size: 44px; flex: none; width: 60px; text-align: center; }
+.ex div { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ex b { font-family: var(--display); font-size: 21px; color: var(--blue); }
+.ex .when { font-family: var(--mono); font-size: 13px; color: var(--red); font-weight: 700; }
+.ex .best { font-size: 15px; color: var(--ink-soft); }
+.ex .best.done { color: var(--ok); font-weight: 700; }
+.group { margin: 6px 0 0; font-family: var(--display); font-size: 18px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <span id="hb"></span>
+    <div>
+      <div class="eyebrow">MY PRACTICE</div>
+      <h1 id="title">Let's <span>practise!</span></h1>
+      <p class="sub">Choose an exercise. Your results are saved, so we can see what to practise more.</p>
+    </div>
+  </header>
+  <div class="list" id="list"></div>
+  <p class="sync" id="sync"></p>
+</div>
+<script src="app.js"></script>
+<script>
+// newest first; "when" = the school test it prepares for
+const EXERCISES = [
+  { group: "This week", id: "inglese-to-be-have-got-2", href: "inglese-to-be-have-got-2/", ico: "🪄", title: "To be and have got 2", when: "English test: Monday 2 November", max: 30 },
+  { group: "This week", id: "cambridge-listening-1", href: "cambridge-listening-1/", ico: "🎧", title: "Movers Listening 1", when: "Cambridge Listening test: Tuesday 3 November", max: 25 }
+];
+document.getElementById("hb").innerHTML = APP.bunny("");
+if (APP.name()) document.getElementById("title").innerHTML = `Hi <span>${APP.esc(APP.name())}!</span>`;
+const best = APP.bests();
+let lastGroup = null;
+document.getElementById("list").innerHTML = EXERCISES.map(e => {
+  const b = best[e.id];
+  const g = e.group !== lastGroup ? `<p class="group">${APP.esc(e.group)}</p>` : "";
+  lastGroup = e.group;
+  const res = b && b.score != null ? `<span class="best done">Best: ${APP.fmt(b.score)} / ${b.max} &middot; done ${b.times} time${b.times > 1 ? "s" : ""}</span>` : `<span class="best">Not done yet</span>`;
+  return `${g}<a class="ex" href="${e.href}${APP.carry()}"><span class="ico">${e.ico}</span><div><b>${APP.esc(e.title)}</b><span class="when">${APP.esc(e.when)}</span>${res}</div></a>`;
+}).join("");
+APP.status();
+</script>
+</body>
+</html>

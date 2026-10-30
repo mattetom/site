@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+<title>To Be and Have Got 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../app.css">
+<style>
+.story { margin: 0; padding: 12px 14px; border-left: 4px solid var(--blue); background: var(--blue-bg); border-radius: 0 12px 12px 0; font-size: 17px; }
+.sent .was { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: var(--red); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" id="back" href="../">&larr; All exercises</a>
+  <header class="hero">
+    <span id="hb"></span>
+    <div>
+      <div class="eyebrow">ENGLISH &middot; GRADE 4 &middot; FOR MONDAY 2 NOVEMBER</div>
+      <h1>To be and <span>have got</span> 2</h1>
+      <p class="sub" id="hello">A magic school test! Seven exercises, 30 points. Spelling and apostrophes count.</p>
+    </div>
+  </header>
+  <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
+  <main class="card" id="card" aria-live="polite"></main>
+  <p class="sync" id="sync"></p>
+</div>
+
+<script src="../app.js"></script>
+<script>
+const { esc, grade, fmt, bunny } = APP;
+const EXERCISE = "inglese-to-be-have-got-2";
+
+// Each blank: a = accepted answers (lowercase), show = how to write it, pre = first letter shown.
+// copy: true = wrong words go in the "copy three times" list. skill/tags go to the results.
+const EX = [
+  { id: "e1", type: "cloze", title: "1. Am, is or are?", max: 5, skill: "to be", tags: ["to be", "subject"],
+    how: "Write am, is or are.", chips: ["am", "is", "are"],
+    tip: "Una persona o una cosa (Harry, the castle, my owl) = he, she, it: IS. Due o piu (Ron and Hermione) = they: ARE. I: AM.",
+    sents: [
+      ["Harry ", { a: ["is"] }, " a young wizard."],
+      ["Ron and Hermione ", { a: ["are"] }, " his best friends."],
+      ["I ", { a: ["am"] }, " in the red house!"],
+      ["The castle ", { a: ["is"] }, " very old and big."],
+      ["The cats in the kitchen ", { a: ["are"] }, " black."]
+    ] },
+  { id: "e2", type: "cloze", title: "2. Have got or has got?", max: 5, skill: "have got", tags: ["have got", "subject"],
+    how: "Write have or has.", chips: ["have", "has"],
+    tip: "He, she, it (Harry, my owl) = HAS got. I, you, we, they = HAVE got.",
+    sents: [
+      ["Harry ", { a: ["has"] }, " got round glasses."],
+      ["I ", { a: ["have"] }, " got a magic wand."],
+      ["My owl ", { a: ["has"] }, " got big yellow eyes."],
+      ["We ", { a: ["have"] }, " got a lesson in the garden today."],
+      ["Ron and his brothers ", { a: ["have"] }, " got red hair."]
+    ] },
+  { id: "e3", type: "cloze", title: "3. Short forms", max: 5, copy: true, wide: true, skill: "short forms", tags: ["short forms", "apostrophe"],
+    how: "Write the short form. Don't forget the apostrophe ( ' ).",
+    tip: "L'apostrofo va dove mancano le lettere: are n-o-t = aren't, is n-o-t = isn't, have = 've, has = 's.",
+    sents: [
+      ["he is = ", { a: ["he's"], show: "he's" }],
+      ["we are not = ", { a: ["we aren't", "we're not"], show: "we aren't" }],
+      ["she has got = ", { a: ["she's got"], show: "she's got" }],
+      ["I have got = ", { a: ["i've got"], show: "I've got" }],
+      ["they are = ", { a: ["they're"], show: "they're" }]
+    ] },
+  { id: "e4", type: "pick", title: "4. To be or have got?", max: 4, skill: "to be or have got", tags: ["to be or have got"],
+    how: "Choose the correct answer.",
+    items: [
+      { q: "Hermione ... eleven years old.", opts: ["is", "has got"], a: "is",
+        why: "L'eta si dice con TO BE: she is eleven. Non si dice 'ha undici anni'." },
+      { q: "I ... a black cat.", opts: ["am", "have got"], a: "have got",
+        why: "Gli animali che hai si dicono con HAVE GOT: I have got a cat. 'I am a black cat' vuol dire 'io sono un gatto nero'!" },
+      { q: "Hagrid ... very tall.", opts: ["is", "has got"], a: "is",
+        why: "Come e una persona (alto, basso, felice) si dice con TO BE: he is tall." },
+      { q: "Ron ... a pet rat.", opts: ["is", "has got"], a: "has got",
+        why: "Le cose e gli animali che una persona ha si dicono con HAS GOT." }
+    ] },
+  { id: "e5", type: "cloze", title: "5. Make it negative", max: 4, copy: true, skill: "negative", tags: ["negative", "apostrophe"],
+    how: "Write the negative form: isn't, aren't, haven't or hasn't.", chips: ["isn't", "aren't", "haven't", "hasn't"],
+    tip: "Guarda il soggetto: he/she/it = ISN'T, HASN'T got. I/you/we/they = AREN'T, HAVEN'T got. E l'apostrofo prima della t!",
+    sents: [
+      ["Harry is a student. He ", { a: ["isn't", "is not"], show: "isn't" }, " a teacher."],
+      ["Ron and Harry ", { a: ["aren't", "are not"], show: "aren't" }, " in the library. They're at dinner."],
+      ["I ", { a: ["haven't", "have not"], show: "haven't" }, " got a broom, but I've got a wand."],
+      ["Hagrid ", { a: ["hasn't", "has not"], show: "hasn't" }, " got a cat. He's got a big dog."]
+    ] },
+  { id: "e6", type: "cloze", title: "6. Questions and short answers", max: 4, skill: "questions", tags: ["questions", "short answers"],
+    how: "Complete the question and the short answer.",
+    tip: "Nella domanda il verbo va prima: Are you...? Has she got...? Nella risposta breve si ripete il verbo: Yes, I am. Yes, she has.",
+    sents: [
+      [{ a: ["are"], show: "Are" }, " you a wizard? Yes, I ", { a: ["am"] }, "."],
+      [{ a: ["has"], show: "Has" }, " Hermione got a cat? Yes, she ", { a: ["has"] }, "."]
+    ] },
+  { id: "e7", type: "pick", title: "7. Read: true or false?", max: 3, skill: "reading", tags: ["reading", "to be", "have got"],
+    how: "Read the text, then choose true or false.",
+    story: "Hi! I'm Ollie. I'm ten years old and I'm a young wizard. I've got a sister, Rose. She's eight. She hasn't got a wand, because she isn't at the magic school. My owl is grey and it has got big orange eyes. Today is Halloween and we aren't in class: we're at a party in the castle!",
+    items: [
+      { q: "Rose is eight years old.", opts: ["true", "false"], a: "true",
+        why: "Vero: \"She's eight\". She's = she is." },
+      { q: "Rose has got a wand.", opts: ["true", "false"], a: "false",
+        why: "Falso: \"She hasn't got a wand\". Hasn't = has not." },
+      { q: "They are in class today.", opts: ["true", "false"], a: "false",
+        why: "Falso: \"we aren't in class: we're at a party\". Aren't = are not." }
+    ] }
+];
+const TOTAL = EX.reduce((a, e) => a + e.max, 0);
+
+let mode = "full";    // "full" = all exercises, "redo" = only what she got wrong
+let RUN = EX;
+let only = {};        // redo: id -> Set of item indices to redo
+let step = 0;
+let scores = {}, misses = {}, wrongWords = [], items = [];
+let startedAt = new Date().toISOString();
+const card = document.getElementById("card");
+document.getElementById("hb").innerHTML = bunny("");
+document.getElementById("back").href = "../" + APP.carry();
+if (APP.name()) document.getElementById("hello").textContent = `Hi ${APP.name()}! A magic school test: seven exercises, 30 points. Spelling and apostrophes count.`;
+
+function isBlank(p) { return typeof p !== "string" && !p.was; }
+function blanksOf(E) { return E.sents.flat().filter(isBlank); }
+function shownWord(B) { return B.show || B.a[0]; }
+function redoing(E, i) { return mode !== "redo" || only[E.id].has(i); }
+function maxOf(E) { return mode === "redo" ? only[E.id].size : E.max; }
+function runMax() { return RUN.reduce((a, e) => a + maxOf(e), 0); }
+function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+
+function drawTally() {
+  document.getElementById("steps").innerHTML = RUN.map((e, i) => `<span class="step ${scores[e.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
+  document.getElementById("pts").textContent = mode === "redo" ? `${fmt(total())} of ${runMax()} right` : `${fmt(total())} points`;
+}
+
+function show() {
+  drawTally();
+  if (step >= RUN.length) return finish();
+  const E = RUN[step];
+  let body = "";
+  if (E.chips) body += `<div class="bank">${E.chips.map(w => `<span class="chip">${esc(w)}</span>`).join("")}</div>`;
+  if (E.story) body += `<p class="story">${esc(E.story)}</p>`;
+  if (E.type === "cloze") {
+    let k = 0;
+    body += E.sents.map(s => {
+      let open = false;
+      const html = s.map(p => {
+        if (typeof p === "string") return esc(p);
+        if (p.was) return `<span class="was">${esc(p.was)}</span><br>`;
+        const i = k++;
+        if (!redoing(E, i)) return `<span class="fill given">${esc(shownWord(p))}</span>`;
+        open = true;
+        return `<span class="fill ${E.wide ? "w" : ""}" data-k="${i}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="missing word"></span>`;
+      }).join("");
+      return open ? `<p class="sent">${html}</p>` : "";
+    }).join("");
+  } else if (E.type === "pick") {
+    body += `<div class="items">${E.items.map((it, i) => !redoing(E, i) ? "" : `<div class="item" data-i="${i}"><p>${esc(it.q)}</p><div class="tg">${it.opts.map(v => `<button type="button" class="tgb" aria-pressed="false" data-v="${esc(v)}">${esc(v)}</button>`).join("")}</div></div>`).join("")}</div>`;
+  }
+  card.innerHTML = `
+    <div class="ex-head"><b>${esc(E.title)}</b><small>${mode === "redo" ? `${maxOf(E)} to redo` : `${E.max} points`}</small></div>
+    <p class="how">${mode === "redo" ? "Redo only the wrong ones: the green parts were already right. " : ""}${esc(E.how)}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="row"><button class="btn" id="go" type="button">Check</button></div>`;
+  wire(E);
+}
+
+function wire(E) {
+  const go = document.getElementById("go");
+  if (E.type === "pick") {
+    card.querySelectorAll(".item").forEach(it => it.querySelectorAll(".tgb").forEach(b => b.addEventListener("click", () => {
+      it.querySelectorAll(".tgb").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    })));
+  }
+  card.querySelectorAll("input").forEach((inp, idx, all) => inp.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); const nx = all[idx + 1]; if (nx) nx.focus(); else go.click(); }
+  }));
+  go.onclick = () => check(E);
+}
+
+function check(E) {
+  const fb = document.getElementById("fb");
+  let pts = 0;
+  const miss = new Set();
+  if (E.type === "cloze") {
+    const blanks = blanksOf(E);
+    const empty = [...card.querySelectorAll("input")].some(i => !i.value.trim());
+    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Some blanks are still empty. To check anyway, press Check again.</span></div>`; return; }
+    card.querySelectorAll(".fill:not(.given)").forEach(f => {
+      const k = +f.dataset.k, B = blanks[k], inp = f.querySelector("input");
+      const cands = B.pre ? [B.pre + inp.value, inp.value] : [inp.value];
+      const typed = cands.reduce((best, c) => grade(c, B.a) > grade(best, B.a) ? c : best, cands[0]);
+      const g = grade(typed, B.a);
+      pts += g;
+      inp.disabled = true;
+      f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+      if (g < 1) { miss.add(k); f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(shownWord(B))}</span>`); if (E.copy) wrongWords.push(shownWord(B)); }
+      items.push({ part: E.id, q: k + 1, skill: E.skill, tags: E.tags, expected: shownWord(B), given: inp.value.trim(), score: g, mode });
+    });
+  } else if (E.type === "pick") {
+    const its = [...card.querySelectorAll(".item")];
+    if (its.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Choose an answer for every sentence.</span></div>`; return; }
+    its.forEach(it => {
+      const i = +it.dataset.i, I = E.items[i];
+      const v = it.querySelector('[aria-pressed="true"]').dataset.v;
+      const ok = v === I.a; if (ok) pts++; else miss.add(i);
+      it.classList.add(ok ? "ok" : "no");
+      it.querySelectorAll(".tgb").forEach(b => b.disabled = true);
+      if (!ok) it.insertAdjacentHTML("beforeend", `<span class="why">${esc(I.why)}</span>`);
+      items.push({ part: E.id, q: i + 1, skill: E.skill, tags: E.tags, expected: I.q.replace("...", I.a), given: v, score: ok ? 1 : 0, mode });
+    });
+  }
+  scores[E.id] = pts;
+  misses[E.id] = miss;
+  drawTally();
+  const max = maxOf(E);
+  const msg = pts === max ? "Perfect!" : pts >= max * 0.6 ? "Well done!" : E.type === "cloze" ? "Look at the green words." : "Read the explanations.";
+  const tip = miss.size && E.tip ? `<span>${esc(E.tip)}</span>` : "";
+  const say = pts === max ? "Hop hop! All right!" : pts >= max * 0.6 ? "Good job, keep going!" : "Don't worry, read and try again!";
+  fb.innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><div class="fbrow">${bunny("s" + (pts === max ? " hop" : ""))}<div><span class="say">${say}</span><strong>${msg} ${fmt(pts)} of ${max}</strong>${E.type === "cloze" ? `<span>Green = right. Yellow = almost, check the spelling (half a point). Red = wrong. Next to it you see how to write it.</span>` : ""}${tip}</div></div></div>`;
+  const go = document.getElementById("go");
+  go.textContent = step === RUN.length - 1 ? "See the result" : "Next exercise";
+  go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
+  go.focus();
+}
+
+function finish() {
+  const t = total(), m = runMax();
+  const words = [...new Set(wrongWords)];
+  const left = RUN.filter(e => misses[e.id] && misses[e.id].size);
+  const nLeft = left.reduce((a, e) => a + misses[e.id].size, 0);
+  APP.send({
+    exercise: EXERCISE, title: "To be and have got 2", mode, startedAt, score: t, max: m,
+    parts: RUN.map(e => ({ id: e.id, title: e.title, score: scores[e.id] ?? 0, max: maxOf(e) })),
+    items: items.filter(i => i.mode === mode)
+  });
+  let top;
+  if (mode === "full") {
+    const voto = Math.round((t / 3) * 2) / 2;
+    const msg = t >= 27 ? "Excellent! You are ready for Monday." : t >= 21 ? "Good! Redo the wrong ones and look at the words below." : "Read your notebook again, then redo the wrong ones.";
+    top = `<div class="ex-head"><b>Result</b><small>${TOTAL} points in all</small></div>
+      <div class="endtop">${bunny(t >= 27 ? "hop" : "")}<div><div class="big">${fmt(t)} / ${TOTAL}</div>
+      <div class="say" style="font-size:24px">Voto: ${fmt(voto)}</div></div></div>
+      <p>${msg}</p>`;
+  } else {
+    top = `<div class="ex-head"><b>Wrong ones again</b><small>${m} to redo</small></div>
+      <div class="endtop">${bunny(nLeft ? "" : "hop")}<div class="big">${fmt(t)} / ${m}</div></div>
+      <p>${nLeft ? "Some are still wrong: redo only those." : "Now they are all right. Well done!"}</p>`;
+  }
+  card.innerHTML = `
+    <div class="end">
+      ${top}
+      <table class="res">${RUN.map(e => `<tr><td>${esc(e.title)}</td><td>${fmt(scores[e.id] ?? 0)} / ${maxOf(e)}</td></tr>`).join("")}</table>
+      ${words.length ? `<p class="note">Copy these three times in your notebook:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="note">No spelling mistakes: perfect!</p>`}
+      <div class="row">
+        ${nLeft ? `<button class="btn" id="redo" type="button">Redo only the wrong ones (${nLeft})</button>` : ""}
+        <button class="btn ${nLeft ? "ghost" : ""}" id="again" type="button">Do it all again</button>
+      </div>
+    </div>`;
+  const redo = document.getElementById("redo");
+  if (redo) redo.onclick = () => { only = {}; left.forEach(e => { only[e.id] = new Set(misses[e.id]); }); RUN = left; mode = "redo"; restart(); };
+  document.getElementById("again").onclick = () => { only = {}; RUN = EX; mode = "full"; restart(); };
+}
+
+function restart() { step = 0; scores = {}; misses = {}; wrongWords = []; items = []; startedAt = new Date().toISOString(); show(); window.scrollTo({ top: 0 }); }
+
+show();
+APP.status();
+</script>
+</body>
+</html>
