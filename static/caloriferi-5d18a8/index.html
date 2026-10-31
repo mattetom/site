@@ -60,6 +60,26 @@
   tr:last-child td { border-bottom: 0; }
   tfoot td { font-weight: 600; }
   .error { color: var(--heat); margin-top: 16px; }
+  .chart-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .seg button { background: transparent; color: var(--text); border-radius: 0; padding: 7px 12px; font-size: .9rem; }
+  .seg button.active { background: var(--accent); color: #fff; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); margin: 10px 0 4px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 14px; height: 10px; border-radius: 3px; display: inline-block; }
+  .sw.heat { background: var(--heat); opacity: .35; } .sw.off { background: var(--off); opacity: .35; }
+  .sw.line { height: 2px; background: var(--accent); } .sw.ref { height: 0; border-top: 2px dashed var(--muted); }
+  .chart { position: relative; margin-top: 10px; }
+  .chart h3 { font-size: .95rem; margin: 0 0 4px; display: flex; justify-content: space-between; }
+  .chart h3 small { color: var(--muted); font-weight: 400; }
+  .chart svg { display: block; width: 100%; touch-action: pan-y; }
+  .t-line { stroke: var(--accent); stroke-width: 2; fill: none; stroke-linejoin: round; }
+  .t-heat { fill: var(--heat); opacity: .2; } .t-off { fill: var(--off); opacity: .2; }
+  .t-grid { stroke: var(--line); stroke-width: 1; } .t-ref { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4 3; }
+  .t-axis { fill: var(--muted); font-size: 11px; } .t-guide { stroke: var(--muted); stroke-width: 1; }
+  .t-dot { fill: var(--accent); stroke: var(--card); stroke-width: 2; }
+  .tip { position: absolute; top: 24px; pointer-events: none; background: var(--card); border: 1px solid var(--line);
+         border-radius: 8px; padding: 6px 8px; font-size: .8rem; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
   .key { margin-top: 24px; } .key input { font: inherit; padding: 9px; width: 100%; max-width: 360px;
          border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); }
 </style>
@@ -84,6 +104,18 @@
     </div>
 
     <div class="rooms" id="rooms"></div>
+
+    <h2>Andamento</h2>
+    <div class="chart-bar">
+      <div class="seg" id="range">
+        <button data-days="1" class="active">24 ore</button><button data-days="3">3 giorni</button><button data-days="7">7 giorni</button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i class="sw line"></i>Temperatura stanza</span><span><i class="sw heat"></i>Scalda</span>
+      <span><i class="sw off"></i>Spento</span><span><i class="sw ref"></i>Soglia e arresto</span>
+    </div>
+    <div id="charts"></div>
 
     <h2>Consumi stimati</h2>
     <div class="table-wrap"><table id="usage"></table></div>
@@ -228,14 +260,126 @@
     load();
   });
 
+  // --- Charts: one per heater, room temperature over time with heating / off bands ---
+  let rangeDays = 1, history = [];
+  const SVGNS = "http://www.w3.org/2000/svg", MAX_SPAN = 600;
+  const el = (tag, attrs, parent) => {
+    const n = document.createElementNS(SVGNS, tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    if (parent) parent.appendChild(n);
+    return n;
+  };
+
+  async function loadHistory() {
+    if (!key) return;
+    try { history = (await call("/history?days=" + (rangeDays + 1))).points || []; renderCharts(); }
+    catch (e) { if (e.message !== "forbidden") showError("Storico non disponibile: " + e.message); }
+  }
+
+  function renderCharts() {
+    const box = $("charts");
+    if (!data || !box) return;
+    box.innerHTML = "";
+    const tMax = Date.now() / 1000, tMin = tMax - rangeDays * 86400;
+    const pts = history.filter((p) => p.t >= tMin - MAX_SPAN);
+    for (const cfg of data.rooms) {
+      const series = pts.filter((p) => p[cfg.name]).map((p) => ({ t: p.t, ...p[cfg.name] }));
+      const wrap = document.createElement("div");
+      wrap.className = "card chart";
+      let heatS = 0;
+      series.forEach((p, i) => { if (p.h && p.t >= tMin) heatS += Math.min((series[i + 1] ? series[i + 1].t : tMax) - p.t, MAX_SPAN); });
+      wrap.innerHTML = `<h3>${cfg.name}<small>scalda ${hours(heatS)} h · ${kwh(heatS, cfg.power_w)} kWh</small></h3>`;
+      box.appendChild(wrap);
+      drawChart(wrap, cfg, series, tMin, tMax);
+    }
+  }
+
+  function drawChart(wrap, cfg, series, tMin, tMax) {
+    const W = Math.max(wrap.clientWidth - 32, 260), H = 170, m = { l: 30, r: 46, t: 8, b: 22 };
+    const temps = series.map((p) => p.c).filter((v) => v != null);
+    const lo = Math.floor(Math.min(...temps, cfg.threshold) - 1), hi = Math.ceil(Math.max(...temps, cfg.stop) + 1);
+    const x = (t) => m.l + (t - tMin) / (tMax - tMin) * (W - m.l - m.r);
+    const y = (v) => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Temperatura ${cfg.name}` }, wrap);
+    const step = hi - lo > 14 ? 5 : 2;
+    for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) {
+      el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "t-grid" }, svg);
+      el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end", class: "t-axis" }, svg).textContent = v + "°";
+    }
+    // state bands behind the line: each sample holds until the next one (capped, gaps stay empty)
+    series.forEach((p, i) => {
+      if (p.h || !p.o) {
+        const t0 = Math.max(p.t, tMin), t1 = Math.min(series[i + 1] ? series[i + 1].t : tMax, p.t + MAX_SPAN, tMax);
+        if (t1 > t0) el("rect", { x: x(t0), y: m.t, width: Math.max(x(t1) - x(t0), 1), height: H - m.t - m.b,
+                                  class: p.h ? "t-heat" : "t-off" }, svg);
+      }
+    });
+    for (const [v, label] of [[cfg.threshold, "soglia"], [cfg.stop, "stop"]]) {
+      el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "t-ref" }, svg);
+      el("text", { x: W - m.r + 4, y: y(v) + 4, class: "t-axis" }, svg).textContent = `${label} ${v}°`;
+    }
+    // x ticks: hours for 24 h, midnights for longer ranges
+    const first = new Date(tMin * 1000); first.setMinutes(0, 0, 0);
+    for (let d = new Date(first); d.getTime() / 1000 <= tMax; d.setHours(d.getHours() + 1)) {
+      const t = d.getTime() / 1000;
+      if (t < tMin) continue;
+      const tick = rangeDays === 1 ? d.getHours() % 6 === 0 : d.getHours() === 0;
+      if (!tick) continue;
+      const label = rangeDays === 1 ? String(d.getHours()).padStart(2, "0") + ":00"
+        : d.toLocaleDateString("it-IT", { weekday: "short", day: "numeric" });
+      el("text", { x: x(t), y: H - 6, "text-anchor": "middle", class: "t-axis" }, svg).textContent = label;
+    }
+    let dPath = "";
+    series.forEach((p, i) => {
+      if (p.c == null || p.t < tMin - MAX_SPAN) return;
+      const gap = i === 0 || series[i - 1].c == null || p.t - series[i - 1].t > MAX_SPAN;
+      dPath += (gap ? "M" : "L") + x(Math.max(p.t, tMin)).toFixed(1) + "," + y(p.c).toFixed(1);
+    });
+    if (dPath) el("path", { d: dPath, class: "t-line" }, svg);
+    if (!series.length) el("text", { x: W / 2, y: H / 2, "text-anchor": "middle", class: "t-axis" }, svg).textContent = "Nessun dato nel periodo";
+
+    // hover / touch: nearest sample, guide line, dot and tooltip
+    const guide = el("line", { y1: m.t, y2: H - m.b, class: "t-guide", visibility: "hidden" }, svg);
+    const dot = el("circle", { r: 4.5, class: "t-dot", visibility: "hidden" }, svg);
+    const tip = document.createElement("div"); tip.className = "tip"; tip.hidden = true; wrap.appendChild(tip);
+    const hit = el("rect", { x: m.l, y: 0, width: W - m.l - m.r, height: H, fill: "transparent" }, svg);
+    const move = (ev) => {
+      if (!series.length) return;
+      const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * W / r.width;
+      const t = tMin + (px - m.l) / (W - m.l - m.r) * (tMax - tMin);
+      const p = series.reduce((a, b) => Math.abs(b.t - t) < Math.abs(a.t - t) ? b : a);
+      if (p.c == null) return;
+      guide.setAttribute("x1", x(p.t)); guide.setAttribute("x2", x(p.t)); guide.setAttribute("visibility", "visible");
+      dot.setAttribute("cx", x(p.t)); dot.setAttribute("cy", y(p.c)); dot.setAttribute("visibility", "visible");
+      const when = new Date(p.t * 1000).toLocaleString("it-IT", { weekday: rangeDays > 1 ? "short" : undefined, hour: "2-digit", minute: "2-digit" });
+      tip.innerHTML = `<b>${when}</b> · ${deg(p.c)}<br>${!p.o ? "Spento" : p.h ? "Scalda" : "In pausa"} · impostata ${deg(p.s)}`;
+      tip.hidden = false;
+      const left = x(p.t) / W * r.width + 16;
+      tip.style.left = Math.min(left, r.width - tip.offsetWidth + 16) + "px";
+    };
+    const leave = () => { guide.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden"); tip.hidden = true; };
+    hit.addEventListener("pointermove", move); hit.addEventListener("pointerdown", move); hit.addEventListener("pointerleave", leave);
+  }
+
+  $("range").addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-days]");
+    if (!b) return;
+    rangeDays = Number(b.dataset.days);
+    $("range").querySelectorAll("button").forEach((x) => x.classList.toggle("active", x === b));
+    loadHistory();
+  });
+  let resizeTimer;
+  window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(renderCharts, 200); });
+
   async function load() {
     if (!key) return askKey();
     try { render(await call("/status")); showError(""); }
     catch (e) { if (e.message !== "forbidden") showError("Dati non disponibili: " + e.message); }
   }
 
-  load();
+  load().then(loadHistory);
   setInterval(() => { if (!confirming && !document.hidden) load(); }, 60000);
+  setInterval(() => { if (!document.hidden) loadHistory(); }, 300000);  // history only every 5 min: Firestore reads
 })();
 </script>
 </body>
