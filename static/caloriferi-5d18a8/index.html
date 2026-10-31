@@ -152,6 +152,9 @@
     $("rooms").innerHTML = "";
     for (const cfg of d.rooms) {
       const r = (st.rooms || {})[cfg.name] || {};
+      // In automatic mode but on outside its calendar and not in a controller boost: set by hand.
+      const handSet = auto[cfg.name] && r.online !== false && r.switch && !r.boost_until
+        && r.mode && r.mode !== cfg.calendar_mode;
       const el = document.createElement("div");
       el.className = "card room";
       const badge = r.online === false ? '<span class="badge idle">Offline</span>'
@@ -164,8 +167,10 @@
             <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}</dd></dl>
         ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
         ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}
+        ${handSet ? `<div class="boost">Impostato a mano: il codice non lo comanda finché non lo riprendi.</div>` : ""}
         <div class="auto-row"><span>${auto[cfg.name] ? '<span class="on">Automatico</span>' : '<span class="off">Calendario</span>'}</span>
-          <button class="ghost" data-room="${cfg.name}" data-enable="${!auto[cfg.name]}">${auto[cfg.name] ? "Passa a calendario" : "Passa ad automatico"}</button></div>`;
+          <span class="buttons">${handSet ? `<button class="ghost" data-room="${cfg.name}" data-enable="true">Riprendi in automatico</button>` : ""}
+          <button class="ghost" data-room="${cfg.name}" data-enable="${!auto[cfg.name]}">${auto[cfg.name] ? "Passa a calendario" : "Passa ad automatico"}</button></span></div>`;
       $("rooms").appendChild(el);
     }
     renderUsage(d);
