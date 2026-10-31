@@ -141,7 +141,7 @@
   // The key arrives once in the link hash (#k=...), is kept on this device and removed from the address bar.
   try {
     const m = location.hash.match(/k=([^&]+)/);
-    if (m) { localStorage.setItem("caloriferiKey", decodeURIComponent(m[1])); history.replaceState(null, "", location.pathname); }
+    if (m) { localStorage.setItem("caloriferiKey", decodeURIComponent(m[1])); window.history.replaceState(null, "", location.pathname); }
     key = localStorage.getItem("caloriferiKey");
   } catch (e) { const m = location.hash.match(/k=([^&]+)/); key = m && decodeURIComponent(m[1]); }
 
@@ -261,7 +261,7 @@
   });
 
   // --- Charts: one per heater, room temperature over time with heating / off bands ---
-  let rangeDays = 1, history = [];
+  let rangeDays = 1, historyPoints = [];
   const SVGNS = "http://www.w3.org/2000/svg", MAX_SPAN = 600;
   const el = (tag, attrs, parent) => {
     const n = document.createElementNS(SVGNS, tag);
@@ -272,7 +272,7 @@
 
   async function loadHistory() {
     if (!key) return;
-    try { history = (await call("/history?days=" + (rangeDays + 1))).points || []; renderCharts(); }
+    try { historyPoints = (await call("/history?days=" + (rangeDays + 1))).points || []; renderCharts(); }
     catch (e) { if (e.message !== "forbidden") showError("Storico non disponibile: " + e.message); }
   }
 
@@ -281,7 +281,7 @@
     if (!data || !box) return;
     box.innerHTML = "";
     const tMax = Date.now() / 1000, tMin = tMax - rangeDays * 86400;
-    const pts = history.filter((p) => p.t >= tMin - MAX_SPAN);
+    const pts = historyPoints.filter((p) => p.t >= tMin - MAX_SPAN);
     for (const cfg of data.rooms) {
       const series = pts.filter((p) => p[cfg.name]).map((p) => ({ t: p.t, ...p[cfg.name] }));
       const wrap = document.createElement("div");
