@@ -1,3 +1,6 @@
 # La landing Regestio vive in /regestio/. Vecchio path -> nuovo (SEO/link esistenti).
 /gestionale-corsi-associazioni        /regestio/        301!
 /gestionale-corsi-associazioni/*      /regestio/:splat  301!
+
+# Heater status page API: proxied to the controller's page API on Google Cloud (casatomoassistant)
+/api/caloriferi/*  https://heating-api-kb5zzampjq-uc.a.run.app/:splat  200
