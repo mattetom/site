@@ -46,7 +46,10 @@
   .table-wrap { overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; font-size: .9rem; background: var(--card);
           border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th, td { padding: 8px 8px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap;
+           vertical-align: top; }
+  td small { display: block; color: var(--muted); font-size: .8rem; }
+  @media (max-width: 480px) { table { font-size: .82rem; } th, td { padding: 7px 5px; } }
   th:first-child, td:first-child { text-align: left; }
   tr:last-child td { border-bottom: 0; }
   tfoot td { font-weight: 600; }
@@ -105,6 +108,7 @@
   const fmtDay = (d) => new Date(d + "T12:00:00").toLocaleDateString("it-IT", { weekday: "short", day: "numeric", month: "numeric" });
   const deg = (v) => v == null ? "–" : (Math.round(v * 10) / 10).toLocaleString("it-IT") + " °C";
   const hours = (s) => (s / 3600).toLocaleString("it-IT", { maximumFractionDigits: 1 });
+  const cell = (s, w) => `<td>${hours(s)} h<small>${kwh(s, w)} kWh</small></td>`;
   const kwh = (s, w) => w ? (s / 3600 * w / 1000).toLocaleString("it-IT", { maximumFractionDigits: 1 }) : "?";
 
   async function call(path, opts = {}) {
@@ -157,7 +161,7 @@
   function renderUsage(d) {
     const days = Object.keys(d.daily || {}).sort().reverse();
     const names = d.rooms.map((r) => r.name), power = Object.fromEntries(d.rooms.map((r) => [r.name, r.power_w]));
-    let html = "<thead><tr><th>Giorno</th>" + names.map((n) => `<th>${n}</th>`).join("") + "<th>kWh</th></tr></thead><tbody>";
+    let html = "<thead><tr><th>Giorno</th>" + names.map((n) => `<th>${n}</th>`).join("") + "<th>Totale kWh</th></tr></thead><tbody>";
     const sum = (list) => {
       const t = Object.fromEntries(names.map((n) => [n, 0]));
       for (const day of list) for (const n of names) t[n] += ((d.daily[day] || {})[n] || {}).heat_s || 0;
@@ -167,14 +171,14 @@
       .toLocaleString("it-IT", { maximumFractionDigits: 1 });
     for (const day of days.slice(0, 7)) {
       const t = sum([day]);
-      html += `<tr><td>${fmtDay(day)}</td>` + names.map((n) => `<td>${hours(t[n])} h · ${kwh(t[n], power[n])} kWh</td>`).join("")
+      html += `<tr><td>${fmtDay(day)}</td>` + names.map((n) => cell(t[n], power[n])).join("")
         + `<td>${kwhTotal(t)}</td></tr>`;
     }
     if (!days.length) html += `<tr><td colspan="${names.length + 2}">Ancora nessun dato.</td></tr>`;
     html += "</tbody><tfoot>";
     for (const [label, list] of [["7 giorni", days.slice(0, 7)], ["30 giorni", days.slice(0, 30)]]) {
       const t = sum(list);
-      html += `<tr><td>${label}</td>` + names.map((n) => `<td>${hours(t[n])} h · ${kwh(t[n], power[n])} kWh</td>`).join("")
+      html += `<tr><td>${label}</td>` + names.map((n) => cell(t[n], power[n])).join("")
         + `<td>${kwhTotal(t)}</td></tr>`;
     }
     $("usage").innerHTML = html + "</tfoot>";
