@@ -34,6 +34,12 @@
            background: var(--accent); color: #fff; }
   button.confirm { background: var(--heat); }
   button:disabled { opacity: .5; cursor: default; }
+  button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  button.ghost.confirm { background: var(--heat); color: #fff; border-color: var(--heat); }
+  .buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+  .room .auto-row { display: flex; align-items: center; justify-content: space-between; gap: 8px;
+                    margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: .9rem; }
+  .room .auto-row button { padding: 7px 10px; font-size: .85rem; }
   .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 16px; }
   .room h3 { margin: 0; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; }
   .temp { font-size: 2.4rem; font-weight: 600; margin: 8px 0 2px; }
@@ -71,7 +77,10 @@
         <strong id="auto-state"></strong>
         <div class="muted" id="auto-help"></div>
       </div>
-      <button id="toggle"></button>
+      <div class="buttons">
+        <button class="ghost" data-room="" data-enable="true">Tutti automatici</button>
+        <button class="ghost" data-room="" data-enable="false">Tutti a calendario</button>
+      </div>
     </div>
 
     <div class="rooms" id="rooms"></div>
@@ -95,7 +104,7 @@
                   EC: "Eco", AF: "Antigelo", P1: "Programma 1", P2: "Programma 2", P3: "Programma 3",
                   holiday: "Vacanza" };
   const $ = (id) => document.getElementById(id);
-  let key = null, confirming = false, data = null;
+  let key = null, confirming = null, data = null;
 
   // The key arrives once in the link hash (#k=...), is kept on this device and removed from the address bar.
   try {
@@ -127,16 +136,18 @@
 
   function render(d) {
     data = d;
-    const st = d.status || {}, enabled = st.enabled !== false;
+    const st = d.status || {};
+    const auto = Object.fromEntries(d.rooms.map((r) => [r.name, (st.auto || {})[r.name] ?? st.enabled ?? true]));
+    const nAuto = Object.values(auto).filter(Boolean).length;
     $("app").hidden = false; $("key-form").hidden = true;
     $("updated").textContent = st.ts ? "Aggiornato alle " + fmtTime(st.ts) + " · lettura ogni 5 minuti" : "Nessun dato ancora";
 
-    $("auto-state").textContent = enabled ? "Acceso" : "Spento";
-    $("auto-state").className = enabled ? "on" : "off";
-    $("auto-help").textContent = enabled
-      ? "Sotto soglia scalda fino all'arresto o per " + d.boost_minutes + " minuti, poi torna al calendario."
-      : "I caloriferi seguono il loro calendario. Il codice registra soltanto.";
-    confirming = false; updateToggle(enabled);
+    $("auto-state").textContent = nAuto === d.rooms.length ? "Automatico su tutti"
+      : nAuto === 0 ? "Tutti a calendario" : `Automatico su ${nAuto} di ${d.rooms.length}`;
+    $("auto-state").className = nAuto ? "on" : "off";
+    $("auto-help").textContent = "Automatico: sotto soglia scalda fino all'arresto o per " + d.boost_minutes
+      + " minuti, poi torna al calendario. Calendario: segue il suo programma, il codice registra soltanto.";
+    confirming = null;
 
     $("rooms").innerHTML = "";
     for (const cfg of d.rooms) {
@@ -152,7 +163,9 @@
             <dt>Impostata</dt><dd>${deg(r.temp_set)}</dd>
             <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}</dd></dl>
         ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
-        ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}`;
+        ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}
+        <div class="auto-row"><span>${auto[cfg.name] ? '<span class="on">Automatico</span>' : '<span class="off">Calendario</span>'}</span>
+          <button class="ghost" data-room="${cfg.name}" data-enable="${!auto[cfg.name]}">${auto[cfg.name] ? "Passa a calendario" : "Passa ad automatico"}</button></div>`;
       $("rooms").appendChild(el);
     }
     renderUsage(d);
@@ -184,19 +197,24 @@
     $("usage").innerHTML = html + "</tfoot>";
   }
 
-  function updateToggle(enabled) {
-    const b = $("toggle");
-    b.classList.toggle("confirm", confirming);
-    b.textContent = confirming ? "Tocca di nuovo per confermare" : enabled ? "Spegni automatismo" : "Accendi automatismo";
-  }
-
-  $("toggle").addEventListener("click", async () => {
-    const enabled = data && data.status && data.status.enabled !== false;
-    if (!confirming) { confirming = true; updateToggle(enabled); setTimeout(() => { confirming = false; updateToggle(enabled); }, 4000); return; }
-    $("toggle").disabled = true; $("toggle").textContent = "Invio…";
-    try { await call("/automation", { method: "POST", body: JSON.stringify({ enabled: !enabled }) }); await load(); showError(""); }
-    catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); }
-    finally { $("toggle").disabled = false; }
+  // Two-tap confirmation on every switch button (one pending at a time).
+  document.addEventListener("click", async (ev) => {
+    const b = ev.target.closest("button[data-enable]");
+    if (!b) return;
+    const id = b.dataset.room + "|" + b.dataset.enable;
+    if (confirming !== id) {
+      document.querySelectorAll("button.confirm").forEach((x) => { x.classList.remove("confirm"); x.textContent = x.dataset.label; });
+      confirming = id; b.dataset.label = b.textContent; b.classList.add("confirm"); b.textContent = "Tocca per confermare";
+      setTimeout(() => { if (confirming === id) { confirming = null; b.classList.remove("confirm"); b.textContent = b.dataset.label; } }, 4000);
+      return;
+    }
+    confirming = null;
+    document.querySelectorAll("button[data-enable]").forEach((x) => x.disabled = true);
+    b.textContent = "Invio…";
+    const body = { enabled: b.dataset.enable === "true" };
+    if (b.dataset.room) body.room = b.dataset.room;
+    try { await call("/automation", { method: "POST", body: JSON.stringify(body) }); await load(); showError(""); }
+    catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); await load(); }
   });
 
   $("key-save").addEventListener("click", () => {
