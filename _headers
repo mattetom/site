@@ -5,3 +5,8 @@
 # Practice pages for the family (not linked anywhere): keep them out of search engines
 /allenamento-tlyp0q/*
   X-Robots-Tag: noindex, nofollow, noarchive
+
+# Heater status page (not linked anywhere; data and commands need the key in the link hash)
+/caloriferi-5d18a8/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Referrer-Policy: no-referrer

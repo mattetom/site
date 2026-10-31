@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Caloriferi</title>
+<style>
+  :root {
+    --bg: #f5f5f2; --card: #fff; --text: #1d1d1b; --muted: #6b6b66; --line: #e3e3dd;
+    --heat: #d9480f; --heat-bg: #fff0e6; --idle: #5c7080; --ok: #2b8a3e; --off: #868e96;
+    --accent: #1c7ed6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413; --card: #1f1f1d; --text: #ecece8; --muted: #9a9a94; --line: #33332f;
+      --heat: #ff8a4c; --heat-bg: #3a2418; --idle: #9fb1bf; --ok: #69db7c; --off: #adb5bd;
+      --accent: #4dabf7;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  h2 { font-size: 1.1rem; margin: 32px 0 12px; }
+  .muted { color: var(--muted); font-size: .9rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .auto { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+          margin-top: 16px; flex-wrap: wrap; }
+  .auto strong { font-size: 1.1rem; }
+  .on { color: var(--ok); } .off { color: var(--off); }
+  button { font: inherit; border: 0; border-radius: 10px; padding: 10px 16px; cursor: pointer;
+           background: var(--accent); color: #fff; }
+  button.confirm { background: var(--heat); }
+  button:disabled { opacity: .5; cursor: default; }
+  .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 16px; }
+  .room h3 { margin: 0; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; }
+  .temp { font-size: 2.4rem; font-weight: 600; margin: 8px 0 2px; }
+  .badge { font-size: .8rem; font-weight: 600; padding: 3px 8px; border-radius: 99px; }
+  .badge.heat { background: var(--heat-bg); color: var(--heat); }
+  .badge.idle { background: var(--line); color: var(--idle); }
+  .room dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 10px 0 0; font-size: .9rem; }
+  .room dt { color: var(--muted); } .room dd { margin: 0; }
+  .boost { margin-top: 10px; font-size: .9rem; color: var(--heat); }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; background: var(--card);
+          border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  tr:last-child td { border-bottom: 0; }
+  tfoot td { font-weight: 600; }
+  .error { color: var(--heat); margin-top: 16px; }
+  .key { margin-top: 24px; } .key input { font: inherit; padding: 9px; width: 100%; max-width: 360px;
+         border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Caloriferi</h1>
+  <div class="muted" id="updated">Caricamento…</div>
+  <div id="error" class="error" hidden></div>
+
+  <div id="app" hidden>
+    <div class="card auto">
+      <div>
+        <div class="muted">Automatismo</div>
+        <strong id="auto-state"></strong>
+        <div class="muted" id="auto-help"></div>
+      </div>
+      <button id="toggle"></button>
+    </div>
+
+    <div class="rooms" id="rooms"></div>
+
+    <h2>Consumi stimati</h2>
+    <div class="table-wrap"><table id="usage"></table></div>
+    <p class="muted">Ore in cui la resistenza scalda × potenza nominale. Camera e Cucina riportano se scaldano;
+      per il bagno è una stima (stanza sotto la temperatura impostata). Campioni ogni 5 minuti.</p>
+  </div>
+
+  <div class="key" id="key-form" hidden>
+    <p>Serve la chiave di accesso.</p>
+    <input id="key-input" type="password" autocomplete="off" placeholder="Chiave">
+    <button id="key-save" style="margin-top:8px">Entra</button>
+  </div>
+</main>
+<script>
+(() => {
+  const API = "/api/caloriferi";
+  const MODES = { ST: "Calendario", auto: "Calendario", CF: "Manuale", manual: "Manuale",
+                  EC: "Eco", AF: "Antigelo", P1: "Programma 1", P2: "Programma 2", P3: "Programma 3",
+                  holiday: "Vacanza" };
+  const $ = (id) => document.getElementById(id);
+  let key = null, confirming = false, data = null;
+
+  // The key arrives once in the link hash (#k=...), is kept on this device and removed from the address bar.
+  try {
+    const m = location.hash.match(/k=([^&]+)/);
+    if (m) { localStorage.setItem("caloriferiKey", decodeURIComponent(m[1])); history.replaceState(null, "", location.pathname); }
+    key = localStorage.getItem("caloriferiKey");
+  } catch (e) { const m = location.hash.match(/k=([^&]+)/); key = m && decodeURIComponent(m[1]); }
+
+  const fmtTime = (ts) => new Date(ts * 1000).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
+  const fmtDay = (d) => new Date(d + "T12:00:00").toLocaleDateString("it-IT", { weekday: "short", day: "numeric", month: "numeric" });
+  const deg = (v) => v == null ? "–" : (Math.round(v * 10) / 10).toLocaleString("it-IT") + " °C";
+  const hours = (s) => (s / 3600).toLocaleString("it-IT", { maximumFractionDigits: 1 });
+  const kwh = (s, w) => w ? (s / 3600 * w / 1000).toLocaleString("it-IT", { maximumFractionDigits: 1 }) : "?";
+
+  async function call(path, opts = {}) {
+    const res = await fetch(API + path, { ...opts, headers: { "X-Heating-Key": key, "Content-Type": "application/json" } });
+    if (res.status === 403) { askKey("Chiave non valida."); throw new Error("forbidden"); }
+    if (!res.ok) throw new Error("Errore " + res.status);
+    return res.json();
+  }
+
+  function askKey(msg) {
+    $("app").hidden = true; $("key-form").hidden = false;
+    $("updated").textContent = msg || "";
+  }
+
+  function showError(msg) { $("error").hidden = !msg; $("error").textContent = msg || ""; }
+
+  function render(d) {
+    data = d;
+    const st = d.status || {}, enabled = st.enabled !== false;
+    $("app").hidden = false; $("key-form").hidden = true;
+    $("updated").textContent = st.ts ? "Aggiornato alle " + fmtTime(st.ts) + " · lettura ogni 5 minuti" : "Nessun dato ancora";
+
+    $("auto-state").textContent = enabled ? "Acceso" : "Spento";
+    $("auto-state").className = enabled ? "on" : "off";
+    $("auto-help").textContent = enabled
+      ? "Sotto soglia scalda fino all'arresto o per " + d.boost_minutes + " minuti, poi torna al calendario."
+      : "I caloriferi seguono il loro calendario. Il codice registra soltanto.";
+    confirming = false; updateToggle(enabled);
+
+    $("rooms").innerHTML = "";
+    for (const cfg of d.rooms) {
+      const r = (st.rooms || {})[cfg.name] || {};
+      const el = document.createElement("div");
+      el.className = "card room";
+      const badge = r.online === false ? '<span class="badge idle">Offline</span>'
+        : r.switch === false ? '<span class="badge idle">Spento</span>'
+        : r.heating ? '<span class="badge heat">Scalda</span>' : '<span class="badge idle">In pausa</span>';
+      el.innerHTML = `<h3>${cfg.name}${badge}</h3>
+        <div class="temp">${deg(r.temp_current)}</div>
+        <dl><dt>Modalità</dt><dd>${MODES[r.mode] || r.mode || "–"}</dd>
+            <dt>Impostata</dt><dd>${deg(r.temp_set)}</dd>
+            <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}</dd></dl>
+        ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
+        ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}`;
+      $("rooms").appendChild(el);
+    }
+    renderUsage(d);
+  }
+
+  function renderUsage(d) {
+    const days = Object.keys(d.daily || {}).sort().reverse();
+    const names = d.rooms.map((r) => r.name), power = Object.fromEntries(d.rooms.map((r) => [r.name, r.power_w]));
+    let html = "<thead><tr><th>Giorno</th>" + names.map((n) => `<th>${n}</th>`).join("") + "<th>kWh</th></tr></thead><tbody>";
+    const sum = (list) => {
+      const t = Object.fromEntries(names.map((n) => [n, 0]));
+      for (const day of list) for (const n of names) t[n] += ((d.daily[day] || {})[n] || {}).heat_s || 0;
+      return t;
+    };
+    const kwhTotal = (t) => names.reduce((a, n) => a + (power[n] ? t[n] / 3600 * power[n] / 1000 : 0), 0)
+      .toLocaleString("it-IT", { maximumFractionDigits: 1 });
+    for (const day of days.slice(0, 7)) {
+      const t = sum([day]);
+      html += `<tr><td>${fmtDay(day)}</td>` + names.map((n) => `<td>${hours(t[n])} h · ${kwh(t[n], power[n])} kWh</td>`).join("")
+        + `<td>${kwhTotal(t)}</td></tr>`;
+    }
+    if (!days.length) html += `<tr><td colspan="${names.length + 2}">Ancora nessun dato.</td></tr>`;
+    html += "</tbody><tfoot>";
+    for (const [label, list] of [["7 giorni", days.slice(0, 7)], ["30 giorni", days.slice(0, 30)]]) {
+      const t = sum(list);
+      html += `<tr><td>${label}</td>` + names.map((n) => `<td>${hours(t[n])} h · ${kwh(t[n], power[n])} kWh</td>`).join("")
+        + `<td>${kwhTotal(t)}</td></tr>`;
+    }
+    $("usage").innerHTML = html + "</tfoot>";
+  }
+
+  function updateToggle(enabled) {
+    const b = $("toggle");
+    b.classList.toggle("confirm", confirming);
+    b.textContent = confirming ? "Tocca di nuovo per confermare" : enabled ? "Spegni automatismo" : "Accendi automatismo";
+  }
+
+  $("toggle").addEventListener("click", async () => {
+    const enabled = data && data.status && data.status.enabled !== false;
+    if (!confirming) { confirming = true; updateToggle(enabled); setTimeout(() => { confirming = false; updateToggle(enabled); }, 4000); return; }
+    $("toggle").disabled = true; $("toggle").textContent = "Invio…";
+    try { await call("/automation", { method: "POST", body: JSON.stringify({ enabled: !enabled }) }); await load(); showError(""); }
+    catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); }
+    finally { $("toggle").disabled = false; }
+  });
+
+  $("key-save").addEventListener("click", () => {
+    key = $("key-input").value.trim();
+    try { localStorage.setItem("caloriferiKey", key); } catch (e) {}
+    load();
+  });
+
+  async function load() {
+    if (!key) return askKey();
+    try { render(await call("/status")); showError(""); }
+    catch (e) { if (e.message !== "forbidden") showError("Dati non disponibili: " + e.message); }
+  }
+
+  load();
+  setInterval(() => { if (!confirming && !document.hidden) load(); }, 60000);
+})();
+</script>
+</body>
+</html>
