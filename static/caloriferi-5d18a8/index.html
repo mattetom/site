@@ -295,7 +295,7 @@
   }
 
   function drawChart(wrap, cfg, series, tMin, tMax) {
-    const W = Math.max(wrap.clientWidth - 32, 260), H = 170, m = { l: 30, r: 46, t: 8, b: 22 };
+    const W = Math.max(wrap.clientWidth - 32, 260), H = 180, m = { l: 30, r: 64, t: 8, b: 28 };
     const temps = series.map((p) => p.c).filter((v) => v != null);
     const lo = Math.floor(Math.min(...temps, cfg.threshold) - 1), hi = Math.ceil(Math.max(...temps, cfg.stop) + 1);
     const x = (t) => m.l + (t - tMin) / (tMax - tMin) * (W - m.l - m.r);
