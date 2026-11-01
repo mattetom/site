@@ -73,6 +73,8 @@
   .edit-link { background: none; color: var(--accent); padding: 0; margin-top: 8px; font-size: .85rem; }
   .edit { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .edit label { font-size: .8rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+  .edit select { font: inherit; width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 8px;
+                 background: var(--bg); color: var(--text); }
   .edit input { font: inherit; width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 8px;
                 background: var(--bg); color: var(--text); }
   .edit .row { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -222,15 +224,18 @@
           .map((p) => `<button data-preset="${esc(p)}" data-room="${cfg.name}" class="${p === cfg.preset ? "on" : ""}">${esc(p)}</button>`).join("")}
           ${cfg.preset_until ? `<span class="until">fino alle ${fmtTime(cfg.preset_until)}, poi ${esc(cfg.default_preset)}</span>` : ""}</div>
         <div class="durations" data-durations="${cfg.name}" hidden></div>
-        <button class="edit-link" data-edit="${cfg.name}">Modifica modalità «${esc(cfg.preset)}»</button>
-        <form class="edit" data-room="${cfg.name}" data-preset="${esc(cfg.preset)}" hidden>
-          <label class="name">Nome (cambialo per salvarla come nuova modalità)<input name="name" maxlength="20" value="${esc(cfg.preset)}"></label>
-          <label>Parte sotto<input name="threshold" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.threshold}"></label>
-          <label>Scalda a<input name="boost" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.boost}"></label>
-          <label>Si ferma a<input name="stop" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.stop}"></label>
+        <button class="edit-link" data-edit="${cfg.name}">Modifica modalità</button>
+        <form class="edit" data-room="${cfg.name}" hidden>
+          <label class="name">Quale modalità<select name="which">
+            ${Object.keys(cfg.presets).map((p) => `<option value="${esc(p)}"${p === cfg.preset ? " selected" : ""}>${esc(p)}${p === cfg.preset ? " (attiva)" : ""}</option>`).join("")}
+            <option value="">Nuova modalità…</option></select></label>
+          <label class="name">Nome<input name="name" maxlength="20"></label>
+          <label>Parte sotto<input name="threshold" type="number" inputmode="numeric" min="5" max="30" step="1"></label>
+          <label>Scalda a<input name="boost" type="number" inputmode="numeric" min="5" max="30" step="1"></label>
+          <label>Si ferma a<input name="stop" type="number" inputmode="numeric" min="5" max="30" step="1"></label>
           <div class="msg"></div>
           <div class="row"><button type="submit">Salva</button><button type="button" class="ghost" data-cancel>Annulla</button>
-            ${cfg.preset !== cfg.default_preset ? `<button type="button" class="ghost" data-delete-preset>Elimina «${esc(cfg.preset)}»</button>` : ""}</div>
+            <button type="button" class="ghost" data-delete-preset hidden></button></div>
         </form>
         ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
         ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}
@@ -299,6 +304,7 @@
     if (open) {
       const form = document.querySelector(`form.edit[data-room="${open.dataset.edit}"]`);
       form.hidden = false; open.hidden = true; editing = open.dataset.edit;
+      fillForm(form);
       return;
     }
     if (ev.target.closest("button[data-cancel]")) { editing = null; render(data); return; }
@@ -326,6 +332,24 @@
       if (del.dataset.armed) { postPreset("/preset-delete", { room: form.dataset.room, name: form.dataset.preset }, form.querySelector(".msg")); }
       else { del.dataset.armed = "1"; del.textContent = "Tocca per confermare"; }
     }
+  });
+
+  // Load the chosen preset's values into the form ("" = a new preset, starting from the default one).
+  function fillForm(form) {
+    const cfg = data.rooms.find((r) => r.name === form.dataset.room);
+    const which = form.elements.which.value;
+    const v = cfg.presets[which] || cfg.presets[cfg.default_preset];
+    form.elements.name.value = which;
+    form.elements.name.placeholder = which ? "" : "Nome della nuova modalità";
+    for (const k of ["threshold", "boost", "stop"]) form.elements[k].value = v[k];
+    form.dataset.preset = which;
+    const del = form.querySelector("[data-delete-preset]");
+    del.hidden = !which || which === cfg.default_preset;
+    del.textContent = `Elimina «${which}»`; delete del.dataset.armed;
+    form.querySelector(".msg").textContent = which ? "" : "Scegli un nome e le temperature, poi Salva.";
+  }
+  document.addEventListener("change", (ev) => {
+    if (ev.target.name === "which" && ev.target.closest("form.edit")) fillForm(ev.target.closest("form.edit"));
   });
 
   async function postPreset(path, body, msgEl) {
