@@ -60,6 +60,13 @@
   tr:last-child td { border-bottom: 0; }
   tfoot td { font-weight: 600; }
   .error { color: var(--heat); margin-top: 16px; }
+  .edit-link { background: none; color: var(--accent); padding: 0; margin-top: 8px; font-size: .85rem; }
+  .edit { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .edit label { font-size: .8rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+  .edit input { font: inherit; width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 8px;
+                background: var(--bg); color: var(--text); }
+  .edit .row { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .edit .msg { grid-column: 1 / -1; font-size: .85rem; color: var(--heat); min-height: 1em; }
   .chart-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
   .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   .seg button { background: transparent; color: var(--text); border-radius: 0; padding: 7px 12px; font-size: .9rem; }
@@ -136,7 +143,7 @@
                   EC: "Eco", AF: "Antigelo", P1: "Programma 1", P2: "Programma 2", P3: "Programma 3",
                   holiday: "Vacanza" };
   const $ = (id) => document.getElementById(id);
-  let key = null, confirming = null, data = null;
+  let key = null, confirming = null, data = null, editing = null;
 
   // The key arrives once in the link hash (#k=...), is kept on this device and removed from the address bar.
   try {
@@ -181,6 +188,7 @@
       + " minuti, poi torna al calendario. Calendario: segue il suo programma, il codice registra soltanto.";
     confirming = null;
 
+    if (editing) { renderUsage(d); return; }  // keep an open temperature form untouched
     $("rooms").innerHTML = "";
     for (const cfg of d.rooms) {
       const r = (st.rooms || {})[cfg.name] || {};
@@ -197,6 +205,14 @@
         <dl><dt>Modalità</dt><dd>${MODES[r.mode] || r.mode || "–"}</dd>
             <dt>Impostata</dt><dd>${deg(r.temp_set)}</dd>
             <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}</dd></dl>
+        <button class="edit-link" data-edit="${cfg.name}">Modifica temperature</button>
+        <form class="edit" data-room="${cfg.name}" hidden>
+          <label>Parte sotto<input name="threshold" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.threshold}"></label>
+          <label>Scalda a<input name="boost" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.boost}"></label>
+          <label>Si ferma a<input name="stop" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.stop}"></label>
+          <div class="msg"></div>
+          <div class="row"><button type="submit">Salva</button><button type="button" class="ghost" data-cancel>Annulla</button></div>
+        </form>
         ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
         ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}
         ${handSet ? `<div class="boost">Impostato a mano: il codice non lo comanda finché non lo riprendi.</div>` : ""}
@@ -252,6 +268,35 @@
     if (b.dataset.room) body.room = b.dataset.room;
     try { await call("/automation", { method: "POST", body: JSON.stringify(body) }); await load(); showError(""); }
     catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); await load(); }
+  });
+
+  // Temperature editing per heater: same rules as the server (whole degrees 5-30, threshold < stop <= boost).
+  document.addEventListener("click", (ev) => {
+    const open = ev.target.closest("button[data-edit]");
+    if (open) {
+      const form = document.querySelector(`form.edit[data-room="${open.dataset.edit}"]`);
+      form.hidden = false; open.hidden = true; editing = open.dataset.edit;
+      return;
+    }
+    if (ev.target.closest("button[data-cancel]")) { editing = null; render(data); }
+  });
+  document.addEventListener("submit", async (ev) => {
+    const form = ev.target.closest("form.edit");
+    if (!form) return;
+    ev.preventDefault();
+    const v = Object.fromEntries(["threshold", "boost", "stop"].map((k) => [k, Number(form.elements[k].value)]));
+    const msg = form.querySelector(".msg");
+    if (!Object.values(v).every((x) => Number.isInteger(x) && x >= 5 && x <= 30)) { msg.textContent = "Usa gradi interi fra 5 e 30."; return; }
+    if (!(v.threshold < v.stop)) { msg.textContent = "\"Parte sotto\" deve essere più basso di \"Si ferma a\"."; return; }
+    if (!(v.stop <= v.boost)) { msg.textContent = "\"Si ferma a\" non può superare \"Scalda a\"."; return; }
+    msg.textContent = "Salvataggio…";
+    form.querySelectorAll("button").forEach((b) => b.disabled = true);
+    try {
+      await call("/settings", { method: "POST", body: JSON.stringify({ room: form.dataset.room, ...v }) });
+      editing = null; await load(); showError("");
+    } catch (e) {
+      if (e.message !== "forbidden") { msg.textContent = "Non salvato: " + e.message; form.querySelectorAll("button").forEach((b) => b.disabled = false); }
+    }
   });
 
   $("key-save").addEventListener("click", () => {
