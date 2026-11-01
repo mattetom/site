@@ -61,6 +61,14 @@
   tr:last-child td { border-bottom: 0; }
   tfoot td { font-weight: 600; }
   .error { color: var(--heat); margin-top: 16px; }
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+  .presets button { padding: 6px 11px; font-size: .85rem; border-radius: 99px; background: transparent;
+                    color: var(--accent); border: 1px solid var(--accent); }
+  .presets button.on { background: var(--accent); color: #fff; }
+  .presets .until { font-size: .8rem; color: var(--muted); }
+  .durations { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; align-items: center; font-size: .85rem; }
+  .durations button { padding: 6px 10px; font-size: .85rem; }
+  .edit .name { grid-column: 1 / -1; }
   .edit-link { background: none; color: var(--accent); padding: 0; margin-top: 8px; font-size: .85rem; }
   .edit { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .edit label { font-size: .8rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
@@ -153,6 +161,7 @@
     key = localStorage.getItem("caloriferiKey");
   } catch (e) { const m = location.hash.match(/k=([^&]+)/); key = m && decodeURIComponent(m[1]); }
 
+  const esc = (t) => String(t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const fmtTime = (ts) => new Date(ts * 1000).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
   const fmtDay = (d) => new Date(d + "T12:00:00").toLocaleDateString("it-IT", { weekday: "short", day: "numeric", month: "numeric" });
   const deg = (v) => v == null ? "–" : (Math.round(v * 10) / 10).toLocaleString("it-IT") + " °C";
@@ -208,13 +217,19 @@
         <dl><dt>Modalità</dt><dd>${MODES[r.mode] || r.mode || "–"}</dd>
             <dt>Impostata</dt><dd>${deg(r.temp_set)}</dd>
             <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}</dd></dl>
-        <button class="edit-link" data-edit="${cfg.name}">Modifica temperature</button>
-        <form class="edit" data-room="${cfg.name}" hidden>
+        <div class="presets">${Object.keys(cfg.presets).sort((a, b) => (a === cfg.default_preset ? -1 : b === cfg.default_preset ? 1 : a.localeCompare(b)))
+          .map((p) => `<button data-preset="${esc(p)}" data-room="${cfg.name}" class="${p === cfg.preset ? "on" : ""}">${esc(p)}</button>`).join("")}
+          ${cfg.preset_until ? `<span class="until">fino alle ${fmtTime(cfg.preset_until)}, poi ${esc(cfg.default_preset)}</span>` : ""}</div>
+        <div class="durations" data-durations="${cfg.name}" hidden></div>
+        <button class="edit-link" data-edit="${cfg.name}">Modifica modalità «${esc(cfg.preset)}»</button>
+        <form class="edit" data-room="${cfg.name}" data-preset="${esc(cfg.preset)}" hidden>
+          <label class="name">Nome (cambialo per salvarla come nuova modalità)<input name="name" maxlength="20" value="${esc(cfg.preset)}"></label>
           <label>Parte sotto<input name="threshold" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.threshold}"></label>
           <label>Scalda a<input name="boost" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.boost}"></label>
           <label>Si ferma a<input name="stop" type="number" inputmode="numeric" min="5" max="30" step="1" value="${cfg.stop}"></label>
           <div class="msg"></div>
-          <div class="row"><button type="submit">Salva</button><button type="button" class="ghost" data-cancel>Annulla</button></div>
+          <div class="row"><button type="submit">Salva</button><button type="button" class="ghost" data-cancel>Annulla</button>
+            ${cfg.preset !== cfg.default_preset ? `<button type="button" class="ghost" data-delete-preset>Elimina «${esc(cfg.preset)}»</button>` : ""}</div>
         </form>
         ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
         ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}
@@ -285,8 +300,40 @@
       form.hidden = false; open.hidden = true; editing = open.dataset.edit;
       return;
     }
-    if (ev.target.closest("button[data-cancel]")) { editing = null; render(data); }
+    if (ev.target.closest("button[data-cancel]")) { editing = null; render(data); return; }
+    const chip = ev.target.closest("button[data-preset]");
+    if (chip) {
+      const room = chip.dataset.room, name = chip.dataset.preset;
+      const cfg = data.rooms.find((r) => r.name === room);
+      if (name === cfg.default_preset) { sendPreset(room, name, null); return; }
+      const box = document.querySelector(`[data-durations="${room}"]`);
+      editing = room; box.hidden = false;
+      box.innerHTML = `<span>«${esc(name)}» per:</span>` + [["Sempre", null], ["30 min", 30], ["1 h", 60], ["2 h", 120], ["4 h", 240], ["8 h", 480]]
+        .map(([l, m]) => `<button class="ghost" data-go="${m}">${l}</button>`).join("") + `<button class="ghost" data-cancel>Annulla</button>`;
+      box.dataset.name = name;
+      return;
+    }
+    const go = ev.target.closest("button[data-go]");
+    if (go) {
+      const box = go.closest("[data-durations]");
+      sendPreset(box.dataset.durations, box.dataset.name, go.dataset.go === "null" ? null : Number(go.dataset.go));
+      return;
+    }
+    const del = ev.target.closest("button[data-delete-preset]");
+    if (del) {
+      const form = del.closest("form.edit");
+      if (del.dataset.armed) { postPreset("/preset-delete", { room: form.dataset.room, name: form.dataset.preset }, form.querySelector(".msg")); }
+      else { del.dataset.armed = "1"; del.textContent = "Tocca per confermare"; }
+    }
   });
+
+  async function postPreset(path, body, msgEl) {
+    document.querySelectorAll(".presets button, .durations button, form.edit button").forEach((b) => b.disabled = true);
+    if (msgEl) msgEl.textContent = "Invio…";
+    try { await call(path, { method: "POST", body: JSON.stringify(body) }); editing = null; await load(); showError(""); }
+    catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); editing = null; await load(); }
+  }
+  const sendPreset = (room, name, minutes) => postPreset("/preset", { room, name, minutes });
   document.addEventListener("submit", async (ev) => {
     const form = ev.target.closest("form.edit");
     if (!form) return;
@@ -296,10 +343,11 @@
     if (!Object.values(v).every((x) => Number.isInteger(x) && x >= 5 && x <= 30)) { msg.textContent = "Usa gradi interi fra 5 e 30."; return; }
     if (!(v.threshold < v.stop)) { msg.textContent = "\"Parte sotto\" deve essere più basso di \"Si ferma a\"."; return; }
     if (!(v.stop <= v.boost)) { msg.textContent = "\"Si ferma a\" non può superare \"Scalda a\"."; return; }
+    if (!/^[\p{L}\p{N} '\-]{1,20}$/u.test(form.elements.name.value.trim())) { msg.textContent = "Nome: da 1 a 20 lettere, numeri o spazi."; return; }
     msg.textContent = "Salvataggio…";
     form.querySelectorAll("button").forEach((b) => b.disabled = true);
     try {
-      await call("/settings", { method: "POST", body: JSON.stringify({ room: form.dataset.room, ...v }) });
+      await call("/preset-save", { method: "POST", body: JSON.stringify({ room: form.dataset.room, name: form.elements.name.value.trim(), ...v }) });
       editing = null; await load(); showError("");
     } catch (e) {
       if (e.message !== "forbidden") { msg.textContent = "Non salvato: " + e.message; form.querySelectorAll("button").forEach((b) => b.disabled = false); }
