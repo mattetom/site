@@ -223,6 +223,7 @@
         <div class="auto-row"><span>${auto[cfg.name] ? '<span class="on">Automatico</span>' : '<span class="off">Calendario</span>'}</span>
           <span class="buttons">${handSet ? `<button class="ghost" data-room="${cfg.name}" data-enable="true">Riprendi in automatico</button>` : ""}
           ${offByHand ? `<button class="ghost" data-room="${cfg.name}" data-switch-on="1">Accendi</button>` : ""}
+          ${r.online !== false && r.switch ? `<button class="ghost" data-room="${cfg.name}" data-switch-off="1">Spegni</button>` : ""}
           <button class="ghost" data-room="${cfg.name}" data-enable="${!auto[cfg.name]}">${auto[cfg.name] ? "Passa a calendario" : "Passa ad automatico"}</button></span></div>`;
       $("rooms").appendChild(el);
     }
@@ -257,9 +258,9 @@
 
   // Two-tap confirmation on every switch button (one pending at a time).
   document.addEventListener("click", async (ev) => {
-    const b = ev.target.closest("button[data-enable], button[data-switch-on]");
+    const b = ev.target.closest("button[data-enable], button[data-switch-on], button[data-switch-off]");
     if (!b) return;
-    const id = b.dataset.room + "|" + (b.dataset.switchOn ? "on" : b.dataset.enable);
+    const id = b.dataset.room + "|" + (b.dataset.switchOn ? "on" : b.dataset.switchOff ? "off" : b.dataset.enable);
     if (confirming !== id) {
       document.querySelectorAll("button.confirm").forEach((x) => { x.classList.remove("confirm"); x.textContent = x.dataset.label; });
       confirming = id; b.dataset.label = b.textContent; b.classList.add("confirm"); b.textContent = "Tocca per confermare";
@@ -267,9 +268,10 @@
       return;
     }
     confirming = null;
-    document.querySelectorAll("button[data-enable], button[data-switch-on]").forEach((x) => x.disabled = true);
+    document.querySelectorAll("button[data-enable], button[data-switch-on], button[data-switch-off]").forEach((x) => x.disabled = true);
     b.textContent = "Invio…";
     const [path, body] = b.dataset.switchOn ? ["/switch-on", { room: b.dataset.room }]
+      : b.dataset.switchOff ? ["/switch-off", { room: b.dataset.room }]
       : ["/automation", Object.assign({ enabled: b.dataset.enable === "true" }, b.dataset.room ? { room: b.dataset.room } : {})];
     try { await call(path, { method: "POST", body: JSON.stringify(body) }); await load(); showError(""); }
     catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); await load(); }
