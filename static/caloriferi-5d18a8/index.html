@@ -69,6 +69,7 @@
   .durations { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; align-items: center; font-size: .85rem; }
   .durations button { padding: 6px 10px; font-size: .85rem; }
   .edit .name { grid-column: 1 / -1; }
+  .edit[hidden], .durations[hidden] { display: none; }  /* display rules above would override [hidden] */
   .edit-link { background: none; color: var(--accent); padding: 0; margin-top: 8px; font-size: .85rem; }
   .edit { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .edit label { font-size: .8rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
@@ -214,7 +215,7 @@
         : r.heating ? '<span class="badge heat">Scalda</span>' : '<span class="badge idle">In pausa</span>';
       el.innerHTML = `<h3>${cfg.name}${badge}</h3>
         <div class="temp">${deg(r.temp_current)}</div>
-        <dl><dt>Modalità</dt><dd>${MODES[r.mode] || r.mode || "–"}</dd>
+        <dl><dt>Funzionamento</dt><dd>${MODES[r.mode] || r.mode || "–"}</dd>
             <dt>Impostata</dt><dd>${deg(r.temp_set)}</dd>
             <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}</dd></dl>
         <div class="presets">${Object.keys(cfg.presets).sort((a, b) => (a === cfg.default_preset ? -1 : b === cfg.default_preset ? 1 : a.localeCompare(b)))
