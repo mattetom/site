@@ -46,6 +46,7 @@
   .badge { font-size: .8rem; font-weight: 600; padding: 3px 8px; border-radius: 99px; }
   .badge.heat { background: var(--heat-bg); color: var(--heat); }
   .badge.idle { background: var(--line); color: var(--idle); }
+  .badge.off { background: var(--text); color: var(--card); }
   .room dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 10px 0 0; font-size: .9rem; }
   .room dt { color: var(--muted); } .room dd { margin: 0; }
   .boost { margin-top: 10px; font-size: .9rem; color: var(--heat); }
@@ -195,12 +196,12 @@
       // In automatic mode but on outside its calendar and not in a controller boost: set by hand.
       const handSet = auto[cfg.name] && r.online !== false && r.switch && !r.boost_until
         && r.mode && r.mode !== cfg.calendar_mode;
-      // In automatic mode but switched off: the controller never switches a heater on by itself.
-      const offByHand = auto[cfg.name] && r.online !== false && r.switch === false;
+      // Switched off (app, timer, by hand): the controller never switches a heater on by itself.
+      const offByHand = r.online !== false && r.switch === false;
       const el = document.createElement("div");
       el.className = "card room";
       const badge = r.online === false ? '<span class="badge idle">Offline</span>'
-        : r.switch === false ? '<span class="badge idle">Spento</span>'
+        : r.switch === false ? '<span class="badge off">Spento</span>'
         : r.heating ? '<span class="badge heat">Scalda</span>' : '<span class="badge idle">In pausa</span>';
       el.innerHTML = `<h3>${cfg.name}${badge}</h3>
         <div class="temp">${deg(r.temp_current)}</div>
@@ -218,10 +219,10 @@
         ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
         ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}
         ${handSet ? `<div class="boost">Impostato a mano: il codice non lo comanda finché non lo riprendi.</div>` : ""}
-        ${offByHand ? `<div class="boost">Spento: il codice non accende da solo un calorifero spento.</div>` : ""}
+        ${offByHand ? `<div class="boost">Spento dall'app, da un timer o a mano: il codice non lo riaccende da solo.</div>` : ""}
         <div class="auto-row"><span>${auto[cfg.name] ? '<span class="on">Automatico</span>' : '<span class="off">Calendario</span>'}</span>
           <span class="buttons">${handSet ? `<button class="ghost" data-room="${cfg.name}" data-enable="true">Riprendi in automatico</button>` : ""}
-          ${offByHand ? `<button class="ghost" data-room="${cfg.name}" data-enable="true">Accendi in automatico</button>` : ""}
+          ${offByHand ? `<button class="ghost" data-room="${cfg.name}" data-switch-on="1">Accendi</button>` : ""}
           <button class="ghost" data-room="${cfg.name}" data-enable="${!auto[cfg.name]}">${auto[cfg.name] ? "Passa a calendario" : "Passa ad automatico"}</button></span></div>`;
       $("rooms").appendChild(el);
     }
@@ -256,9 +257,9 @@
 
   // Two-tap confirmation on every switch button (one pending at a time).
   document.addEventListener("click", async (ev) => {
-    const b = ev.target.closest("button[data-enable]");
+    const b = ev.target.closest("button[data-enable], button[data-switch-on]");
     if (!b) return;
-    const id = b.dataset.room + "|" + b.dataset.enable;
+    const id = b.dataset.room + "|" + (b.dataset.switchOn ? "on" : b.dataset.enable);
     if (confirming !== id) {
       document.querySelectorAll("button.confirm").forEach((x) => { x.classList.remove("confirm"); x.textContent = x.dataset.label; });
       confirming = id; b.dataset.label = b.textContent; b.classList.add("confirm"); b.textContent = "Tocca per confermare";
@@ -266,11 +267,11 @@
       return;
     }
     confirming = null;
-    document.querySelectorAll("button[data-enable]").forEach((x) => x.disabled = true);
+    document.querySelectorAll("button[data-enable], button[data-switch-on]").forEach((x) => x.disabled = true);
     b.textContent = "Invio…";
-    const body = { enabled: b.dataset.enable === "true" };
-    if (b.dataset.room) body.room = b.dataset.room;
-    try { await call("/automation", { method: "POST", body: JSON.stringify(body) }); await load(); showError(""); }
+    const [path, body] = b.dataset.switchOn ? ["/switch-on", { room: b.dataset.room }]
+      : ["/automation", Object.assign({ enabled: b.dataset.enable === "true" }, b.dataset.room ? { room: b.dataset.room } : {})];
+    try { await call(path, { method: "POST", body: JSON.stringify(body) }); await load(); showError(""); }
     catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); await load(); }
   });
 
