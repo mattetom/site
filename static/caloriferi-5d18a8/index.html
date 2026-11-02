@@ -110,6 +110,7 @@
   <div id="error" class="error" hidden></div>
 
   <div id="app" hidden>
+    <div class="seg" id="houses" style="margin-top:14px"></div>
     <div class="card auto">
       <div>
         <div class="muted">Automatismo</div>
@@ -117,8 +118,8 @@
         <div class="muted" id="auto-help"></div>
       </div>
       <div class="buttons">
-        <button class="ghost" data-room="" data-enable="true">Tutti automatici</button>
-        <button class="ghost" data-room="" data-enable="false">Tutti a calendario</button>
+        <button class="ghost" data-room="" data-house="" data-enable="true">Tutti automatici</button>
+        <button class="ghost" data-room="" data-house="" data-enable="false">Tutti a calendario</button>
       </div>
     </div>
 
@@ -155,7 +156,10 @@
                   EC: "Eco", AF: "Antigelo", P1: "Programma 1", P2: "Programma 2", P3: "Programma 3",
                   holiday: "Vacanza" };
   const $ = (id) => document.getElementById(id);
-  let key = null, confirming = null, data = null, editing = null;
+  let key = null, confirming = null, data = null, editing = null, house = null;
+  try { house = localStorage.getItem("caloriferiHouse"); } catch (e) {}
+  const inHouse = (d) => d.rooms.filter((r) => r.house === house);
+  const durata = (m) => m % 60 ? `${m} min` : `${m / 60} h`;
 
   // The key arrives once in the link hash (#k=...), is kept on this device and removed from the address bar.
   try {
@@ -169,7 +173,7 @@
   const fmtDay = (d) => new Date(d + "T12:00:00").toLocaleDateString("it-IT", { weekday: "short", day: "numeric", month: "numeric" });
   const deg = (v) => v == null ? "–" : (Math.round(v * 10) / 10).toLocaleString("it-IT") + " °C";
   const hours = (s) => (s / 3600).toLocaleString("it-IT", { maximumFractionDigits: 1 });
-  const cell = (s, w) => `<td>${hours(s)} h<small>${kwh(s, w)} kWh</small></td>`;
+  const cell = (s, w) => `<td>${hours(s)} h${w ? `<small>${kwh(s, w)} kWh</small>` : ""}</td>`;
   const kwh = (s, w) => w ? (s / 3600 * w / 1000).toLocaleString("it-IT", { maximumFractionDigits: 1 }) : "?";
 
   async function call(path, opts = {}) {
@@ -188,22 +192,25 @@
 
   function render(d) {
     data = d;
-    const st = d.status || {};
+    if (!d.houses.includes(house)) house = d.houses[0];
+    $("houses").innerHTML = d.houses.map((h) => `<button data-house-tab="${esc(h)}" class="${h === house ? "active" : ""}">${esc(h)}</button>`).join("");
+    document.querySelectorAll("button[data-house]").forEach((b) => b.dataset.house = house);
+    const st = d.status || {}, rooms = inHouse(d);
     const auto = Object.fromEntries(d.rooms.map((r) => [r.name, (st.auto || {})[r.name] ?? st.enabled ?? true]));
-    const nAuto = Object.values(auto).filter(Boolean).length;
+    const nAuto = rooms.filter((r) => auto[r.name]).length;
     $("app").hidden = false; $("key-form").hidden = true;
     $("updated").textContent = st.ts ? "Aggiornato alle " + fmtTime(st.ts) + " · lettura ogni 5 minuti" : "Nessun dato ancora";
 
-    $("auto-state").textContent = nAuto === d.rooms.length ? "Automatico su tutti"
-      : nAuto === 0 ? "Tutti a calendario" : `Automatico su ${nAuto} di ${d.rooms.length}`;
+    $("auto-state").textContent = nAuto === rooms.length ? "Automatico su tutti"
+      : nAuto === 0 ? "Tutti a calendario" : `Automatico su ${nAuto} di ${rooms.length}`;
     $("auto-state").className = nAuto ? "on" : "off";
-    $("auto-help").textContent = "Automatico: sotto soglia scalda fino all'arresto o per " + d.boost_minutes
-      + " minuti, poi torna al calendario. Calendario: segue il suo programma, il codice registra soltanto.";
+    $("auto-help").textContent = "Automatico: sotto soglia scalda fino all'arresto o per la durata minima della modalità"
+      + ", poi torna al calendario. Calendario: segue il suo programma, il codice registra soltanto.";
     confirming = null;
 
     if (editing) { renderUsage(d); return; }  // keep an open temperature form untouched
     $("rooms").innerHTML = "";
-    for (const cfg of d.rooms) {
+    for (const cfg of rooms) {
       const r = (st.rooms || {})[cfg.name] || {};
       // In automatic mode but on outside its calendar and not in a controller boost: set by hand.
       const handSet = auto[cfg.name] && r.online !== false && r.switch && !r.boost_until
@@ -219,7 +226,7 @@
         <div class="temp">${deg(r.temp_current)}</div>
         <dl><dt>Funzionamento</dt><dd>${MODES[r.mode] || r.mode || "–"}</dd>
             <dt>Impostata</dt><dd>${deg(r.temp_set)}</dd>
-            <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}</dd></dl>
+            <dt>Soglia</dt><dd>${deg(cfg.threshold)} → ${deg(cfg.boost)}, stop ${deg(cfg.stop)}, almeno ${durata(cfg.minutes)}</dd></dl>
         <div class="presets">${Object.keys(cfg.presets).sort((a, b) => (a === cfg.default_preset ? -1 : b === cfg.default_preset ? 1 : a.localeCompare(b)))
           .map((p) => `<button data-preset="${esc(p)}" data-room="${cfg.name}" class="${p === cfg.preset ? "on" : ""}">${esc(p)}</button>`).join("")}
           ${cfg.preset_until ? `<span class="until">fino alle ${fmtTime(cfg.preset_until)}, poi ${esc(cfg.default_preset)}</span>` : ""}</div>
@@ -230,9 +237,10 @@
             ${Object.keys(cfg.presets).map((p) => `<option value="${esc(p)}"${p === cfg.preset ? " selected" : ""}>${esc(p)}${p === cfg.preset ? " (attiva)" : ""}</option>`).join("")}
             <option value="">Nuova modalità…</option></select></label>
           <label class="name">Nome<input name="name" maxlength="20"></label>
-          <label>Parte sotto<input name="threshold" type="number" inputmode="numeric" min="5" max="30" step="1"></label>
-          <label>Scalda a<input name="boost" type="number" inputmode="numeric" min="5" max="30" step="1"></label>
-          <label>Si ferma a<input name="stop" type="number" inputmode="numeric" min="5" max="30" step="1"></label>
+          <label>Parte sotto<input name="threshold" type="number" inputmode="decimal" min="5" max="30" step="${cfg.step || 1}"></label>
+          <label>Scalda a<input name="boost" type="number" inputmode="decimal" min="5" max="30" step="${cfg.step || 1}"></label>
+          <label>Si ferma a<input name="stop" type="number" inputmode="decimal" min="5" max="30" step="${cfg.step || 1}"></label>
+          <label>Almeno (minuti)<input name="minutes" type="number" inputmode="numeric" min="15" max="480" step="15"></label>
           <div class="msg"></div>
           <div class="row"><button type="submit">Salva</button><button type="button" class="ghost" data-cancel>Annulla</button>
             <button type="button" class="ghost" data-delete-preset hidden></button></div>
@@ -253,8 +261,9 @@
 
   function renderUsage(d) {
     const days = Object.keys(d.daily || {}).sort().reverse();
-    const names = d.rooms.map((r) => r.name), power = Object.fromEntries(d.rooms.map((r) => [r.name, r.power_w]));
-    let html = "<thead><tr><th>Giorno</th>" + names.map((n) => `<th>${n}</th>`).join("") + "<th>Totale kWh</th></tr></thead><tbody>";
+    const names = inHouse(d).map((r) => r.name), power = Object.fromEntries(inHouse(d).map((r) => [r.name, r.power_w]));
+    const anyElectric = names.some((n) => power[n]);
+    let html = "<thead><tr><th>Giorno</th>" + names.map((n) => `<th>${n}</th>`).join("") + (anyElectric ? "<th>Totale kWh</th>" : "") + "</tr></thead><tbody>";
     const sum = (list) => {
       const t = Object.fromEntries(names.map((n) => [n, 0]));
       for (const day of list) for (const n of names) t[n] += ((d.daily[day] || {})[n] || {}).heat_s || 0;
@@ -265,17 +274,25 @@
     for (const day of days.slice(0, 7)) {
       const t = sum([day]);
       html += `<tr><td>${fmtDay(day)}</td>` + names.map((n) => cell(t[n], power[n])).join("")
-        + `<td>${kwhTotal(t)}</td></tr>`;
+        + (anyElectric ? `<td>${kwhTotal(t)}</td>` : "") + "</tr>";
     }
     if (!days.length) html += `<tr><td colspan="${names.length + 2}">Ancora nessun dato.</td></tr>`;
     html += "</tbody><tfoot>";
     for (const [label, list] of [["7 giorni", days.slice(0, 7)], ["30 giorni", days.slice(0, 30)]]) {
       const t = sum(list);
       html += `<tr><td>${label}</td>` + names.map((n) => cell(t[n], power[n])).join("")
-        + `<td>${kwhTotal(t)}</td></tr>`;
+        + (anyElectric ? `<td>${kwhTotal(t)}</td>` : "") + "</tr>";
     }
     $("usage").innerHTML = html + "</tfoot>";
   }
+
+  document.addEventListener("click", (ev) => {
+    const tab = ev.target.closest("button[data-house-tab]");
+    if (!tab) return;
+    house = tab.dataset.houseTab; editing = null;
+    try { localStorage.setItem("caloriferiHouse", house); } catch (e) {}
+    render(data); renderCharts();
+  });
 
   // Two-tap confirmation on every switch button (one pending at a time).
   document.addEventListener("click", async (ev) => {
@@ -293,7 +310,8 @@
     b.textContent = "Invio…";
     const [path, body] = b.dataset.switchOn ? ["/switch-on", { room: b.dataset.room }]
       : b.dataset.switchOff ? ["/switch-off", { room: b.dataset.room }]
-      : ["/automation", Object.assign({ enabled: b.dataset.enable === "true" }, b.dataset.room ? { room: b.dataset.room } : {})];
+      : ["/automation", Object.assign({ enabled: b.dataset.enable === "true" },
+          b.dataset.room ? { room: b.dataset.room } : { house: b.dataset.house })];
     try { await call(path, { method: "POST", body: JSON.stringify(body) }); await load(); showError(""); }
     catch (e) { if (e.message !== "forbidden") showError("Comando non riuscito: " + e.message); await load(); }
   });
@@ -342,6 +360,7 @@
     form.elements.name.value = which;
     form.elements.name.placeholder = which ? "" : "Nome della nuova modalità";
     for (const k of ["threshold", "boost", "stop"]) form.elements[k].value = v[k];
+    form.elements.minutes.value = v.minutes || cfg.minutes;
     form.dataset.preset = which;
     const del = form.querySelector("[data-delete-preset]");
     del.hidden = !which || which === cfg.default_preset;
@@ -365,7 +384,12 @@
     ev.preventDefault();
     const v = Object.fromEntries(["threshold", "boost", "stop"].map((k) => [k, Number(form.elements[k].value)]));
     const msg = form.querySelector(".msg");
-    if (!Object.values(v).every((x) => Number.isInteger(x) && x >= 5 && x <= 30)) { msg.textContent = "Usa gradi interi fra 5 e 30."; return; }
+    const step = data.rooms.find((r) => r.name === form.dataset.room).step || 1;
+    if (!Object.values(v).every((x) => Number.isInteger(x / step) && x >= 5 && x <= 30)) {
+      msg.textContent = step === 1 ? "Usa gradi interi fra 5 e 30." : "Usa mezzi gradi fra 5 e 30."; return;
+    }
+    v.minutes = Number(form.elements.minutes.value);
+    if (!(Number.isInteger(v.minutes / 15) && v.minutes >= 15 && v.minutes <= 480)) { msg.textContent = "Durata: da 15 a 480 minuti, a passi di 15."; return; }
     if (!(v.threshold < v.stop)) { msg.textContent = "\"Parte sotto\" deve essere più basso di \"Si ferma a\"."; return; }
     if (!(v.stop <= v.boost)) { msg.textContent = "\"Si ferma a\" non può superare \"Scalda a\"."; return; }
     if (!/^[\p{L}\p{N} '\-]{1,20}$/u.test(form.elements.name.value.trim())) { msg.textContent = "Nome: da 1 a 20 lettere, numeri o spazi."; return; }
@@ -407,13 +431,13 @@
     box.innerHTML = "";
     const tMax = Date.now() / 1000, tMin = tMax - rangeDays * 86400;
     const pts = historyPoints.filter((p) => p.t >= tMin - MAX_SPAN);
-    for (const cfg of data.rooms) {
+    for (const cfg of inHouse(data)) {
       const series = pts.filter((p) => p[cfg.name]).map((p) => ({ t: p.t, ...p[cfg.name] }));
       const wrap = document.createElement("div");
       wrap.className = "card chart";
       let heatS = 0;
       series.forEach((p, i) => { if (p.h && p.t >= tMin) heatS += Math.min((series[i + 1] ? series[i + 1].t : tMax) - p.t, MAX_SPAN); });
-      wrap.innerHTML = `<h3>${cfg.name}<small>scalda ${hours(heatS)} h · ${kwh(heatS, cfg.power_w)} kWh</small></h3>`;
+      wrap.innerHTML = `<h3>${cfg.name}<small>scalda ${hours(heatS)} h${cfg.power_w ? ` · ${kwh(heatS, cfg.power_w)} kWh` : ""}</small></h3>`;
       box.appendChild(wrap);
       drawChart(wrap, cfg, series, tMin, tMax);
     }
