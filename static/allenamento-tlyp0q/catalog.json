@@ -36,6 +36,15 @@
   "testLabel": "Cambridge Listening test"
  },
  {
+  "id": "cambridge-listening-2",
+  "subject": "Cambridge",
+  "kind": "exercise",
+  "ico": "🎧",
+  "title": "Movers Listening 2",
+  "test": "2026-11-03",
+  "testLabel": "Cambridge Listening test"
+ },
+ {
   "id": "cambridge-reading-writing-1",
   "subject": "Cambridge",
   "kind": "exercise",
