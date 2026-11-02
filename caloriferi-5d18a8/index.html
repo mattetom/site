@@ -139,8 +139,9 @@
 
     <h2>Consumi stimati</h2>
     <div class="table-wrap"><table id="usage"></table></div>
-    <p class="muted">Ore in cui la resistenza scalda × potenza nominale. Camera e Cucina riportano se scaldano;
-      per il bagno è una stima (stanza sotto la temperatura impostata). Campioni ogni 5 minuti.</p>
+    <p class="muted">Ore di riscaldamento × potenza nominale. Camera e Cucina riportano se scaldano; per lo specchio
+      del bagno e per il termostato della taverna è una stima (stanza sotto la temperatura impostata). La taverna è a gas:
+      solo ore. Campioni ogni 5 minuti.</p>
   </div>
 
   <div class="key" id="key-form" hidden>
@@ -154,7 +155,7 @@
   const API = "/api/caloriferi";
   const MODES = { ST: "Calendario", auto: "Calendario", CF: "Manuale", manual: "Manuale",
                   EC: "Eco", AF: "Antigelo", P1: "Programma 1", P2: "Programma 2", P3: "Programma 3",
-                  holiday: "Vacanza" };
+                  holiday: "Vacanza", "0": "Manuale", "1": "Calendario" };  // "0"/"1": taverna thermostat
   const $ = (id) => document.getElementById(id);
   let key = null, confirming = null, data = null, editing = null, house = null;
   try { house = localStorage.getItem("caloriferiHouse"); } catch (e) {}
