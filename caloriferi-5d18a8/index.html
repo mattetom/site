@@ -222,7 +222,10 @@
       el.className = "card room";
       const badge = r.online === false ? '<span class="badge idle">Offline</span>'
         : r.switch === false ? '<span class="badge off">Spento</span>'
-        : r.heating ? '<span class="badge heat">Scalda</span>' : '<span class="badge idle">In pausa</span>';
+        : r.heating ? (r.heating_source === "setpoint"
+            ? '<span class="badge heat" title="Il dispositivo non lo comunica: stanza sotto la temperatura impostata">Chiede calore (stima)</span>'
+            : '<span class="badge heat">Scalda</span>')
+        : '<span class="badge idle">In pausa</span>';
       el.innerHTML = `<h3>${cfg.name}${badge}</h3>
         <div class="temp">${deg(r.temp_current)}</div>
         <dl><dt>Funzionamento</dt><dd>${MODES[r.mode] || r.mode || "–"}</dd>
