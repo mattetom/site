@@ -155,7 +155,7 @@
   const API = "/api/caloriferi";
   const MODES = { ST: "Calendario", auto: "Calendario", CF: "Manuale", manual: "Manuale",
                   EC: "Eco", AF: "Antigelo", P1: "Programma 1", P2: "Programma 2", P3: "Programma 3",
-                  holiday: "Vacanza", "0": "Manuale", "1": "Calendario" };  // "0"/"1": taverna thermostat
+                  holiday: "Vacanza", "0": "Calendario", "1": "Manuale" };  // "0"/"1": taverna thermostat ("0" = P in the app)
   const $ = (id) => document.getElementById(id);
   let key = null, confirming = null, data = null, editing = null, house = null;
   try { house = localStorage.getItem("caloriferiHouse"); } catch (e) {}
