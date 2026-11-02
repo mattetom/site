@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+<title>Movers Listening 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../app.css">
+<style>
+.player { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 12px; border-radius: 16px; background: var(--blue-bg); }
+.player .btn { min-width: 150px; }
+.bar { flex: 1 1 160px; height: 10px; border-radius: 6px; background: var(--card); overflow: hidden; min-width: 120px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--blue); transition: width .2s linear; }
+.plays { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); }
+.qplay { font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; border: 2px solid var(--blue); color: var(--blue); background: var(--card); border-radius: 999px; padding: 4px 12px; min-height: 40px; }
+
+/* part 1 */
+.names { display: flex; flex-wrap: wrap; gap: 8px; }
+.nm { font: inherit; font-weight: 700; font-size: 18px; padding: 6px 16px; border-radius: 999px; border: 2px solid var(--blue); background: var(--card); color: var(--blue); min-height: 46px; cursor: pointer; }
+.nm.sel { background: var(--blue); color: var(--card); }
+.nm.used { border-style: dashed; opacity: .55; }
+.nm:disabled { border-color: var(--line); color: var(--ink-soft); cursor: default; opacity: 1; }
+.room { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; padding: 12px; border-radius: 16px; background: var(--scene); border: 2px solid var(--line); }
+.room-title { grid-column: 1 / -1; margin: 0; font-family: var(--display); font-weight: 600; color: #56607a; font-size: 15px; }
+.person { font: inherit; cursor: pointer; border: 2px solid #d3dbeb; border-radius: 16px; background: #fff; color: #1d2a44; padding: 8px 6px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 132px; }
+.person .who { font-size: 48px; line-height: 1.1; }
+.person .has { font-size: 26px; line-height: 1.2; letter-spacing: 2px; }
+.person .tag { min-height: 28px; font-weight: 700; font-size: 16px; color: #2f5fb3; }
+.person .tag span { padding: 2px 10px; border-radius: 999px; background: #e3ebf9; }
+.person.ok { border-color: #3d8b4f; background: #e1f2e4; }
+.person.no { border-color: #c23b50; background: #fbe5e8; }
+.person .fixn { font-size: 14px; font-weight: 700; color: #3d8b4f; }
+
+/* part 2 */
+.form { border: 2px solid var(--line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.form h3 { margin: 0; font-family: var(--display); font-size: 20px; }
+.field { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: 18px; }
+.field .n { font-family: var(--mono); font-weight: 700; color: var(--ink-soft); width: 1.4em; }
+.field input { width: 10em; }
+
+/* part 3 */
+.pics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.pic { border: 2px solid var(--line); border-radius: 14px; background: var(--scene); text-align: center; padding: 6px 4px; color: #1d2a44; }
+.pic b { display: block; font-family: var(--mono); font-size: 15px; color: #2f5fb3; }
+.pic span { font-size: 40px; line-height: 1.2; }
+.who3 { display: flex; flex-direction: column; gap: 10px; }
+.who3 .item p { font-weight: 700; }
+.lt { display: flex; gap: 6px; flex-wrap: wrap; }
+.lt button { font: inherit; font-family: var(--mono); font-weight: 700; font-size: 18px; width: 46px; height: 46px; border-radius: 12px; border: 2px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.lt button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue); color: var(--card); }
+.lt button.right { border-color: var(--ok); background: var(--ok-bg); color: var(--ink); }
+
+/* part 4 */
+.opts { display: flex; gap: 10px; flex-wrap: wrap; }
+.opt { font: inherit; cursor: pointer; width: 104px; border-radius: 16px; border: 3px solid var(--line); background: var(--scene); color: #1d2a44; padding: 6px; display: flex; flex-direction: column; align-items: center; }
+.opt span { font-size: 50px; line-height: 1.15; }
+.opt b { font-family: var(--mono); font-size: 15px; }
+.opt[aria-pressed="true"] { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue); }
+.opt[aria-pressed="true"] b::after { content: " \2713"; color: var(--blue); }
+.opt.right { border-color: var(--ok); background: var(--ok-bg); }
+
+/* part 5 */
+.palette { display: flex; gap: 8px; flex-wrap: wrap; }
+.sw { width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--line); cursor: pointer; }
+.sw[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--ink); }
+.scene { width: 100%; height: auto; border-radius: 16px; border: 2px solid var(--line); background: var(--scene); touch-action: manipulation; }
+.scene .obj { cursor: pointer; }
+.scene .f { stroke: #2a3550; stroke-width: 3; stroke-linejoin: round; }
+.scene .k { fill: none; stroke: #2a3550; stroke-width: 3; stroke-linecap: round; pointer-events: none; }
+.scene .hit { stroke: #3d8b4f; stroke-width: 6; }
+.scene .miss { stroke: #c23b50; stroke-width: 6; }
+.signin { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+
+details.ts { border: 2px dashed var(--line); border-radius: 14px; padding: 8px 12px; }
+details.ts summary { cursor: pointer; font-weight: 700; color: var(--blue); }
+details.ts p { margin: 4px 0; font-size: 16px; }
+details.ts .wq { background: var(--miss-bg); border-radius: 8px; padding: 2px 6px; }
+.spk { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" id="back" href="../">&larr; All exercises</a>
+  <header class="hero">
+    <span id="hb"></span>
+    <div>
+      <div class="eyebrow">CAMBRIDGE &middot; A1 MOVERS &middot; LISTENING</div>
+      <h1>Movers <span>Listening</span> 2</h1>
+      <p class="sub" id="hello">Five parts, 25 points, like the real test. You can listen to each part two times.</p>
+    </div>
+  </header>
+  <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
+  <main class="card" id="card" aria-live="polite"></main>
+  <p class="sync" id="sync"></p>
+</div>
+<audio id="au" preload="none" playsinline></audio>
+
+<script src="../app.js"></script>
+<script>
+const { esc, grade, fmt, bunny } = APP;
+const BASE = "./";
+const COL = { red: "#e53935", blue: "#1e88e5", green: "#43a047", yellow: "#fdd835", orange: "#fb8c00",
+  pink: "#f48fb1", purple: "#8e24aa", brown: "#8d6e63", black: "#333333", grey: "#9e9e9e" };
+const LABEL = { R: "", F: "Woman", M: "Man", G: "Girl", B: "Boy" };
+
+let S;               // script.json
+let RUN = [];        // parts in this run
+let mode = "full";   // "full" | "redo"
+let only = {};       // redo: part id -> Set of question numbers
+let step = -1;       // -1 = start screen
+let scores = {}, misses = {}, plays = {}, items = [];
+let startedAt = null;
+let st = {};         // state of the part on screen
+const card = document.getElementById("card");
+const au = document.getElementById("au");
+
+document.getElementById("hb").innerHTML = bunny("");
+document.getElementById("back").href = "../" + APP.carry();
+if (APP.name()) document.getElementById("hello").textContent = `Hi ${APP.name()}! Five parts, 25 points, like the real test. You can listen to each part two times.`;
+
+fetch(BASE + "script.json").then(r => r.json()).then(j => { S = j; RUN = S.parts; show(); APP.status(); })
+  .catch(() => { card.innerHTML = "<p>Oops, the exercise did not load. Check the internet and reload the page.</p>"; });
+
+function active(P, q) { return mode !== "redo" || only[P.id].has(q); }
+function maxOf(P) { return mode === "redo" ? only[P.id].size : P.questions.length; }
+function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+function runMax() { return RUN.reduce((a, p) => a + maxOf(p), 0); }
+
+function drawTally() {
+  document.getElementById("steps").innerHTML = RUN.map((p, i) => `<span class="step ${scores[p.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
+  document.getElementById("pts").textContent = step < 0 ? "" : mode === "redo" ? `${fmt(total())} of ${runMax()} right` : `${fmt(total())} points`;
+}
+
+// ---------- audio ----------
+let current = null;
+function playSrc(src, onStart) {
+  if (current === src && !au.paused) { au.pause(); return; }
+  au.src = src; current = src; au.currentTime = 0;
+  au.play().then(onStart || (() => {})).catch(() => {});
+}
+au.addEventListener("timeupdate", () => { const b = document.getElementById("barfill"); if (b && au.duration) b.style.width = (100 * au.currentTime / au.duration) + "%"; });
+au.addEventListener("play", syncPlayBtn); au.addEventListener("pause", syncPlayBtn); au.addEventListener("ended", syncPlayBtn);
+function syncPlayBtn() {
+  const b = document.getElementById("playbtn");
+  if (!b) return;
+  const P = RUN[step];
+  const n = plays[P.id] || 0;
+  b.textContent = !au.paused && current === fullSrc(P) ? "⏸ Pause" : n === 0 ? "▶ Listen" : n === 1 ? "▶ Listen again" : "▶ Listen one more time";
+  const pl = document.getElementById("plays");
+  if (pl) pl.textContent = n === 0 ? "Not listened yet" : n === 1 ? "Listened 1 time" : `Listened ${n} times`;
+}
+function fullSrc(P) { return BASE + "audio/" + P.id + "-full.m4a"; }
+function qSrc(P, q) { return BASE + "audio/" + P.id + "-q" + q + ".m4a"; }
+
+function playerHTML(P) {
+  if (mode === "redo") return `<div class="player"><span class="note">Listen to each question again, then answer.</span></div>`;
+  return `<div class="player"><button class="btn" id="playbtn" type="button">▶ Listen</button><div class="bar"><i id="barfill"></i></div><span class="plays" id="plays">Not listened yet</span></div>`;
+}
+function qBtn(P, q) { return mode === "redo" ? `<button class="qplay" type="button" data-q="${q}">▶ Question ${q}</button>` : ""; }
+
+// ---------- part 5 scene ----------
+function scene() {
+  const o = (id, inner) => `<g class="obj" data-obj="${id}">${inner}</g>`;
+  const bird = (x, y) => `<g transform="translate(${x} ${y}) scale(1.4)"><ellipse class="f" cx="0" cy="0" rx="13" ry="9"/><circle class="f" cx="11" cy="-8" r="6.5"/><polygon class="f" points="-12,-2 -22,-8 -20,4"/><path class="k" d="M17 -8 L23 -6 L17 -4"/><circle cx="12.5" cy="-9" r="1.4" fill="#2a3550"/></g>`;
+  const dog = (x, y) => `<g transform="translate(${x} ${y})"><ellipse class="f" cx="0" cy="0" rx="24" ry="13"/><circle class="f" cx="25" cy="-12" r="11"/><ellipse class="f" cx="31" cy="-20" rx="5" ry="9" transform="rotate(25 31 -20)"/><path class="k" d="M-14 10 L-15 24 M-4 11 L-4 24 M8 11 L8 24 M16 10 L17 24 M-23 -4 Q-33 -16 -28 -22"/><circle cx="29" cy="-14" r="1.6" fill="#2a3550"/><circle cx="36" cy="-9" r="2.2" fill="#2a3550"/></g>`;
+  return `<svg class="scene" viewBox="0 0 600 350" role="img" aria-label="A street with a house, a tree, a shop, a bus and a car">
+    <rect x="0" y="278" width="600" height="24" fill="#b9dfa5"/>
+    <rect x="0" y="300" width="600" height="50" fill="#c9ced6"/>
+    <path d="M0 325 H600" stroke="#ffffff" stroke-width="4" stroke-dasharray="26 18"/>
+    ${o("house", `<rect class="f" x="30" y="150" width="180" height="130"/>`)}
+    ${o("roof", `<polygon class="f" points="18,152 120,78 222,152"/>`)}
+    ${o("windowTop", `<rect class="f" x="104" y="112" width="32" height="26"/>`)}
+    <path class="k" d="M120 112 V138"/>
+    ${o("windowBig", `<rect class="f" x="126" y="178" width="66" height="50"/>`)}
+    <path class="k" d="M159 178 V228 M126 203 H192"/>
+    ${o("door", `<rect class="f" x="52" y="198" width="46" height="82"/>`)}
+    <circle cx="88" cy="242" r="3.5" fill="#2a3550"/>
+    ${o("birdRoof", bird(176, 104))}
+    ${o("trunk", `<rect class="f" x="283" y="182" width="22" height="98"/>`)}
+    ${o("leaves", `<circle class="f" cx="294" cy="148" r="58"/>`)}
+    ${o("birdTree", bird(300, 132))}
+    ${o("dogTree", dog(232, 262))}
+    ${o("shop", `<rect class="f" x="375" y="175" width="205" height="105"/>`)}
+    <rect x="390" y="198" width="95" height="56" fill="#ffffff" stroke="#2a3550" stroke-width="3"/>
+    ${o("shopDoor", `<rect class="f" x="515" y="205" width="45" height="75"/>`)}
+    <g class="obj" data-obj="sign"><rect class="f" x="393" y="136" width="170" height="34" rx="4"/><text id="signtext" x="478" y="160" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="800" font-size="22" fill="#2a3550" pointer-events="none"></text></g>
+    <path class="k" d="M420 170 V175 M536 170 V175"/>
+    ${o("bus", `<rect class="f" x="306" y="282" width="206" height="50" rx="10"/>`)}
+    <path class="k" d="M318 292 H500 M318 308 H500 M362 292 V308 M408 292 V308 M454 292 V308"/>
+    <circle cx="345" cy="335" r="10" fill="#2a3550"/><circle cx="475" cy="335" r="10" fill="#2a3550"/>
+    ${o("car", `<path class="f" d="M40 328 V310 Q42 300 56 299 L72 284 H118 L136 299 Q150 300 152 310 V328 Z"/>`)}
+    <path class="k" d="M80 288 V299 M76 299 H130"/>
+    <circle cx="70" cy="331" r="9" fill="#2a3550"/><circle cx="124" cy="331" r="9" fill="#2a3550"/>
+    ${o("dogCar", dog(190, 318))}
+  </svg>`;
+}
+
+// ---------- rendering of each part ----------
+function render(P) {
+  st = { P, picks: {} };
+  const qs = P.questions.filter(q => active(P, q.q));
+  let body = "";
+  if (P.type === "match") {
+    const fixed = {};
+    fixed[P.example.name] = P.example.person;
+    P.questions.forEach(q => { if (!active(P, q.q)) fixed[q.answer.name] = q.answer.person; });
+    st.fixed = fixed; st.sel = null; st.assign = {};
+    body = `
+      <div class="names">${P.names.map(n => `<button type="button" class="nm" data-name="${esc(n)}" ${fixed[n] ? "disabled" : ""}>${esc(n)}${n === P.example.name ? " (example)" : ""}</button>`).join("")}</div>
+      <div class="room"><p class="room-title">${esc(P.scene)}</p>${P.people.map(p => {
+        const n = Object.keys(fixed).find(k => fixed[k] === p.id);
+        return `<button type="button" class="person" data-p="${p.id}" aria-label="${esc(p.label)}"><span class="who">${p.who}</span><span class="has">${p.has.join("")}</span><span class="tag">${n ? `<span>${esc(n)}</span>` : ""}</span></button>`;
+      }).join("")}</div>
+      ${mode === "redo" ? `<div class="row">${qs.map(q => qBtn(P, q.q)).join("")}</div>` : ""}`;
+  } else if (P.type === "write") {
+    body = `<div class="form"><h3>${esc(P.form)}</h3>
+      <div class="field"><span class="n">ex</span><span>${esc(P.example.label)}:</span><span class="given">${esc(P.example.value)}</span></div>
+      ${P.questions.map(q => active(P, q.q)
+        ? `<div class="field" data-q="${q.q}"><span class="n">${q.q}</span><label for="w${q.q}">${esc(q.label)}:</label><input id="w${q.q}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">${qBtn(P, q.q)}</div>`
+        : `<div class="field"><span class="n">${q.q}</span><span>${esc(q.label)}:</span><span class="given">${esc(q.show)}</span></div>`).join("")}
+    </div>`;
+  } else if (P.type === "letters") {
+    const letters = P.pictures.map(p => p.id);
+    body = `<div class="pics">${P.pictures.map(p => `<div class="pic"><b>${p.id}</b><span>${p.pic}</span></div>`).join("")}</div>
+      <div class="who3">
+        <div class="item ok"><p>${esc(P.example.who)} &rarr; ${P.example.letter} <small>(example)</small></p></div>
+        ${qs.map(q => `<div class="item" data-q="${q.q}"><div class="row"><p>${q.q}. ${esc(q.who)}</p>${qBtn(P, q.q)}</div><div class="lt">${letters.map(l => `<button type="button" aria-pressed="false" data-v="${l}">${l}</button>`).join("")}</div></div>`).join("")}
+      </div>`;
+  } else if (P.type === "tick") {
+    const L = ["A", "B", "C"];
+    body = `<div class="items">
+      ${mode === "full" ? `<div class="item ok"><p><b>Example.</b> ${esc(P.example.question)}</p><div class="opts">${P.example.options.map((e, i) => `<div class="opt ${i === P.example.answer ? "right" : ""}"><span>${e}</span><b>${L[i]}${i === P.example.answer ? " ✓" : ""}</b></div>`).join("")}</div></div>` : ""}
+      ${qs.map(q => `<div class="item" data-q="${q.q}"><div class="row"><p><b>${q.q}.</b> ${esc(q.question)}</p>${qBtn(P, q.q)}</div><div class="opts">${q.options.map((e, i) => `<button type="button" class="opt" aria-pressed="false" data-v="${i}" aria-label="${L[i]}: ${esc(q.labels[i])}"><span>${e}</span><b>${L[i]}</b></button>`).join("")}</div></div>`).join("")}
+    </div>`;
+  } else if (P.type === "colour") {
+    st.fill = { [P.example.obj]: P.example.colour };
+    P.questions.forEach(q => { if (!active(P, q.q) && q.colour) st.fill[q.obj] = q.colour; });
+    st.colour = null;
+    const writeQ = P.questions.find(q => q.write);
+    const signGiven = writeQ && !active(P, writeQ.q);
+    body = `<div class="palette">${P.colours.map(c => `<button type="button" class="sw" aria-pressed="false" data-c="${c}" style="background:${COL[c]}" aria-label="${c}"></button>`).join("")}</div>
+      ${scene()}
+      ${writeQ ? `<div class="signin field" data-q="${writeQ.q}"><label for="signw">Write on the sign:</label>${signGiven ? `<span class="given">${esc(writeQ.write[0].toUpperCase())}</span>` : `<input id="signw" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false">`}${qBtn(P, writeQ.q)}</div>` : ""}
+      ${mode === "redo" ? `<div class="row">${qs.filter(q => !q.write).map(q => qBtn(P, q.q)).join("")}</div>` : ""}`;
+  }
+  return body;
+}
+
+function wire(P) {
+  const pb = document.getElementById("playbtn");
+  if (pb) pb.onclick = () => {
+    const src = fullSrc(P);
+    const fresh = au.paused && (current !== src || au.ended || au.currentTime === 0 || au.currentTime >= (au.duration || 1e9) - 0.5);
+    if (current === src && !au.paused) { au.pause(); return; }
+    if (current === src && au.paused && !fresh) { au.play(); return; }
+    playSrc(src, () => { plays[P.id] = (plays[P.id] || 0) + 1; syncPlayBtn(); });
+  };
+  card.querySelectorAll(".qplay").forEach(b => b.onclick = () => {
+    playSrc(qSrc(P, +b.dataset.q), () => { plays[P.id] = (plays[P.id] || 0) + 1; });
+  });
+  if (P.type === "match") {
+    const nms = [...card.querySelectorAll(".nm:not(:disabled)")];
+    nms.forEach(b => b.onclick = () => { st.sel = st.sel === b.dataset.name ? null : b.dataset.name; nms.forEach(x => x.classList.toggle("sel", x.dataset.name === st.sel)); });
+    card.querySelectorAll(".person").forEach(pc => pc.onclick = () => {
+      const pid = pc.dataset.p;
+      if (Object.values(st.fixed).includes(pid) || st.done) return;
+      const here = Object.keys(st.assign).find(n => st.assign[n] === pid);
+      if (st.sel) {
+        if (here) delete st.assign[here];
+        st.assign[st.sel] = pid;
+        st.sel = null;
+      } else if (here) delete st.assign[here];
+      drawMatch();
+    });
+  }
+  if (P.type === "letters" || P.type === "tick") {
+    card.querySelectorAll(".item[data-q]").forEach(it => it.querySelectorAll("[data-v]").forEach(b => b.onclick = () => {
+      if (st.done) return;
+      it.querySelectorAll("[data-v]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    }));
+  }
+  if (P.type === "colour") {
+    const sws = [...card.querySelectorAll(".sw")];
+    sws.forEach(b => b.onclick = () => { st.colour = b.dataset.c; sws.forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+    card.querySelectorAll(".scene .obj").forEach(g => g.addEventListener("click", () => {
+      const id = g.dataset.obj;
+      if (st.done) return;
+      if (id === "sign") { const i = document.getElementById("signw"); if (i) i.focus(); return; }
+      if (id === P.example.obj || (mode === "redo" && P.questions.some(q => q.obj === id && !active(P, q.q)))) return;
+      if (!st.colour) { fbNote("First tap a colour, then tap the thing in the picture."); return; }
+      st.fill[id] = st.fill[id] === st.colour ? undefined : st.colour;
+      drawFill();
+    }));
+    const si = document.getElementById("signw");
+    if (si) si.addEventListener("input", () => { document.getElementById("signtext").textContent = si.value.toUpperCase().slice(0, 12); });
+    else { const w = P.questions.find(q => q.write); if (w) document.getElementById("signtext").textContent = w.write[0].toUpperCase(); }
+    drawFill();
+  }
+  card.querySelectorAll("input").forEach((inp, idx, all) => inp.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); const nx = all[idx + 1]; if (nx) nx.focus(); else inp.blur(); }
+  }));
+  document.getElementById("go").onclick = () => check(P);
+}
+
+function drawMatch() {
+  const P = st.P;
+  card.querySelectorAll(".person").forEach(pc => {
+    const pid = pc.dataset.p;
+    const n = Object.keys(st.fixed).find(k => st.fixed[k] === pid) || Object.keys(st.assign).find(k => st.assign[k] === pid);
+    pc.querySelector(".tag").innerHTML = n ? `<span>${esc(n)}</span>` : "";
+  });
+  card.querySelectorAll(".nm:not(:disabled)").forEach(b => { b.classList.toggle("used", !!st.assign[b.dataset.name]); b.classList.toggle("sel", b.dataset.name === st.sel); });
+}
+function drawFill() {
+  card.querySelectorAll(".scene .obj").forEach(g => {
+    const c = st.fill[g.dataset.obj];
+    g.querySelectorAll(".f").forEach(s => s.setAttribute("fill", c ? COL[c] : "#ffffff"));
+  });
+}
+function fbNote(t) { document.getElementById("fb").innerHTML = `<div class="fb mid"><span>${esc(t)}</span></div>`; }
+
+function show() {
+  drawTally();
+  au.pause();
+  if (step < 0) {
+    card.innerHTML = `
+      <div class="ex-head"><b>Before you start</b><small>about 25 minutes</small></div>
+      <div class="fbrow">${bunny("s")}<div><span class="say">Put on your headphones!</span>
+      <span>Each part has an example first. Listen to the whole part, then answer. You can listen two times, like in the test. If you need, you can listen one more time.</span></div></div>
+      <div class="row"><button class="btn" id="go" type="button">Start Part 1</button></div>`;
+    document.getElementById("go").onclick = () => { startedAt = new Date().toISOString(); step = 0; show(); };
+    return;
+  }
+  if (step >= RUN.length) return finish();
+  const P = RUN[step];
+  card.innerHTML = `
+    <div class="ex-head"><b>${esc(P.title)}</b><small>${mode === "redo" ? `${maxOf(P)} to redo` : `${P.questions.length} points`}</small></div>
+    <p class="how">${mode === "redo" ? "Redo only the wrong ones: the green parts were already right. " : ""}${esc(P.how)}</p>
+    ${playerHTML(P)}
+    ${render(P)}
+    <div id="fb"></div>
+    <div id="ts"></div>
+    <div class="row"><button class="btn" id="go" type="button">Check</button></div>`;
+  wire(P);
+  syncPlayBtn();
+}
+
+// ---------- checking ----------
+function check(P) {
+  const fb = document.getElementById("fb");
+  const qs = P.questions.filter(q => active(P, q.q));
+  const res = [];
+  if (P.type === "match") {
+    const missing = qs.filter(q => !st.assign[q.answer.name]).length;
+    if (missing && !fb.dataset.warned) { fb.dataset.warned = "1"; return fbNote("Some names are not in the picture yet. To check anyway, press Check again."); }
+    qs.forEach(q => {
+      const gp = st.assign[q.answer.name] || null;
+      res.push({ q, given: gp ? P.people.find(p => p.id === gp).label : "", score: gp === q.answer.person ? 1 : 0, expected: P.people.find(p => p.id === q.answer.person).label });
+    });
+    card.querySelectorAll(".person").forEach(pc => {
+      const pid = pc.dataset.p;
+      const q = qs.find(x => x.answer.person === pid);
+      if (!q) return;
+      const ok = st.assign[q.answer.name] === pid;
+      pc.classList.add(ok ? "ok" : "no");
+      if (!ok) pc.insertAdjacentHTML("beforeend", `<span class="fixn">${esc(q.answer.name)}</span>`);
+    });
+    // a name put on the wrong person: that card goes red too, with the name crossed out
+    qs.forEach(q => {
+      const gp = st.assign[q.answer.name];
+      if (!gp || gp === q.answer.person) return;
+      const pc = card.querySelector(`.person[data-p="${gp}"]`);
+      if (!pc.classList.contains("ok")) pc.classList.add("no");
+      pc.querySelectorAll(".tag span").forEach(t => { if (t.textContent === q.answer.name) t.style.textDecoration = "line-through"; });
+    });
+  } else if (P.type === "write") {
+    const empty = qs.some(q => !document.getElementById("w" + q.q).value.trim());
+    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; return fbNote("Some answers are still empty. To check anyway, press Check again."); }
+    qs.forEach(q => {
+      const inp = document.getElementById("w" + q.q);
+      const g = grade(inp.value, q.accept);
+      inp.disabled = true;
+      const f = inp.closest(".field");
+      f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+      if (g < 1) inp.insertAdjacentHTML("afterend", `<span class="fix">${esc(q.show)}</span>`);
+      res.push({ q, given: inp.value.trim(), score: g, expected: q.show });
+    });
+  } else if (P.type === "letters" || P.type === "tick") {
+    const its = [...card.querySelectorAll(".item[data-q]")];
+    if (its.some(it => !it.querySelector('[aria-pressed="true"]'))) return fbNote(P.type === "letters" ? "Choose a letter for every person." : "Tick a picture for every question.");
+    its.forEach(it => {
+      const q = qs.find(x => x.q === +it.dataset.q);
+      const v = it.querySelector('[aria-pressed="true"]').dataset.v;
+      const right = P.type === "letters" ? q.answer : String(q.answer);
+      const ok = v === right;
+      it.classList.add(ok ? "ok" : "no");
+      it.querySelectorAll("[data-v]").forEach(b => { b.disabled = true; if (!ok && b.dataset.v === right) b.classList.add("right"); });
+      const lab = P.type === "letters" ? (l => `${l} (${P.pictures.find(p => p.id === l).label})`) : (i => `${"ABC"[+i]} (${q.labels[+i]})`);
+      if (!ok) it.insertAdjacentHTML("beforeend", `<span class="why">The answer is <b>${esc(lab(right))}</b>.</span>`);
+      res.push({ q, given: lab(v), score: ok ? 1 : 0, expected: lab(right) });
+    });
+  } else if (P.type === "colour") {
+    qs.forEach(q => {
+      if (q.write) {
+        const inp = document.getElementById("signw");
+        const g = grade(inp.value, q.write);
+        inp.disabled = true;
+        inp.closest(".field").classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+        if (g < 1) inp.insertAdjacentHTML("afterend", `<span class="fix">${esc(q.write[0].toUpperCase())}</span>`);
+        res.push({ q, given: inp.value.trim(), score: g, expected: q.write[0] });
+      } else {
+        const c = st.fill[q.obj];
+        const ok = c === q.colour;
+        // which other thing got the colour meant for this one? (place words mixed up)
+        const elsewhere = Object.keys(st.fill).filter(k => k !== q.obj && k !== P.example.obj && st.fill[k] === q.colour);
+        const g = card.querySelector(`.scene .obj[data-obj="${q.obj}"]`);
+        g.querySelectorAll(".f").forEach(s => s.classList.add(ok ? "hit" : "miss"));
+        res.push({ q, given: (c || "not coloured") + (elsewhere.length ? ` (${q.colour} on: ${elsewhere.join(", ")})` : ""), score: ok ? 1 : 0, expected: `${q.obj} ${q.colour}` });
+      }
+    });
+    st.done = true;
+  }
+  st.done = true;
+
+  let pts = 0;
+  const miss = new Set();
+  res.forEach(r => {
+    pts += r.score;
+    if (r.score < 1) miss.add(r.q.q);
+    items.push({ part: P.id, q: r.q.q, skill: r.q.skill, tags: r.q.tags, expected: r.expected, given: r.given, score: r.score, mode });
+  });
+  scores[P.id] = pts; misses[P.id] = miss;
+  drawTally();
+  const max = maxOf(P);
+  const say = pts === max ? "Hop hop! All right!" : pts >= max * 0.6 ? "Good job, keep going!" : "Don't worry, read what they said and try again later!";
+  const wrongColours = P.type === "colour" && miss.size ? "<span>The red outline shows the thing you had to colour.</span>" : "";
+  fb.innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><div class="fbrow">${bunny("s" + (pts === max ? " hop" : ""))}<div><span class="say">${say}</span><strong>${fmt(pts)} of ${max}</strong>${miss.size && P.tip ? `<span>${esc(P.tip)}</span>` : ""}${wrongColours}</div></div></div>`;
+  document.getElementById("ts").innerHTML = transcript(P, miss);
+  const go = document.getElementById("go");
+  go.textContent = step === RUN.length - 1 ? "See the result" : "Next part";
+  go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
+}
+
+function transcript(P, miss) {
+  const ln = l => l[0] === "R" ? `<p><i>${esc(l[1])}</i></p>` : `<p><span class="spk">${LABEL[l[0]]}:</span> ${esc(l[1])}</p>`;
+  return `<details class="ts"><summary>Read what they said</summary>
+    ${P.questions.filter(q => active(P, q.q)).map(q => `<div class="${miss.has(q.q) ? "wq" : ""}"><p><b>${q.q}.</b></p>${q.lines.map(ln).join("")}</div>`).join("")}
+  </details>`;
+}
+
+function finish() {
+  au.pause();
+  const t = total(), m = runMax();
+  const left = RUN.filter(p => misses[p.id] && misses[p.id].size);
+  const nLeft = left.reduce((a, p) => a + misses[p.id].size, 0);
+  APP.send({
+    exercise: S.id, title: S.title, mode, startedAt, score: t, max: m,
+    parts: RUN.map(p => ({ id: p.id, title: p.title, score: scores[p.id] ?? 0, max: maxOf(p), plays: plays[p.id] || 0 })),
+    items: items.filter(i => i.mode === mode)
+  });
+  const stars = t >= m * 0.9 ? 5 : t >= m * 0.75 ? 4 : t >= m * 0.6 ? 3 : t >= m * 0.4 ? 2 : 1;
+  const msg = mode === "redo" ? (nLeft ? "Some are still wrong: listen again and redo only those." : "Now they are all right. Well done!")
+    : t >= 22 ? "Excellent! You are ready for Tuesday." : t >= 17 ? "Good! Redo the wrong ones and you will be ready." : "Listen again to the parts you missed and try again.";
+  card.innerHTML = `<div class="end">
+    <div class="ex-head"><b>${mode === "redo" ? "Wrong ones again" : "Result"}</b><small>${m} points</small></div>
+    <div class="endtop">${bunny(nLeft ? "" : "hop")}<div><div class="big">${fmt(t)} / ${m}</div>
+    ${mode === "full" ? `<div aria-label="${stars} stars of 5" style="font-size:30px;letter-spacing:4px">${"⭐".repeat(stars)}${"☆".repeat(5 - stars)}</div>` : ""}</div></div>
+    <p>${msg}</p>
+    <table class="res">${RUN.map(p => `<tr><td>${esc(p.title)}</td><td>${fmt(scores[p.id] ?? 0)} / ${maxOf(p)}</td></tr>`).join("")}</table>
+    <div class="row">
+      ${nLeft ? `<button class="btn" id="redo" type="button">Listen again to the wrong ones (${nLeft})</button>` : ""}
+      <button class="btn ${nLeft ? "ghost" : ""}" id="again" type="button">Do it all again</button>
+    </div></div>`;
+  const redo = document.getElementById("redo");
+  if (redo) redo.onclick = () => { only = {}; left.forEach(p => { only[p.id] = new Set(misses[p.id]); }); RUN = left; mode = "redo"; restart(0); };
+  document.getElementById("again").onclick = () => { only = {}; RUN = S.parts; mode = "full"; restart(-1); };
+}
+
+function restart(s) { step = s; scores = {}; misses = {}; plays = {}; items = []; startedAt = new Date().toISOString(); show(); window.scrollTo({ top: 0 }); }
+</script>
+</body>
+</html>
