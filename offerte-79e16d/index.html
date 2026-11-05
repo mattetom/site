@@ -231,7 +231,7 @@
   if (!key) {
     $('sub').textContent = '';
     banner('warn', 'Manca la chiave', 'Apri questa pagina dal link completo (quello con #k=…) una volta: poi la ricorda. ' +
-      'Indirizzo letto dalla pagina: ' + (location.pathname + location.search + location.hash).slice(0, 40) + '…');
+      'Indirizzo letto dalla pagina: ' + (location.pathname + location.search + location.hash).replace(/[A-Za-z0-9_-]{12,}/g, '[chiave]'));
     return;
   }
   fetch('/api/offerte', { headers: { 'x-offerte-key': key }, cache: 'no-store' })
