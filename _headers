@@ -10,3 +10,8 @@
 /caloriferi-5d18a8/*
   X-Robots-Tag: noindex, nofollow, noarchive
   Referrer-Policy: no-referrer
+
+# Daily offers digest (not linked anywhere; the data needs the key in the link hash)
+/offerte-79e16d/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Referrer-Policy: no-referrer

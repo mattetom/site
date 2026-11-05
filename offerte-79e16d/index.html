@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>Offerte del giorno</title>
+<style>
+  :root {
+    --bg: #f6f5f2; --card: #ffffff; --ink: #1d1d1b; --muted: #6b6a66; --line: #e4e2dc;
+    --accent: #1f6f5c; --accent-soft: #e3f1ec; --warn: #9a5b00; --warn-soft: #fff3dc;
+    --bad: #a3271c; --bad-soft: #fde8e6; --top: #fff8e1; --top-line: #f0d98a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151514; --card: #1f1f1d; --ink: #ecebe6; --muted: #a09e97; --line: #33322f;
+      --accent: #6cc5a8; --accent-soft: #1b3330; --warn: #f0b45a; --warn-soft: #3a2c14;
+      --bad: #f08a80; --bad-soft: #3b1d1a; --top: #2a2618; --top-line: #5b4f23;
+    }
+  }
+  [hidden] { display: none !important; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 680px; margin: 0 auto; padding: 18px 16px 48px; }
+  h1 { font-size: 1.45rem; margin: 0; }
+  .sub { color: var(--muted); font-size: .9rem; margin: 2px 0 14px; }
+  .banner { border-radius: 12px; padding: 12px 14px; margin: 0 0 14px; font-size: .95rem; }
+  .banner b { display: block; margin-bottom: 2px; }
+  .banner.bad { background: var(--bad-soft); color: var(--bad); }
+  .banner.warn { background: var(--warn-soft); color: var(--warn); }
+  .banner code { font-size: .8rem; word-break: break-all; }
+  h2 { font-size: 1.05rem; margin: 22px 0 8px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 14px; margin: 0 0 10px;
+  }
+  .card.top { background: var(--top); border-color: var(--top-line); }
+  .who { font-size: .8rem; color: var(--muted); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .tag { font-size: .72rem; padding: 1px 7px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); }
+  .title { font-weight: 650; margin: 3px 0 4px; }
+  .what { margin: 0 0 6px; }
+  .why { font-size: .88rem; color: var(--muted); margin: 0 0 8px; }
+  .meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: .88rem; }
+  .price { font-weight: 600; }
+  .due { padding: 2px 8px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+  .due.soon { background: var(--warn-soft); color: var(--warn); }
+  .due.gone { background: var(--bad-soft); color: var(--bad); text-decoration: line-through; }
+  .links { margin-top: 8px; display: flex; gap: 14px; flex-wrap: wrap; font-size: .9rem; }
+  a { color: var(--accent); }
+  details { margin: 0 0 10px; }
+  summary { cursor: pointer; padding: 10px 0; font-weight: 600; }
+  .skipped { font-size: .85rem; color: var(--muted); margin: 0; padding-left: 18px; }
+  .skipped li { margin: 2px 0; }
+  .empty { color: var(--muted); font-style: italic; }
+  .foot { margin-top: 28px; font-size: .8rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Offerte del giorno</h1>
+  <p class="sub" id="sub">Caricamento…</p>
+  <div id="banners"></div>
+  <div id="today"></div>
+  <div id="older"></div>
+  <p class="foot" id="foot"></p>
+</main>
+<script>
+(function () {
+  'use strict';
+  var LS = 'offerte-k';
+  var key = null;
+  var m = location.hash.match(/[#&]k=([^&]+)/);
+  if (m) {
+    key = decodeURIComponent(m[1]);
+    try { localStorage.setItem(LS, key); } catch (e) {}
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  } else {
+    try { key = localStorage.getItem(LS); } catch (e) {}
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function safeUrl(u) { return typeof u === 'string' && /^https:\/\//i.test(u) ? u : null; }
+  function link(href, text) {
+    var a = el('a', null, text);
+    a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    return a;
+  }
+  var DAYS = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
+  var MONTHS = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto',
+    'settembre', 'ottobre', 'novembre', 'dicembre'];
+  function dayLabel(iso) {
+    var d = new Date(iso + 'T12:00:00');
+    return DAYS[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()];
+  }
+  function timeLabel(iso) {
+    var d = new Date(iso);
+    return d.toLocaleString('it-IT', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  }
+  function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function dueBadge(o) {
+    if (!o.deadline && !o.deadlineText) return null;
+    var b = el('span', 'due');
+    if (o.deadline && /^\d{4}-\d{2}-\d{2}$/.test(o.deadline)) {
+      var diff = Math.round((new Date(o.deadline + 'T00:00:00') - startOfDay(new Date())) / 86400000);
+      var when;
+      if (diff < 0) { when = 'scaduta il ' + dayLabel(o.deadline); b.className += ' gone'; }
+      else if (diff === 0) { when = 'scade oggi'; b.className += ' soon'; }
+      else if (diff === 1) { when = 'scade domani'; b.className += ' soon'; }
+      else if (diff <= 3) { when = 'scade ' + dayLabel(o.deadline) + ' (tra ' + diff + ' giorni)'; b.className += ' soon'; }
+      else { when = 'scade ' + dayLabel(o.deadline); }
+      b.textContent = when;
+    } else {
+      b.textContent = o.deadlineText;
+    }
+    return b;
+  }
+  function card(o, isTop) {
+    var c = el('div', 'card' + (isTop ? ' top' : ''));
+    var who = el('div', 'who');
+    who.appendChild(el('span', null, o.sender || ''));
+    if (o.category) who.appendChild(el('span', 'tag', o.category));
+    if (o.mailbox === 'dev') who.appendChild(el('span', 'tag', 'mattetom.dev'));
+    c.appendChild(who);
+    c.appendChild(el('div', 'title', o.title || ''));
+    if (o.what) c.appendChild(el('p', 'what', o.what));
+    if (o.why) c.appendChild(el('p', 'why', o.why));
+    var meta = el('div', 'meta');
+    if (o.price) meta.appendChild(el('span', 'price', o.price));
+    var due = dueBadge(o);
+    if (due) meta.appendChild(due);
+    if (meta.childNodes.length) c.appendChild(meta);
+    var links = el('div', 'links');
+    var u = safeUrl(o.link);
+    if (u) links.appendChild(link(u, 'Vai all’offerta'));
+    var g = safeUrl(o.gmailLink);
+    if (g) links.appendChild(link(g, 'Apri la mail'));
+    if (links.childNodes.length) c.appendChild(links);
+    return c;
+  }
+  function renderDay(day, container) {
+    var offers = day.offers || [];
+    var topIds = day.top || [];
+    var top = topIds.map(function (id) { return offers.find(function (o) { return o.id === id; }); }).filter(Boolean);
+    var rest = offers.filter(function (o) { return topIds.indexOf(o.id) < 0; });
+    rest.sort(function (a, b) { return (a.deadline || '9999') < (b.deadline || '9999') ? -1 : 1; });
+    if (!offers.length) container.appendChild(el('p', 'empty', 'Nessuna offerta interessante in questo giro.'));
+    if (top.length) {
+      container.appendChild(el('h2', null, 'Le più interessanti'));
+      top.forEach(function (o) { container.appendChild(card(o, true)); });
+    }
+    if (rest.length) {
+      container.appendChild(el('h2', null, top.length ? 'Le altre' : 'Offerte'));
+      rest.forEach(function (o) { container.appendChild(card(o, false)); });
+    }
+    var skipped = day.skipped || [];
+    if (skipped.length) {
+      var d = el('details');
+      d.appendChild(el('summary', null, 'Scartate (' + skipped.length + ')'));
+      var ul = el('ul', 'skipped');
+      skipped.forEach(function (s) {
+        ul.appendChild(el('li', null, (s.sender ? s.sender + ': ' : '') + (s.subject || '') + (s.reason ? ' — ' + s.reason : '')));
+      });
+      d.appendChild(ul);
+      container.appendChild(d);
+    }
+  }
+  function banner(kind, title, text) {
+    var b = el('div', 'banner ' + kind);
+    b.appendChild(el('b', null, title));
+    if (text) b.appendChild(el('span', null, text));
+    $('banners').appendChild(b);
+  }
+
+  function render(data) {
+    var st = data.status;
+    var days = data.days || [];
+    var now = Date.now();
+    if (st && st.ok === false) {
+      banner('bad', 'Il giro di ' + timeLabel(st.lastRunAt) + ' non è andato',
+        (st.error && st.error.message ? st.error.message + ' ' : '') +
+        (st.error && st.error.fix ? 'Come si ripara: ' + st.error.fix : ''));
+    }
+    var lastOk = st && st.lastOkAt ? new Date(st.lastOkAt).getTime() : 0;
+    if (!lastOk || now - lastOk > 26 * 3600 * 1000) {
+      if (!st || st.ok !== false) {
+        banner('warn', 'Riepilogo vecchio',
+          lastOk ? 'L’ultimo giro riuscito è di ' + timeLabel(st.lastOkAt) + ': stamattina il Mac non l’ha fatto (spento, chiuso o senza rete?).'
+                 : 'Nessun giro riuscito finora.');
+      }
+    }
+    if (st && st.warnings) st.warnings.forEach(function (w) { banner('warn', 'Attenzione', w); });
+
+    $('sub').textContent = st && st.lastOkAt ? 'Aggiornato ' + timeLabel(st.lastOkAt) : 'Nessun aggiornamento';
+    if (days[0]) {
+      var t = $('today');
+      var d0 = new Date();
+      var todayIso = d0.getFullYear() + '-' + String(d0.getMonth() + 1).padStart(2, '0') + '-' + String(d0.getDate()).padStart(2, '0');
+      t.appendChild(el('h2', null, (days[0].date === todayIso ? 'Oggi, ' : 'Ultimo riepilogo, ') + dayLabel(days[0].date) +
+        (days[0].windowLabel ? ' · ' + days[0].windowLabel : '')));
+      renderDay(days[0], t);
+    }
+    if (days.length > 1) {
+      $('older').appendChild(el('h2', null, 'Giorni precedenti'));
+      days.slice(1).forEach(function (d) {
+        var det = el('details');
+        var n = (d.offers || []).length;
+        det.appendChild(el('summary', null, dayLabel(d.date) + ' · ' + n + (n === 1 ? ' offerta' : ' offerte')));
+        renderDay(d, det);
+        $('older').appendChild(det);
+      });
+    }
+    $('foot').textContent = 'Riepilogo automatico delle promozioni arrivate per mail. Le scadenze sono quelle scritte nelle mail: in caso di dubbio fa fede la pagina dell’offerta.';
+  }
+
+  if (!key) {
+    $('sub').textContent = '';
+    banner('warn', 'Manca la chiave', 'Apri questa pagina dal link completo (quello con #k=…) una volta: poi la ricorda.');
+    return;
+  }
+  fetch('/api/offerte', { headers: { 'x-offerte-key': key }, cache: 'no-store' })
+    .then(function (r) {
+      if (r.status === 403) throw new Error('chiave');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(render)
+    .catch(function (e) {
+      $('sub').textContent = '';
+      if (e.message === 'chiave') {
+        try { localStorage.removeItem(LS); } catch (x) {}
+        banner('bad', 'Chiave sbagliata', 'Riapri la pagina dal link completo.');
+      } else {
+        banner('bad', 'Non riesco a leggere i riepiloghi', String(e.message || e));
+      }
+    });
+})();
+</script>
+</body>
+</html>
