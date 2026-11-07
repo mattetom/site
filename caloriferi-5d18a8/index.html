@@ -205,8 +205,9 @@
     $("auto-state").textContent = nAuto === rooms.length ? "Automatico su tutti"
       : nAuto === 0 ? "Tutti a calendario" : `Automatico su ${nAuto} di ${rooms.length}`;
     $("auto-state").className = nAuto ? "on" : "off";
-    $("auto-help").textContent = "Automatico: sotto soglia scalda fino all'arresto o per la durata minima della modalità"
-      + ", poi torna al calendario. Calendario: segue il suo programma, il codice registra soltanto.";
+    $("auto-help").textContent = "Automatico: sotto soglia scalda almeno per la durata minima della modalità"
+      + " (prima si ferma solo se arriva alla temperatura di \"Scalda a\"), poi fino all'arresto, e torna al calendario."
+      + " Calendario: segue il suo programma, il codice registra soltanto.";
     confirming = null;
 
     if (editing) { renderUsage(d); return; }  // keep an open temperature form untouched
@@ -249,7 +250,9 @@
           <div class="row"><button type="submit">Salva</button><button type="button" class="ghost" data-cancel>Annulla</button>
             <button type="button" class="ghost" data-delete-preset hidden></button></div>
         </form>
-        ${r.boost_until ? `<div class="boost">Riscaldamento in corso fino alle ${fmtTime(r.boost_until)} (o a ${deg(cfg.stop)})</div>` : ""}
+        ${r.boost_until ? `<div class="boost">${(r.ts || Date.now() / 1000) < r.boost_until
+          ? `Riscaldamento in corso almeno fino alle ${fmtTime(r.boost_until)} (prima solo se arriva a ${deg(cfg.boost)}), poi fino a ${deg(cfg.stop)}`
+          : `Durata minima finita alle ${fmtTime(r.boost_until)}: scalda fino a ${deg(cfg.stop)}`}</div>` : ""}
         ${r.severity === "ERROR" ? `<div class="boost">${r.message}</div>` : ""}
         ${handSet ? `<div class="boost">Impostato a mano: il codice non lo comanda finché non lo riprendi.</div>` : ""}
         ${offByHand ? `<div class="boost">Spento dall'app, da un timer o a mano: il codice non lo riaccende da solo.</div>` : ""}
