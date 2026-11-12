@@ -22,7 +22,7 @@
                     <div class="container">
                         {{ $plural := .Data.Plural }}
                         {{ range $key, $value := .Data.Terms }}
-                        <a href="{{ $baseurl }}/{{ $plural }}/{{ $key }}">{{ $key }}</a>
+                        <a href="{{ $value.Page.Permalink }}">{{ $key }}</a>
                         <br>
                         {{ end }}
                     </div>
