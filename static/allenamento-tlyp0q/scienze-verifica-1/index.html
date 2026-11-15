@@ -10,12 +10,12 @@
 </head>
 <body>
 <a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
-<title>Verifica di Scienze</title>
+<title>Science practice test 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
-/* Layout: the same meadow world as "Chi mangia chi"; one exercise per card, inline write-in blanks, a score tally that grows like a plant stem */
+/* Layout: the same meadow world as "Who eats whom?"; one exercise per card, inline write-in blanks, a score tally that grows like a plant stem */
 :root {
   --meadow: #eef5e4;
   --meadow-deep: #dcebc8;
@@ -140,9 +140,9 @@ table.res td:last-child { text-align: right; font-variant-numeric: tabular-nums;
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">Science · Grade 4 · Verifica di prova</div>
-    <h1>Verifica di <span>Scienze</span></h1>
-    <p class="sub">Ecology, ecosystems e food chain. Sei esercizi, 30 punti. Scrivi le parole con attenzione: conta anche come le scrivi.</p>
+    <div class="eyebrow">Science · Grade 4 · Practice test</div>
+    <h1>Science <span>practice test</span></h1>
+    <p class="sub">Ecology, ecosystems and the food chain. Six exercises, 30 points. Write the words carefully: spelling counts too.</p>
   </header>
   <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
   <main class="card" id="card" aria-live="polite"></main>
@@ -152,7 +152,7 @@ table.res td:last-child { text-align: right; font-variant-numeric: tabular-nums;
 // Each blank: a = accepted answers (lowercase). pre = first letter shown (exercise with hints).
 const EX = [
   { id: "e1", type: "cloze", title: "1. Ecology and ecosystems", max: 8,
-    how: "Scrivi nei buchi le parole del riquadro. Ogni parola si usa una volta.",
+    how: "Write the words from the box in the gaps. Use each word once.",
     bank: ["organisms", "ecologist", "relationships", "study", "science", "non-living", "home", "environment"],
     sents: [
       ["Ecology is the ", { a: ["science"] }, " that studies living ", { a: ["organisms"] }, ", the ", { a: ["environment"] }, " in which they live and the ", { a: ["relationships"] }, " between them."],
@@ -161,7 +161,7 @@ const EX = [
       ["An ecosystem is made up of living organisms, ", { a: ["non-living", "nonliving", "non living"] }, " things and the relationships between them."]
     ] },
   { id: "e2", type: "cloze", title: "2. The food chain", max: 9,
-    how: "Qui le parole non ci sono: c'e solo la prima lettera. Scrivi il resto della parola.",
+    how: "There are no words here, only the first letter. Write the rest of the word.",
     sents: [
       ["Plants are ", { pre: "p", a: ["producers"] }, ". They make their own food through ", { pre: "p", a: ["photosynthesis"] }, ", using energy from ", { pre: "s", a: ["sunlight"] }, "."],
       ["Primary consumers eat producers. They are generally ", { pre: "h", a: ["herbivores"] }, "."],
@@ -169,16 +169,16 @@ const EX = [
       ["", { pre: "F", a: ["fungi"] }, " and ", { pre: "b", a: ["bacteria"] }, " are decomposers: they break down dead plants and animals and return ", { pre: "n", a: ["nutrients"] }, " to the soil."]
     ] },
   { id: "e3", type: "cloze", title: "3. The arrows", max: 3,
-    how: "La frase della scheda sulle frecce. C'e la prima lettera come aiuto.",
+    how: "The sentence about arrows from the worksheet. The first letter helps you.",
     sents: [["The arrows show the ", { pre: "d", a: ["direction"] }, " in which ", { pre: "m", a: ["matter"] }, " and ", { pre: "e", a: ["energy"] }, " move."]] },
   { id: "e4", type: "chain", title: "4. Build a food chain", max: 3,
-    how: "Tocca le carte nell'ordine giusto. Ricorda: la freccia va verso chi mangia.",
+    how: "Tap the cards in the right order. Remember: the arrow points to the one that eats.",
     cards: ["seeds", "mouse", "owl"] },
   { id: "e5", type: "sort", title: "5. Living or non-living?", max: 4,
-    how: "Per ogni cosa scegli Living (vivente) o Non-living (non vivente).",
+    how: "For each thing, choose Living or Non-living.",
     items: [["fungi", "Living"], ["soil", "Non-living"], ["bacteria", "Living"], ["light", "Non-living"]] },
   { id: "e6", type: "three", title: "6. Three ecosystems", max: 3,
-    how: "Scrivi tre esempi di ecosistema in inglese. Valgono quelli del quaderno e anche altri.",
+    how: "Write three examples of ecosystems in English. You can use the ones in your notebook or others.",
     ok: ["forest", "pond", "meadow", "sea", "ocean", "lake", "river", "mountain", "mountains", "desert", "grassland", "savanna", "jungle", "rainforest", "wetland", "coral reef", "swamp", "tundra", "beach"] }
 ];
 
@@ -209,7 +209,7 @@ function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
 
 function drawTally() {
   document.getElementById("steps").innerHTML = EX.map((e, i) => `<span class="step ${scores[e.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
-  document.getElementById("pts").textContent = `${fmt(total())} punti`;
+  document.getElementById("pts").textContent = `${fmt(total())} points`;
 }
 
 function show() {
@@ -221,20 +221,20 @@ function show() {
     let k = 0;
     if (E.bank) body += `<div class="bank" id="bank">${E.bank.map(w => `<span class="chip" data-w="${esc(w)}">${esc(w)}</span>`).join("")}</div>`;
     body += E.sents.map(s => `<p class="sent">${s.map(p => typeof p === "string" ? esc(p)
-      : `<span class="fill" data-k="${k}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${k++}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="parola mancante"></span>`).join("")}</p>`).join("");
+      : `<span class="fill" data-k="${k}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${k++}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="missing word"></span>`).join("")}</p>`).join("");
   } else if (E.type === "chain") {
-    body = `<div class="chain" id="chain"></div><div class="deck" id="deck"></div><div class="row"><button class="btn ghost" id="undo" type="button">Togli l'ultima</button></div>`;
+    body = `<div class="chain" id="chain"></div><div class="deck" id="deck"></div><div class="row"><button class="btn ghost" id="undo" type="button">Remove the last one</button></div>`;
   } else if (E.type === "sort") {
     body = `<div class="items">${E.items.map(([w], i) => `<div class="item" data-i="${i}"><b>${esc(w)}</b><div class="tg">${["Living", "Non-living"].map(v => `<button type="button" class="tgb" aria-pressed="false" data-v="${v}">${v}</button>`).join("")}</div></div>`).join("")}</div>`;
   } else if (E.type === "three") {
-    body = `<div class="three">${[0, 1, 2].map(i => `<span class="fill" data-k="${i}"><span class="pre">${i + 1}.&nbsp;</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="ecosistema ${i + 1}"></span>`).join("")}</div>`;
+    body = `<div class="three">${[0, 1, 2].map(i => `<span class="fill" data-k="${i}"><span class="pre">${i + 1}.&nbsp;</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="ecosystem ${i + 1}"></span>`).join("")}</div>`;
   }
   card.innerHTML = `
-    <div class="ex-head"><b>${esc(E.title)}</b><small>${E.max} punti</small></div>
+    <div class="ex-head"><b>${esc(E.title)}</b><small>${E.max} points</small></div>
     <p class="how">${esc(E.how)}</p>
     ${body}
     <div id="fb"></div>
-    <div class="row"><button class="btn" id="go" type="button">Controlla</button></div>`;
+    <div class="row"><button class="btn" id="go" type="button">Check</button></div>`;
   wire(E);
   const first = card.querySelector("input"); if (first) first.focus();
 }
@@ -288,7 +288,7 @@ function check(E) {
   if (E.type === "cloze") {
     const blanks = E.sents.flat().filter(p => typeof p !== "string");
     const empty = [...card.querySelectorAll("input")].some(i => !i.value.trim());
-    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Ci sono ancora buchi vuoti. Se vuoi controllare lo stesso, premi di nuovo Controlla.</span></div>`; return; }
+    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Some gaps are still empty. To check anyway, press Check again.</span></div>`; return; }
     const usedGroup = {};
     card.querySelectorAll(".fill").forEach(f => {
       const B = blanks[+f.dataset.k], inp = f.querySelector("input");
@@ -310,14 +310,14 @@ function check(E) {
       if (g < 1) { f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(right)}</span>`); wrongWords.push(right); }
     });
   } else if (E.type === "chain") {
-    if (picked.length < E.cards.length) { fb.innerHTML = `<div class="fb mid"><span>Metti tutte e tre le carte nella catena.</span></div>`; return; }
+    if (picked.length < E.cards.length) { fb.innerHTML = `<div class="fb mid"><span>Put all three cards in the chain.</span></div>`; return; }
     pts = picked.filter((ci, i) => ci === i).length;
     drawChain(E, true);
     document.getElementById("undo").hidden = true;
-    if (pts < 3) fb.dataset.extra = "La catena giusta e: sunlight → seeds → mouse → owl. I semi sono il produttore, il topo il consumatore primario, il gufo il secondario.";
+    if (pts < 3) fb.dataset.extra = "The right chain is: sunlight → seeds → mouse → owl. The seeds are the producer, the mouse is the primary consumer, the owl is the secondary consumer.";
   } else if (E.type === "sort") {
     const items = [...card.querySelectorAll(".item")];
-    if (items.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Scegli una risposta per ogni cosa.</span></div>`; return; }
+    if (items.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Choose an answer for each thing.</span></div>`; return; }
     items.forEach(it => {
       const [w, a] = E.items[+it.dataset.i];
       const v = it.querySelector('[aria-pressed="true"]').dataset.v;
@@ -337,15 +337,15 @@ function check(E) {
       pts += g; inp.disabled = true;
       f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
       if (g === 0.5) { f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(right)}</span>`); wrongWords.push(right); }
-      if (g === 0) f.insertAdjacentHTML("beforeend", `<span class="fix">${t && E.ok.includes(t) ? "gia scritto sopra" : "per esempio forest, pond, meadow"}</span>`);
+      if (g === 0) f.insertAdjacentHTML("beforeend", `<span class="fix">${t && E.ok.includes(t) ? "already written above" : "for example forest, pond, meadow"}</span>`);
     });
   }
   scores[E.id] = pts;
   drawTally();
-  const msg = pts === E.max ? "Perfetto!" : pts >= E.max * 0.6 ? "Bene!" : "Riguarda le parole in verde.";
-  fb.innerHTML = `<div class="fb ${pts >= E.max * 0.6 ? "good" : "mid"}"><strong>${msg} ${fmt(pts)} su ${E.max}</strong>${E.type === "cloze" || E.type === "three" ? `<span>Verde = giusta. Giallo = quasi, attenta all'ortografia (mezzo punto). Rosso = sbagliata. Accanto trovi come si scrive.</span>` : ""}${fb.dataset.extra ? `<span>${esc(fb.dataset.extra)}</span>` : ""}</div>`;
+  const msg = pts === E.max ? "Perfect!" : pts >= E.max * 0.6 ? "Good!" : "Look again at the green words.";
+  fb.innerHTML = `<div class="fb ${pts >= E.max * 0.6 ? "good" : "mid"}"><strong>${msg} ${fmt(pts)} out of ${E.max}</strong>${E.type === "cloze" || E.type === "three" ? `<span>Green = right. Yellow = almost, check the spelling (half a point). Red = wrong. Next to it you can see how to spell it.</span>` : ""}${fb.dataset.extra ? `<span>${esc(fb.dataset.extra)}</span>` : ""}</div>`;
   const go = document.getElementById("go");
-  go.textContent = step === EX.length - 1 ? "Vedi il risultato" : "Esercizio successivo";
+  go.textContent = step === EX.length - 1 ? "See the result" : "Next exercise";
   go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
   go.focus();
 }
@@ -355,17 +355,17 @@ function finish() {
   let best = null;
   try { const prev = Number(localStorage.getItem("ver-sci-1-best") || 0); if (t > prev) localStorage.setItem("ver-sci-1-best", String(t)); best = Math.max(prev, t); } catch (e) { best = null; }
   const words = [...new Set(wrongWords)];
-  const msg = t >= 27 ? "Bravissima! Sei pronta per la verifica vera." : t >= 21 ? "Bene! Ripassa le parole qui sotto e riprova." : "Rileggi i riassunti, rifai il gioco Chi mangia chi e poi riprova.";
+  const msg = t >= 27 ? "Excellent! You are ready for the real test." : t >= 21 ? "Good! Review the words below and try again." : "Read the summaries again, play the game Who eats whom? again and then try again.";
   card.innerHTML = `
-    <div class="ex-head"><b>Risultato</b><small>30 punti in tutto</small></div>
+    <div class="ex-head"><b>Result</b><small>30 points in total</small></div>
     <div class="end">
       <div class="big">${fmt(t)} / 30</div>
-      <div class="grade">Voto: ${fmt(voto)}</div>
+      <div class="grade">Grade: ${fmt(voto)}</div>
       <p>${msg}</p>
       <table class="res">${EX.map(e => `<tr><td>${esc(e.title)}</td><td>${fmt(scores[e.id] ?? 0)} / ${e.max}</td></tr>`).join("")}</table>
-      ${words.length ? `<p class="tip">Parole da ricopiare tre volte sul quaderno:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="tip">Nessuna parola sbagliata: ortografia perfetta!</p>`}
-      ${best ? `<p class="tip">Il tuo record: ${fmt(best)} su 30</p>` : ""}
-      <div class="row"><button class="btn" id="again" type="button">Rifai la verifica</button></div>
+      ${words.length ? `<p class="tip">Words to copy three times in your notebook:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="tip">No wrong words: perfect spelling!</p>`}
+      ${best ? `<p class="tip">Your best: ${fmt(best)} out of 30</p>` : ""}
+      <div class="row"><button class="btn" id="again" type="button">Do the test again</button></div>
     </div>`;
   document.getElementById("again").onclick = () => { step = 0; scores = {}; wrongWords = []; show(); window.scrollTo({ top: 0 }); };
 }

@@ -10,7 +10,7 @@
 </head>
 <body>
 <a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
-<title>Chi Mangia Chi</title>
+<title>Who eats whom?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
@@ -136,61 +136,61 @@ button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
 <div class="wrap">
   <header>
     <div class="eyebrow">Science · Grade 4 · Ecosystems</div>
-    <h1>Chi <span class="a">mangia</span> <span class="b">chi</span></h1>
-    <p class="sub">Ecology, ecosystems e food chain. Domande in inglese come a scuola, spiegazioni in italiano.</p>
+    <h1>Who <span class="a">eats</span> <span class="b">whom?</span></h1>
+    <p class="sub">Ecology, ecosystems and the food chain. Questions and explanations in English, like at school.</p>
   </header>
-  <div class="links" id="links" aria-label="Avanzamento"></div>
+  <div class="links" id="links" aria-label="Progress"></div>
   <main class="card" id="card" aria-live="polite"></main>
 </div>
 
 <script>
 const ROUNDS = {
-  live:  { name: "Round 1: Living or non-living?", how: "Living = vivente (nasce, cresce, si nutre, muore). Non-living = non vivente." },
-  role:  { name: "Round 2: What is its role?", how: "Producer, primary consumer, secondary consumer o decomposer?" },
-  chain: { name: "Round 3: Build the food chain", how: "Tocca le carte nell'ordine giusto. Le frecce puntano verso chi mangia." },
-  words: { name: "Round 4: Words", how: "Scegli la risposta giusta." },
-  tf:    { name: "Round 5: True or False", how: "True = vero, False = falso." }
+  live:  { name: "Round 1: Living or non-living?", how: "Living things are born, grow, feed and die. Non-living things do not." },
+  role:  { name: "Round 2: What is its role?", how: "Producer, primary consumer, secondary consumer or decomposer?" },
+  chain: { name: "Round 3: Build the food chain", how: "Tap the cards in the right order. The arrows point to the one that eats." },
+  words: { name: "Round 4: Words", how: "Choose the right answer." },
+  tf:    { name: "Round 5: True or False", how: "Is the sentence true or false?" }
 };
 const LIVE = ["Living", "Non-living"];
 const ROLES = ["Producer", "Primary consumer", "Secondary consumer", "Decomposer"];
 const TF = ["True", "False"];
 
 const QS = [
-  { r: "live", q: "a mushroom", it: "un fungo", a: "Living", why: "I funghi (fungi) sono esseri viventi, anche se non sono ne piante ne animali.", src: "Quaderno, Ecology" },
-  { r: "live", q: "a rock", it: "una roccia", a: "Non-living", why: "La roccia non nasce, non cresce e non si nutre: e un elemento non vivente.", src: "Quaderno, Ecology" },
-  { r: "live", q: "bacteria", it: "i batteri", a: "Living", why: "I batteri sono microrganismi: viventi piccolissimi, si vedono solo al microscopio.", src: "Quaderno, Ecology" },
-  { r: "live", q: "sunlight", it: "la luce del Sole", a: "Non-living", why: "La luce e un elemento non vivente, ma senza di lei le piante non possono fare la fotosintesi.", src: "Quaderno, Ecology" },
-  { r: "live", q: "snow", it: "la neve", a: "Non-living", why: "La neve e acqua ghiacciata: non vivente, anche se si scioglie e cambia.", src: "Scheda Explore an ecosystem" },
-  { r: "live", q: "an earthworm", it: "un lombrico", a: "Living", why: "Il lombrico e un animale, e aiuta i decompositori.", src: "Scheda The Food Chain" },
-  { r: "live", q: "the soil", it: "il suolo", a: "Non-living", why: "Il suolo (soil) e non vivente, anche se dentro vivono tanti esseri viventi.", src: "Quaderno, Ecology" },
+  { r: "live", q: "a mushroom", a: "Living", why: "Fungi are living things, but they are not plants and not animals.", src: "Notebook, Ecology" },
+  { r: "live", q: "a rock", a: "Non-living", why: "A rock is not born, does not grow and does not feed. It is non-living.", src: "Notebook, Ecology" },
+  { r: "live", q: "bacteria", a: "Living", why: "Bacteria are microorganisms: very tiny living things. You can only see them with a microscope.", src: "Notebook, Ecology" },
+  { r: "live", q: "sunlight", a: "Non-living", why: "Light is non-living, but without it plants cannot do photosynthesis.", src: "Notebook, Ecology" },
+  { r: "live", q: "snow", a: "Non-living", why: "Snow is frozen water. It is non-living, even if it melts and changes.", src: "Worksheet Explore an ecosystem" },
+  { r: "live", q: "an earthworm", a: "Living", why: "An earthworm is an animal. It helps the decomposers.", src: "Worksheet The Food Chain" },
+  { r: "live", q: "the soil", a: "Non-living", why: "Soil is non-living, but many living things live in it.", src: "Notebook, Ecology" },
 
-  { r: "role", q: "grass", it: "l'erba", a: "Producer", why: "L'erba e una pianta: si fa il cibo da sola con la fotosintesi.", src: "Scheda The Food Chain" },
-  { r: "role", q: "a rabbit that eats grass", it: "un coniglio che mangia l'erba", a: "Primary consumer", why: "Mangia i produttori: e un consumatore primario, erbivoro.", src: "Scheda The Food Chain" },
-  { r: "role", q: "a fox that eats rabbits", it: "una volpe che mangia conigli", a: "Secondary consumer", why: "Mangia un consumatore primario: e un consumatore secondario.", src: "Scheda The Food Chain" },
-  { r: "role", q: "fungi and bacteria that break down dead leaves", it: "funghi e batteri che decompongono foglie morte", a: "Decomposer", why: "I decompositori riportano le sostanze nutritive nel suolo.", src: "Scheda The Food Chain" },
-  { r: "role", q: "an oak tree", it: "una quercia", a: "Producer", why: "Anche gli alberi sono piante: fanno la fotosintesi, quindi sono produttori.", src: "Scheda The Food Chain" },
-  { r: "role", q: "a caterpillar that eats leaves", it: "un bruco che mangia foglie", a: "Primary consumer", why: "Le foglie sono di una pianta: il bruco e un consumatore primario.", src: "Scheda The Food Chain" },
-  { r: "role", q: "an eagle that eats marmots", it: "un'aquila che mangia marmotte", a: "Secondary consumer", why: "La marmotta mangia l'erba (primario), l'aquila mangia la marmotta: secondario.", src: "Scheda Explore an ecosystem" },
+  { r: "role", q: "grass", a: "Producer", why: "Grass is a plant. It makes its own food through photosynthesis.", src: "Worksheet The Food Chain" },
+  { r: "role", q: "a rabbit that eats grass", a: "Primary consumer", why: "It eats producers, so it is a primary consumer. It is a herbivore.", src: "Worksheet The Food Chain" },
+  { r: "role", q: "a fox that eats rabbits", a: "Secondary consumer", why: "It eats a primary consumer, so it is a secondary consumer.", src: "Worksheet The Food Chain" },
+  { r: "role", q: "fungi and bacteria that break down dead leaves", a: "Decomposer", why: "Decomposers return nutrients to the soil.", src: "Worksheet The Food Chain" },
+  { r: "role", q: "an oak tree", a: "Producer", why: "Trees are plants too. They do photosynthesis, so they are producers.", src: "Worksheet The Food Chain" },
+  { r: "role", q: "a caterpillar that eats leaves", a: "Primary consumer", why: "Leaves come from a plant, so the caterpillar is a primary consumer.", src: "Worksheet The Food Chain" },
+  { r: "role", q: "an eagle that eats marmots", a: "Secondary consumer", why: "The marmot eats grass (primary). The eagle eats the marmot (secondary).", src: "Worksheet Explore an ecosystem" },
 
-  { r: "chain", place: "Meadow (prato)", cards: [["grass", "erba"], ["grasshopper", "cavalletta"], ["frog", "rana"]], why: "L'erba fa il cibo con il Sole, la cavalletta mangia l'erba, la rana mangia la cavalletta.", src: "Scheda The Food Chain" },
-  { r: "chain", place: "Forest (bosco)", cards: [["leaves", "foglie"], ["caterpillar", "bruco"], ["robin", "pettirosso"]], why: "Le foglie sono il produttore, il bruco le mangia, il pettirosso mangia il bruco.", src: "Scheda The Food Chain" },
-  { r: "chain", place: "Sea (mare)", cards: [["tiny algae", "alghe piccolissime"], ["krill", "krill"], ["whale", "balena"]], why: "Le alghe fanno la fotosintesi, il krill (piccoli gamberetti) le mangia, la balena mangia il krill.", src: "Scheda The Food Chain" },
-  { r: "chain", place: "Mountain (montagna)", cards: [["grass", "erba"], ["marmot", "marmotta"], ["eagle", "aquila"]], why: "La marmotta mangia l'erba e i fiori del prato; il suo vero cacciatore e l'aquila reale.", src: "Scheda Explore an ecosystem" },
+  { r: "chain", place: "Meadow", cards: [["grass", ""], ["grasshopper", ""], ["frog", ""]], why: "Grass makes food with sunlight. The grasshopper eats the grass. The frog eats the grasshopper.", src: "Worksheet The Food Chain" },
+  { r: "chain", place: "Forest", cards: [["leaves", ""], ["caterpillar", ""], ["robin", ""]], why: "The leaves are the producer. The caterpillar eats them. The robin eats the caterpillar.", src: "Worksheet The Food Chain" },
+  { r: "chain", place: "Sea", cards: [["tiny algae", ""], ["krill", ""], ["whale", ""]], why: "The algae do photosynthesis. The krill (tiny shrimps) eat them. The whale eats the krill.", src: "Worksheet The Food Chain" },
+  { r: "chain", place: "Mountain", cards: [["grass", ""], ["marmot", ""], ["eagle", ""]], why: "The marmot eats grass and meadow flowers. Its real hunter is the golden eagle.", src: "Worksheet Explore an ecosystem" },
 
-  { r: "words", q: "Ecology is the science that studies...", o: ["only animals", "living organisms, their environment and the relationships between them", "rocks and volcanoes"], a: "living organisms, their environment and the relationships between them", why: "E la definizione del quaderno: viventi, ambiente e relazioni.", src: "Quaderno, Ecology" },
-  { r: "words", q: "In Greek, oikos means...", o: ["home or environment", "study", "a group of connected parts"], a: "home or environment", why: "Oikos = casa, ambiente. Logos = studio. Systema = gruppo di parti collegate.", src: "Quaderno, Ecology" },
-  { r: "words", q: "An ecologist is...", o: ["a scientist who studies ecology", "an animal that eats plants", "a type of ecosystem"], a: "a scientist who studies ecology", why: "L'ecologo e lo scienziato che studia l'ecologia.", src: "Quaderno, Ecology" },
-  { r: "words", q: "An ecosystem is made up of...", o: ["only plants and animals", "living things, non-living things and their relationships", "only water and soil"], a: "living things, non-living things and their relationships", why: "Le tre parti: viventi, non viventi e relazioni.", src: "Quaderno, Ecology" },
-  { r: "words", q: "Plants make their own food through...", o: ["photosynthesis", "decomposition", "hunting"], a: "photosynthesis", why: "Fotosintesi: le piante usano l'energia della luce del Sole.", src: "Scheda The Food Chain" },
-  { r: "words", q: "An omnivore eats...", o: ["only plants", "only meat", "plants and meat"], a: "plants and meat", why: "Onnivoro = mangia di tutto. Erbivoro = solo vegetali. Carnivoro = carne.", src: "Scheda The Food Chain" },
-  { r: "words", q: "Which food chain is written correctly?", o: ["grass → rabbit → fox", "fox → rabbit → grass", "rabbit → grass → fox"], a: "grass → rabbit → fox", why: "Le frecce puntano verso chi mangia, cioe verso chi riceve l'energia.", src: "Scheda The Food Chain" },
+  { r: "words", q: "Ecology is the science that studies...", o: ["only animals", "living organisms, their environment and the relationships between them", "rocks and volcanoes"], a: "living organisms, their environment and the relationships between them", why: "This is the definition in your notebook: living things, environment and relationships.", src: "Notebook, Ecology" },
+  { r: "words", q: "In Greek, oikos means...", o: ["home or environment", "study", "a group of connected parts"], a: "home or environment", why: "Oikos = home, environment. Logos = study. Systema = a group of connected parts.", src: "Notebook, Ecology" },
+  { r: "words", q: "An ecologist is...", o: ["a scientist who studies ecology", "an animal that eats plants", "a type of ecosystem"], a: "a scientist who studies ecology", why: "An ecologist is the scientist who studies ecology.", src: "Notebook, Ecology" },
+  { r: "words", q: "An ecosystem is made up of...", o: ["only plants and animals", "living things, non-living things and their relationships", "only water and soil"], a: "living things, non-living things and their relationships", why: "The three parts: living things, non-living things and relationships.", src: "Notebook, Ecology" },
+  { r: "words", q: "Plants make their own food through...", o: ["photosynthesis", "decomposition", "hunting"], a: "photosynthesis", why: "Photosynthesis: plants use energy from sunlight.", src: "Worksheet The Food Chain" },
+  { r: "words", q: "An omnivore eats...", o: ["only plants", "only meat", "plants and meat"], a: "plants and meat", why: "Omnivore = eats everything. Herbivore = only plants. Carnivore = meat.", src: "Worksheet The Food Chain" },
+  { r: "words", q: "Which food chain is written correctly?", o: ["grass → rabbit → fox", "fox → rabbit → grass", "rabbit → grass → fox"], a: "grass → rabbit → fox", why: "The arrows point to the one that eats, so to the one that gets the energy.", src: "Worksheet The Food Chain" },
 
-  { r: "tf", q: "The arrows in a food chain point towards the organism that receives the energy.", a: "True", why: "Sono le parole della scheda: la freccia va verso chi mangia.", src: "Scheda Explore an ecosystem" },
-  { r: "tf", q: "Primary consumers eat secondary consumers.", a: "False", why: "Al contrario: i secondari mangiano i primari. I primari mangiano le piante.", src: "Scheda The Food Chain" },
-  { r: "tf", q: "Decomposers return nutrients to the soil.", a: "True", why: "Funghi e batteri decompongono i resti e restituiscono le sostanze nutritive al suolo.", src: "Scheda The Food Chain" },
-  { r: "tf", q: "Earthworms and some insects help the decomposers.", a: "True", why: "Lo dice la scheda: lombrichi e alcuni insetti aiutano la decomposizione.", src: "Scheda The Food Chain" },
-  { r: "tf", q: "Primary consumers are generally carnivores.", a: "False", why: "I consumatori primari sono di solito erbivori: mangiano piante.", src: "Scheda The Food Chain" },
-  { r: "tf", q: "A forest, a pond and a meadow are examples of ecosystems.", a: "True", why: "Sono gli esempi scritti sul quaderno.", src: "Quaderno, Ecosystem" }
+  { r: "tf", q: "The arrows in a food chain point towards the organism that receives the energy.", a: "True", why: "These are the words on the worksheet: the arrow points to the one that eats.", src: "Worksheet Explore an ecosystem" },
+  { r: "tf", q: "Primary consumers eat secondary consumers.", a: "False", why: "It is the other way round: secondary consumers eat primary consumers. Primary consumers eat plants.", src: "Worksheet The Food Chain" },
+  { r: "tf", q: "Decomposers return nutrients to the soil.", a: "True", why: "Fungi and bacteria break down dead things and return nutrients to the soil.", src: "Worksheet The Food Chain" },
+  { r: "tf", q: "Earthworms and some insects help the decomposers.", a: "True", why: "The worksheet says it: earthworms and some insects help decomposition.", src: "Worksheet The Food Chain" },
+  { r: "tf", q: "Primary consumers are generally carnivores.", a: "False", why: "Primary consumers are usually herbivores: they eat plants.", src: "Worksheet The Food Chain" },
+  { r: "tf", q: "A forest, a pond and a meadow are examples of ecosystems.", a: "True", why: "These are the examples in your notebook.", src: "Notebook, Ecosystem" }
 ];
 
 let order = QS.map((_, i) => i);
@@ -222,7 +222,7 @@ function show() {
     shuffled = shuffle(Q.cards.map((_, i) => i));
     qtext = `${esc(Q.place)}: build the food chain.`;
     body = `<div class="chain" id="chain"></div><div class="deck" id="deck"></div>
-      <div class="row"><button class="btn" id="check" disabled>Controlla</button><button class="btn ghost" id="undo">Togli l'ultima</button></div>`;
+      <div class="row"><button class="btn" id="check" disabled>Check</button><button class="btn ghost" id="undo">Remove the last one</button></div>`;
   } else {
     const opts = Q.r === "live" ? LIVE : Q.r === "role" ? ROLES : Q.r === "tf" ? TF : Q.o;
     qtext = Q.it ? `${esc(Q.q)}<small>${esc(Q.it)}</small>` : esc(Q.q);
@@ -235,7 +235,7 @@ function show() {
     <p class="q">${qtext}</p>
     ${body}
     <div id="fb"></div>
-    <div class="next"><button class="btn" id="nx" hidden>Avanti</button></div>`;
+    <div class="next"><button class="btn" id="nx" hidden>Next</button></div>`;
   if (Q.r === "chain") drawChain(Q);
   card.querySelectorAll(".opts .opt").forEach(b => b.addEventListener("click", () => answer(b.dataset.v === answerOf(Q), b)));
   document.getElementById("nx").addEventListener("click", () => { pos++; show(); window.scrollTo({ top: 0 }); });
@@ -245,15 +245,15 @@ function answerOf(Q) { return Q.a; }
 
 function drawChain(Q, checked) {
   const chain = document.getElementById("chain"), deck = document.getElementById("deck");
-  let html = `<div class="sunbox"><b>sunlight</b><span class="it">luce del Sole</span></div>`;
+  let html = `<div class="sunbox"><b>sunlight</b></div>`;
   for (let i = 0; i < Q.cards.length; i++) {
     const c = picked[i] !== undefined ? Q.cards[picked[i]] : null;
     const bad = checked && picked[i] !== i;
-    html += `<span class="arrow" aria-hidden="true">→</span><div class="slot ${c ? "filled" : ""} ${bad ? "bad" : ""}">${c ? `<b>${esc(c[0])}</b><span class="it">${esc(c[1])}</span>` : ""}${checked ? `<span class="role">${ROLE_LABEL[i]}</span>` : ""}</div>`;
+    html += `<span class="arrow" aria-hidden="true">→</span><div class="slot ${c ? "filled" : ""} ${bad ? "bad" : ""}">${c ? `<b>${esc(c[0])}</b>` : ""}${checked ? `<span class="role">${ROLE_LABEL[i]}</span>` : ""}</div>`;
   }
   chain.innerHTML = html;
   if (checked) { deck.innerHTML = ""; return; }
-  deck.innerHTML = shuffled.map(ci => `<button class="opt ${picked.includes(ci) ? "used" : ""}" data-c="${ci}"><b>${esc(Q.cards[ci][0])}</b><span class="it">${esc(Q.cards[ci][1])}</span></button>`).join("");
+  deck.innerHTML = shuffled.map(ci => `<button class="opt ${picked.includes(ci) ? "used" : ""}" data-c="${ci}"><b>${esc(Q.cards[ci][0])}</b></button>`).join("");
   deck.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => { picked.push(+b.dataset.c); drawChain(Q); }));
   const check = document.getElementById("check"), undo = document.getElementById("undo");
   check.disabled = picked.length < Q.cards.length;
@@ -273,11 +273,11 @@ function answer(ok, btn) {
   if (btn && !ok) btn.classList.add("wrong");
   const right = Q.r === "chain" ? "sunlight → " + Q.cards.map(c => c[0]).join(" → ") : Q.a;
   document.getElementById("fb").innerHTML = ok
-    ? `<div class="fb ok"><strong>Giusto!</strong><span>${esc(Q.why)}</span><span class="src">${esc(Q.src)}</span></div>`
-    : `<div class="fb no"><strong>La risposta giusta e: ${esc(right)}</strong><span>${esc(Q.why)}</span><span class="src">Rileggi: ${esc(Q.src)}</span></div>`;
+    ? `<div class="fb ok"><strong>Right!</strong><span>${esc(Q.why)}</span><span class="src">${esc(Q.src)}</span></div>`
+    : `<div class="fb no"><strong>The right answer is: ${esc(right)}</strong><span>${esc(Q.why)}</span><span class="src">Read again: ${esc(Q.src)}</span></div>`;
   const nx = document.getElementById("nx");
   nx.hidden = false;
-  nx.textContent = pos === order.length - 1 ? "Vedi il risultato" : "Avanti";
+  nx.textContent = pos === order.length - 1 ? "See the result" : "Next";
   nx.focus();
   drawLinks();
 }
@@ -291,21 +291,21 @@ function finish() {
     if (order.length === QS.length && good > prev) localStorage.setItem("cmc-best", String(good));
     best = Math.max(prev, order.length === QS.length ? good : 0) || null;
   } catch (e) { best = null; }
-  const msg = good === order.length ? "Catena perfetta! Hai capito tutto."
-    : good >= order.length * 0.8 ? "Benissimo! Ripassa solo queste."
-    : "Buon inizio! Rileggi le schede e riprova.";
+  const msg = good === order.length ? "Perfect chain! You understood everything."
+    : good >= order.length * 0.8 ? "Very good! Just review these ones."
+    : "Good start! Read the worksheets again and try again.";
   card.innerHTML = `
-    <div class="round"><b>Risultato</b><small>${order.length} domande</small></div>
+    <div class="round"><b>Result</b><small>${order.length} questions</small></div>
     <div class="end">
       <div class="big">${good} / ${order.length}</div>
       <p>${msg}</p>
-      ${best ? `<p class="tip">Il tuo record sul giro completo: ${best} su ${QS.length}</p>` : ""}
-      ${missed.length ? `<ul class="miss">${missed.map(qi => { const Q = QS[qi]; const qt = Q.r === "chain" ? Q.place : Q.q; const r = Q.r === "chain" ? "sunlight → " + Q.cards.map(c => c[0]).join(" → ") : Q.a; return `<li><b>${esc(qt)}</b>Risposta: ${esc(r)}</li>`; }).join("")}</ul>` : ""}
+      ${best ? `<p class="tip">Your best on the full game: ${best} out of ${QS.length}</p>` : ""}
+      ${missed.length ? `<ul class="miss">${missed.map(qi => { const Q = QS[qi]; const qt = Q.r === "chain" ? Q.place : Q.q; const r = Q.r === "chain" ? "sunlight → " + Q.cards.map(c => c[0]).join(" → ") : Q.a; return `<li><b>${esc(qt)}</b>Answer: ${esc(r)}</li>`; }).join("")}</ul>` : ""}
       <div class="row">
-        ${missed.length ? `<button class="btn" id="again-miss">Rifai le sbagliate</button>` : ""}
-        <button class="btn ghost" id="again-all">Ricomincia da capo</button>
+        ${missed.length ? `<button class="btn" id="again-miss">Redo the wrong ones</button>` : ""}
+        <button class="btn ghost" id="again-all">Start again</button>
       </div>
-      <p class="tip">Ricorda: la freccia va verso chi mangia. Erba → coniglio → volpe.</p>
+      <p class="tip">Remember: the arrow points to the one that eats. Grass → rabbit → fox.</p>
     </div>`;
   const am = document.getElementById("again-miss");
   if (am) am.addEventListener("click", () => { order = missed.slice(); missed.forEach(qi => delete results[qi]); pos = 0; show(); });

@@ -142,7 +142,8 @@
   "ico": "🦴",
   "title": "Vertebrates and invertebrates",
   "topic": "Animals",
-  "topicDate": "2026-10-28"
+  "topicDate": "2026-10-28",
+  "lang": "en"
  },
  {
   "id": "scienze-nutrizione",
@@ -151,7 +152,8 @@
   "ico": "🥕",
   "title": "Animal nutrition",
   "topic": "Animals",
-  "topicDate": "2026-10-28"
+  "topicDate": "2026-10-28",
+  "lang": "en"
  },
  {
   "id": "scienze-respirazione-temperatura",
@@ -160,7 +162,8 @@
   "ico": "🫁",
   "title": "Respiration and body temperature",
   "topic": "Animals",
-  "topicDate": "2026-10-28"
+  "topicDate": "2026-10-28",
+  "lang": "en"
  },
  {
   "id": "scienze-riproduzione",
@@ -169,7 +172,8 @@
   "ico": "🥚",
   "title": "Animal reproduction",
   "topic": "Animals",
-  "topicDate": "2026-10-28"
+  "topicDate": "2026-10-28",
+  "lang": "en"
  },
  {
   "id": "scienze-schema-vertebrati",
@@ -178,7 +182,8 @@
   "ico": "🐸",
   "title": "Vertebrates at a glance",
   "topic": "Animals",
-  "topicDate": "2026-10-28"
+  "topicDate": "2026-10-28",
+  "lang": "en"
  },
  {
   "id": "scienze-ripasso-regni",
@@ -205,7 +210,8 @@
   "ico": "🌍",
   "title": "Ecology and ecosystem",
   "topic": "Ecology and food chains",
-  "topicDate": "2026-09-30"
+  "topicDate": "2026-09-30",
+  "lang": "en"
  },
  {
   "id": "scienze-catena-alimentare",
@@ -214,7 +220,8 @@
   "ico": "🔗",
   "title": "The food chain",
   "topic": "Ecology and food chains",
-  "topicDate": "2026-09-30"
+  "topicDate": "2026-09-30",
+  "lang": "en"
  },
  {
   "id": "scienze-ocean-ecosystem",
@@ -230,7 +237,7 @@
   "subject": "Science",
   "kind": "game",
   "ico": "🦊",
-  "title": "Chi mangia chi",
+  "title": "Who eats whom?",
   "topic": "Ecology and food chains",
   "topicDate": "2026-09-30"
  },
@@ -239,7 +246,7 @@
   "subject": "Science",
   "kind": "test",
   "ico": "🌿",
-  "title": "Practice test: ecology and food chains",
+  "title": "Practice test 1: ecology and food chains",
   "topic": "Ecology and food chains",
   "topicDate": "2026-09-30"
  },
