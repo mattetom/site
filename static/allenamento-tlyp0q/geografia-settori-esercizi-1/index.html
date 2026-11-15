@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en" data-exercise="geografia-settori-esercizi-1" data-subject="Geography">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<link rel="apple-touch-icon" href="../icon.png">
+</head>
+<body>
+<a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
+<title>Economic sectors: more practice 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout and engine: the same as the geography practice test 2 (English, "redo only the wrong ones"); long answer buttons wrap. */
+:root {
+  --sea: #e4f1f4;
+  --sea-line: #c3dde4;
+  --card: #ffffff;
+  --ink: #12304a;
+  --ink-soft: #4d6a80;
+  --line: #cfe0e8;
+  --chart: #1f6f8b;
+  --chart-bg: #e2f0f5;
+  --buoy: #e8692c;
+  --buoy-bg: #fde9de;
+  --land: #3d8b4f;
+  --land-bg: #e1f2e4;
+  --miss: #c23b50;
+  --miss-bg: #fbe5e8;
+  --sun: #f2b632;
+  --sun-bg: #fff3d6;
+  --display: "Rubik", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Lexend", "Verdana", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Menlo", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sea: #0c1d2b; --sea-line: #173247; --card: #132a3d; --ink: #e9f3f8; --ink-soft: #9fb8c9;
+    --line: #23415a; --chart: #6cc3e0; --chart-bg: #173a50; --buoy: #ff9a62; --buoy-bg: #3e2418;
+    --land: #72cf87; --land-bg: #173826; --miss: #ff8a9a; --miss-bg: #3d1b23; --sun: #ffd166; --sun-bg: #3a3014; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sea: #0c1d2b; --sea-line: #173247; --card: #132a3d; --ink: #e9f3f8; --ink-soft: #9fb8c9;
+  --line: #23415a; --chart: #6cc3e0; --chart-bg: #173a50; --buoy: #ff9a62; --buoy-bg: #3e2418;
+  --land: #72cf87; --land-bg: #173826; --miss: #ff8a9a; --miss-bg: #3d1b23; --sun: #ffd166; --sun-bg: #3a3014; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--sea);
+  background-image:
+    linear-gradient(var(--sea-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--sea-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.5;
+  min-height: 100vh; padding-inline: 16px; padding-block: 20px 40px;
+}
+.wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 4px; }
+.eyebrow { font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: .06em; color: var(--chart); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 8.5vw, 52px); line-height: 1; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h1 span { color: var(--buoy); }
+.sub { color: var(--ink-soft); margin: 4px 0 0; font-size: 16px; max-width: 58ch; }
+
+.tally { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.steps { display: flex; gap: 6px; }
+.step { width: 30px; height: 30px; border-radius: 50%; border: 3px solid var(--line); display: grid; place-items: center; font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--ink-soft); background: var(--card); }
+.step.done { border-color: var(--land); background: var(--land-bg); color: var(--land); }
+.step.now { border-color: var(--buoy); background: var(--buoy-bg); color: var(--ink); }
+.pts { margin-left: auto; font-family: var(--mono); font-weight: 700; font-size: 17px; color: var(--chart); font-variant-numeric: tabular-nums; }
+
+.card { background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 22px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.ex-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.ex-head b { font-family: var(--display); font-weight: 800; font-size: 22px; color: var(--chart); }
+.ex-head small { color: var(--ink-soft); font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.how { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+.bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border: 2px dashed var(--chart); border-radius: 14px; }
+.chip { font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--chart-bg); color: var(--ink); }
+.chip.used { text-decoration: line-through; opacity: .45; }
+
+.sent { margin: 0; line-height: 2.3; font-size: 18px; }
+.fill { display: inline-flex; align-items: baseline; gap: 1px; white-space: nowrap; }
+.fill .pre { font-weight: 700; color: var(--buoy); }
+.fill input {
+  font: inherit; font-weight: 700; line-height: 1.3; width: 9.5em; max-width: 58vw; padding: 1px 6px; border: 0; border-bottom: 2.5px solid var(--ink-soft);
+  background: var(--sea); color: var(--ink); border-radius: 6px 6px 0 0;
+}
+.fill input:focus { outline: none; border-bottom-color: var(--buoy); background: var(--buoy-bg); }
+.fill.ok input { border-bottom-color: var(--land); background: var(--land-bg); }
+.fill.half input { border-bottom-color: var(--sun); background: var(--sun-bg); }
+.fill.no input { border-bottom-color: var(--miss); background: var(--miss-bg); text-decoration: line-through; }
+.fix { font-weight: 700; color: var(--land); margin-left: 4px; font-size: 16px; }
+
+/* circle / true-false */
+.items { display: flex; flex-direction: column; gap: 10px; }
+.item { border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.item.ok { border-color: var(--land); background: var(--land-bg); }
+.item.no { border-color: var(--miss); background: var(--miss-bg); }
+.item p { margin: 0; font-size: 18px; }
+.item .tg { display: flex; gap: 8px; flex-wrap: wrap; }
+.tgb.long { border-radius: 14px; text-align: left; white-space: normal; width: 100%; }
+.tgb { font: inherit; font-size: 17px; font-weight: 600; cursor: pointer; padding: 6px 14px; border-radius: 999px; border: 2px solid var(--line); background: var(--card); color: var(--ink); }
+.tgb[aria-pressed="true"] { border-color: var(--chart); background: var(--chart); color: var(--card); }
+.why { font-size: 15px; color: var(--ink); }
+
+button:focus-visible, input:focus-visible { outline: 3px solid var(--buoy); outline-offset: 2px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn { font: inherit; font-weight: 700; font-size: 17px; cursor: pointer; padding: 11px 18px; border-radius: 14px; border: 2px solid var(--chart); background: var(--chart); color: var(--card); }
+.btn.ghost { background: transparent; color: var(--chart); }
+.fill.given { font-weight: 700; color: var(--land); }
+.fb { border-radius: 14px; padding: 12px 14px; font-size: 16px; display: flex; flex-direction: column; gap: 4px; }
+.fb.good { background: var(--land-bg); border: 2px solid var(--land); }
+.fb.mid { background: var(--sun-bg); border: 2px solid var(--sun); }
+.fb strong { font-size: 18px; }
+
+.end { display: flex; flex-direction: column; gap: 12px; }
+.big { font-family: var(--display); font-weight: 800; font-size: 64px; line-height: 1; color: var(--chart); font-variant-numeric: tabular-nums; }
+.grade { font-family: var(--display); font-size: 24px; font-weight: 800; }
+table.res { border-collapse: collapse; width: 100%; font-size: 16px; }
+table.res td { padding: 6px 4px; border-bottom: 1px solid var(--line); }
+table.res td:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; font-family: var(--mono); }
+.copy { display: flex; flex-wrap: wrap; gap: 8px; }
+.copy span { font-weight: 700; padding: 4px 10px; border-radius: 10px; background: var(--buoy-bg); border: 2px solid var(--buoy); }
+.tip { margin: 0; color: var(--ink-soft); font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) {
+  .card { animation: grow .25s ease-out; }
+  @keyframes grow { from { transform: scale(.985); } to { transform: none; } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GEOGRAPHY · GRADE 4 · MORE PRACTICE</div>
+    <h1>Economic sectors: <span>more practice</span></h1>
+    <p class="sub">Like the worksheets from class, with new jobs and new examples. Six exercises, 40 points. Take your time and read every sentence to the end.</p>
+  </header>
+  <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
+  <main class="card" id="card" aria-live="polite"></main>
+</div>
+
+<script>
+// Each blank: a = accepted answers (lowercase). pre = first letter shown (exercise with hints).
+// Extra practice on the class worksheets photographed on 15/11/2026 (quaderno/03_economic-sectors.md):
+// same kinds of exercises (match, which sector, raw/finished, complete the text, true or false,
+// find the mistake), with new jobs and examples. Not the homework: material to practise.
+const S3 = ["primary", "secondary", "tertiary"];
+const EX = [
+  { id: "e1", type: "pick", title: "1. Match the workers to the area of work", max: 8,
+    how: "Like the REVISION sheet: choose the area of work of each worker.",
+    items: [
+      { q: "nurse", opts: ["health", "transport", "crafts", "mining"], a: "health",
+        why: "A nurse looks after sick people in a hospital: health." },
+      { q: "pilot", opts: ["tourism", "transport", "farming", "retail"], a: "transport",
+        why: "A pilot flies a plane and moves people from one place to another: transport." },
+      { q: "cashier", opts: ["education", "fishing", "retail", "crafts"], a: "retail",
+        why: "A cashier sells goods in a shop or supermarket: retail (trade)." },
+      { q: "logger", opts: ["forestry", "health", "transport", "banking"], a: "forestry",
+        why: "A logger cuts down trees for wood: forestry." },
+      { q: "potter", opts: ["mining", "crafts", "tourism", "farming"], a: "crafts",
+        why: "A potter makes pots and vases by hand: crafts." },
+      { q: "tour guide", opts: ["tourism", "fishing", "crafts", "mining"], a: "tourism",
+        why: "A tour guide shows a town to the visitors: tourism." },
+      { q: "bank worker", opts: ["farming", "banking", "forestry", "crafts"], a: "banking",
+        why: "A bank worker looks after people's money: banking." },
+      { q: "shepherd", opts: ["livestock", "education", "retail", "transport"], a: "livestock",
+        why: "A shepherd looks after sheep: raising animals is livestock." }
+    ] },
+  { id: "e2", type: "pick", title: "2. Which sector is it?", max: 10,
+    how: "Does the worker take from nature, make something, or help people?",
+    items: [
+      { q: "A beekeeper collects honey from the bees.", opts: S3, a: "primary",
+        why: "Honey comes straight from nature: primary sector." },
+      { q: "A factory makes chocolate from cocoa beans.", opts: S3, a: "secondary",
+        why: "The factory transforms a raw material (cocoa) into a finished good (chocolate): secondary." },
+      { q: "A waiter serves food in a restaurant.", opts: S3, a: "tertiary",
+        why: "The waiter does not make the food, he serves it: a service, tertiary." },
+      { q: "A tailor sews a new dress.", opts: S3, a: "secondary",
+        why: "The tailor makes a dress from fabric: making = secondary." },
+      { q: "Workers get oil from under the sea.", opts: S3, a: "primary",
+        why: "Getting oil from the ground is mineral extraction: primary." },
+      { q: "A dentist checks a child's teeth.", opts: S3, a: "tertiary",
+        why: "A dentist works in healthcare: tertiary." },
+      { q: "Builders build a new road.", opts: S3, a: "secondary",
+        why: "Building roads, houses and bridges is construction: secondary." },
+      { q: "A train driver takes people to the city.", opts: S3, a: "tertiary",
+        why: "Transport is a service: tertiary." },
+      { q: "A mill turns wheat into flour.", opts: S3, a: "secondary",
+        why: "The mill transforms wheat into flour: secondary." },
+      { q: "A farmer picks grapes in the vineyard.", opts: S3, a: "primary",
+        why: "Growing and picking fruit is farming: primary." }
+    ] },
+  { id: "e3", type: "pick", title: "3. Raw material or finished good?", max: 6,
+    how: "A raw material has not been changed yet. A finished good is ready to be used or sold.",
+    items: [
+      { q: "wool", opts: ["raw material", "finished good"], a: "raw material",
+        why: "Wool comes from the sheep and has not been changed yet: raw material." },
+      { q: "a blanket", opts: ["raw material", "finished good"], a: "finished good",
+        why: "A blanket is made from wool and is ready to be used: finished good." },
+      { q: "iron", opts: ["raw material", "finished good"], a: "raw material",
+        why: "Iron comes from mining: raw material. Factories use it to make cars." },
+      { q: "a car", opts: ["raw material", "finished good"], a: "finished good",
+        why: "A car is ready to be sold: finished good." },
+      { q: "milk from the cow", opts: ["raw material", "finished good"], a: "raw material",
+        why: "Milk from the cow is used by a factory to make cheese: here it is a raw material." },
+      { q: "a bar of chocolate", opts: ["raw material", "finished good"], a: "finished good",
+        why: "Chocolate is made from cocoa beans and is ready to eat: finished good." }
+    ] },
+  { id: "e4", type: "cloze", title: "4. Complete the text", max: 6,
+    how: "The words are from the theory sheets. There is only the first letter: write the rest.",
+    sents: [
+      ["Farming is also called ", { pre: "a", a: ["agriculture"] }, ": growing food or plants."],
+      ["Raw materials are things that have not been changed or ", { pre: "p", a: ["processed"] }, " yet."],
+      ["The primary sector is very important where many people live in ", { pre: "r", a: ["rural"] }, " areas."],
+      ["In the secondary sector things are ", { pre: "m", a: ["manufactured"] }, " or built."],
+      ["Shops and supermarkets are part of ", { pre: "t", a: ["trade"] }, "."],
+      ["Teachers, doctors and bank workers provide ", { pre: "s", a: ["services"] }, "."]
+    ] },
+  { id: "e5", type: "pick", title: "5. True or False", max: 6,
+    how: "Read the whole sentence carefully, then choose T or F.",
+    items: [
+      { q: "A fisherman and a factory that puts fish into tins belong to the same sector.", opts: ["T", "F"], a: "F",
+        why: "False: the fisherman takes fish from the sea (primary), the factory makes tins of fish (secondary)." },
+      { q: "Building a bridge is construction, so it is a secondary-sector activity.", opts: ["T", "F"], a: "T",
+        why: "True: construction is in the secondary sector." },
+      { q: "A teacher produces finished goods.", opts: ["T", "F"], a: "F",
+        why: "False: a teacher does not make things, she provides a service (education): tertiary." },
+      { q: "Selling apples at the market is a tertiary-sector activity.", opts: ["T", "F"], a: "T",
+        why: "True: selling is trade, a service." },
+      { q: "A carpenter who makes a table uses wood as a raw material.", opts: ["T", "F"], a: "T",
+        why: "True: wood is the raw material, the table is the finished good." },
+      { q: "In developed countries most people work in the primary sector.", opts: ["T", "F"], a: "F",
+        why: "False: in developed countries the biggest sector is the tertiary one." }
+    ] },
+  { id: "e6", type: "pick", title: "6. Find the mistake", max: 4,
+    how: "Like FIND AND CORRECT THE MISTAKES: in each story one sentence is wrong. Choose it.",
+    items: [
+      { q: "From milk to cheese. Which sentence is wrong?", opts: [
+          "A dairy farmer milks the cows: primary sector.",
+          "A factory makes cheese from the milk: secondary sector.",
+          "A lorry driver takes the cheese to the shops: secondary sector."], a: "A lorry driver takes the cheese to the shops: secondary sector.",
+        why: "The lorry driver transports the cheese, he does not make it. Transport is a service: tertiary sector." },
+      { q: "From cotton to T-shirt. Which sentence is wrong?", opts: [
+          "A farmer grows cotton: secondary sector.",
+          "A factory makes T-shirts from the cotton: secondary sector.",
+          "A shop sells the T-shirts: tertiary sector."], a: "A farmer grows cotton: secondary sector.",
+        why: "Growing cotton is farming: the farmer is in the primary sector." },
+      { q: "A new hospital. Which sentence is wrong?", opts: [
+          "Builders build the hospital: secondary sector.",
+          "The doctors who work in the hospital are in the primary sector.",
+          "The nurses help the sick people: tertiary sector."], a: "The doctors who work in the hospital are in the primary sector.",
+        why: "Doctors provide healthcare, a service: tertiary sector." },
+      { q: "A holiday by the sea. Which sentence is wrong?", opts: [
+          "A fisherman catches fish: primary sector.",
+          "The cook in the hotel changes the fish into a raw material.",
+          "A hotel welcomes the tourists: tertiary sector."], a: "The cook in the hotel changes the fish into a raw material.",
+        why: "The fish is the raw material. The cook makes a meal, so the fish becomes food ready to eat, not a raw material." }
+    ] }
+];
+const TOTAL = EX.reduce((a, e) => a + e.max, 0);
+
+let mode = "full";    // "full" = whole test, "redo" = only what she got wrong
+let RUN = EX;         // exercises in this run
+let only = {};        // redo: id -> Set of item indices to redo
+let step = 0;
+let scores = {};      // id -> points
+let misses = {};      // id -> Set of item indices not fully right in this run
+let wrongWords = [];  // correct spellings to copy
+const card = document.getElementById("card");
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function clean(s) { return s.trim().toLowerCase().replace(/\s+/g, " ").replace(/[.,;!]+$/, ""); }
+function dist(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++)
+    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+// 1 = right, 0.5 = one letter off (two for long words), 0 = wrong
+function grade(typed, accepted) {
+  const t = clean(typed);
+  if (!t) return 0;
+  if (accepted.includes(t)) return 1;
+  if (accepted.some(a => a.length >= 4 && dist(t, a) <= (a.length >= 9 ? 2 : 1))) return 0.5;
+  return 0;
+}
+function fmt(n) { return String(n).replace(".", ","); }
+function total() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+function blanksOf(E) { return E.sents.flat().filter(p => typeof p !== "string"); }
+// the word as written on the sheets (capitals for names)
+function shownWord(E, B) {
+  return (E.bank || []).find(w => w.toLowerCase() === B.a[0]) || (B.pre && B.pre === B.pre.toUpperCase() ? B.a[0][0].toUpperCase() + B.a[0].slice(1) : B.a[0]);
+}
+function redoing(E, i) { return mode !== "redo" || only[E.id].has(i); }
+function maxOf(E) { return mode === "redo" ? only[E.id].size : E.max; }
+function runMax() { return RUN.reduce((a, e) => a + maxOf(e), 0); }
+
+function drawTally() {
+  document.getElementById("steps").innerHTML = RUN.map((e, i) => `<span class="step ${scores[e.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
+  document.getElementById("pts").textContent = mode === "redo" ? `${fmt(total())} of ${runMax()} right` : `${fmt(total())} points`;
+}
+
+function show() {
+  drawTally();
+  if (step >= RUN.length) return finish();
+  const E = RUN[step];
+  let body = "";
+  if (E.type === "cloze") {
+    const blanks = blanksOf(E);
+    const given = blanks.filter((B, i) => !redoing(E, i)).map(B => B.a[0]);
+    if (E.bank) body += `<div class="bank" id="bank">${E.bank.map(w => `<span class="chip ${given.includes(w.toLowerCase()) ? "used" : ""}" data-w="${esc(w.toLowerCase())}">${esc(w)}</span>`).join("")}</div>`;
+    let k = 0;
+    body += E.sents.map(s => {
+      let open = false;
+      const html = s.map(p => {
+        if (typeof p === "string") return esc(p);
+        const i = k++;
+        if (!redoing(E, i)) return `<span class="fill given" data-w="${esc(p.a[0])}">${esc(shownWord(E, p))}</span>`;
+        open = true;
+        return `<span class="fill" data-k="${i}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="missing word"></span>`;
+      }).join("");
+      return open ? `<p class="sent">${html}</p>` : "";
+    }).join("");
+  } else if (E.type === "pick") {
+    body = `<div class="items">${E.items.map((it, i) => !redoing(E, i) ? "" : `<div class="item" data-i="${i}"><p>${esc(it.q)}</p><div class="tg">${it.opts.map(v => `<button type="button" class="tgb${v.length > 30 ? " long" : ""}" aria-pressed="false" data-v="${esc(v)}">${esc(v)}</button>`).join("")}</div></div>`).join("")}</div>`;
+  }
+  card.innerHTML = `
+    <div class="ex-head"><b>${esc(E.title)}</b><small>${mode === "redo" ? `${maxOf(E)} to redo` : `${E.max} points`}</small></div>
+    <p class="how">${mode === "redo" ? "Redo only the wrong ones: the green parts were already right. " : ""}${esc(E.how)}</p>
+    ${body}
+    <div id="fb"></div>
+    <div class="row"><button class="btn" id="go" type="button">Check</button></div>`;
+  wire(E);
+  const first = card.querySelector("input"); if (first) first.focus();
+}
+
+function wire(E) {
+  const go = document.getElementById("go");
+  if (E.type === "cloze" && E.bank) {
+    const upd = () => {
+      const typed = [...card.querySelectorAll("input")].map(i => clean(i.value)).concat([...card.querySelectorAll(".fill.given")].map(g => g.dataset.w));
+      card.querySelectorAll(".chip").forEach(c => c.classList.toggle("used", typed.includes(c.dataset.w)));
+    };
+    card.querySelectorAll("input").forEach(i => i.addEventListener("input", upd));
+  }
+  if (E.type === "pick") {
+    card.querySelectorAll(".item").forEach(it => it.querySelectorAll(".tgb").forEach(b => b.addEventListener("click", () => {
+      it.querySelectorAll(".tgb").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    })));
+  }
+  card.querySelectorAll("input").forEach((inp, idx, all) => inp.addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); const nx = all[idx + 1]; if (nx) nx.focus(); else go.click(); }
+  }));
+  go.onclick = () => check(E);
+}
+
+function check(E) {
+  const fb = document.getElementById("fb");
+  let pts = 0;
+  const miss = new Set();
+  const notes = [];
+  if (E.type === "cloze") {
+    const blanks = blanksOf(E);
+    const empty = [...card.querySelectorAll("input")].some(i => !i.value.trim());
+    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Some blanks are still empty. To check anyway, press Check again.</span></div>`; return; }
+    card.querySelectorAll(".fill:not(.given)").forEach(f => {
+      const k = +f.dataset.k, B = blanks[k], inp = f.querySelector("input");
+      // she may retype the first letter too: try both "g"+"ills" and "gills"
+      const cands = B.pre ? [B.pre + inp.value, inp.value] : [inp.value];
+      const typed = cands.reduce((best, c) => grade(c, B.a) > grade(best, B.a) ? c : best, cands[0]);
+      const g = grade(typed, B.a);
+      const shown = shownWord(E, B);
+      pts += g;
+      inp.disabled = true;
+      f.classList.add(g === 1 ? "ok" : g === 0.5 ? "half" : "no");
+      if (g < 1) { miss.add(k); f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(shown)}</span>`); wrongWords.push(shown); }
+    });
+  } else if (E.type === "pick") {
+    const items = [...card.querySelectorAll(".item")];
+    if (items.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Choose an answer for each one.</span></div>`; return; }
+    items.forEach(it => {
+      const i = +it.dataset.i, I = E.items[i];
+      const v = it.querySelector('[aria-pressed="true"]').dataset.v;
+      const ok = v === I.a; if (ok) pts++; else miss.add(i);
+      it.classList.add(ok ? "ok" : "no");
+      it.querySelectorAll(".tgb").forEach(b => b.disabled = true);
+      if (!ok) it.insertAdjacentHTML("beforeend", `<span class="why">${esc(I.why)}</span>`);
+    });
+  }
+  scores[E.id] = pts;
+  misses[E.id] = miss;
+  drawTally();
+  const max = maxOf(E);
+  const msg = pts === max ? "Perfect!" : pts >= max * 0.6 ? "Well done!" : E.type === "cloze" ? "Look at the green words." : "Read the explanations.";
+  fb.innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><strong>${msg} ${fmt(pts)} out of ${max}</strong>${E.type === "cloze" ? `<span>Green = right. Yellow = almost, check the spelling (half a point). Red = wrong. Next to it you find how to write it.</span>` : ""}${notes.map(n => `<span>${esc(n)}</span>`).join("")}</div>`;
+  const go = document.getElementById("go");
+  go.textContent = step === RUN.length - 1 ? "See the result" : "Next exercise";
+  go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
+  go.focus();
+}
+
+function finish() {
+  const t = total();
+  const words = [...new Set(wrongWords)];
+  const left = RUN.filter(e => misses[e.id] && misses[e.id].size);
+  const nLeft = left.reduce((a, e) => a + misses[e.id].size, 0);
+  let top;
+  if (mode === "full") {
+    const voto = Math.round((t / TOTAL * 10) * 2) / 2;
+    let best = null;
+    try { const prev = Number(localStorage.getItem("geo-sectors-more-1-best") || 0); if (t > prev) localStorage.setItem("geo-sectors-more-1-best", String(t)); best = Math.max(prev, t); } catch (e) { best = null; }
+    const msg = t >= TOTAL * 0.9 ? "Excellent! You really know the three sectors." : t >= TOTAL * 0.7 ? "Well done! Study the words below and try again." : "Read the summary \"Economic sectors\" again, then try again.";
+    top = `<div class="ex-head"><b>Result</b><small>${TOTAL} points in all</small></div>
+      <div class="big">${fmt(t)} / ${TOTAL}</div>
+      <div class="grade">Grade: ${fmt(voto)}</div>
+      <p>${msg}</p>
+      ${best ? `<p class="tip">Your best: ${fmt(best)} out of ${TOTAL}</p>` : ""}`;
+  } else {
+    const m = runMax();
+    top = `<div class="ex-head"><b>Redo of the wrong ones</b><small>${m} to redo</small></div>
+      <div class="big">${fmt(t)} / ${m}</div>
+      <p>${nLeft ? "Some are still wrong: redo only those." : "Now they are all right. Excellent!"}</p>`;
+  }
+  card.innerHTML = `
+    <div class="end">
+      ${top}
+      <table class="res">${RUN.map(e => `<tr><td>${esc(e.title)}</td><td>${fmt(scores[e.id] ?? 0)} / ${maxOf(e)}</td></tr>`).join("")}</table>
+      ${words.length ? `<p class="tip">Words to copy three times in your notebook:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="tip">No wrong words: perfect spelling!</p>`}
+      <div class="row">
+        ${nLeft ? `<button class="btn" id="redo" type="button">Redo only the wrong ones (${nLeft})</button>` : ""}
+        <button class="btn ${nLeft ? "ghost" : ""}" id="again" type="button">Do the whole test again</button>
+      </div>
+    </div>`;
+  const redo = document.getElementById("redo");
+  if (redo) redo.onclick = () => {
+    only = {};
+    left.forEach(e => { only[e.id] = new Set(misses[e.id]); });
+    RUN = left; mode = "redo"; restart();
+  };
+  document.getElementById("again").onclick = () => { only = {}; RUN = EX; mode = "full"; restart(); };
+}
+
+function restart() { step = 0; scores = {}; misses = {}; wrongWords = []; show(); window.scrollTo({ top: 0 }); }
+
+show();
+</script>
+
+<script src="../app.js"></script>
+<script src="../track.js"></script>
+<script>document.getElementById("allen-back").href = "../" + APP.carry();</script>
+</body>
+</html>

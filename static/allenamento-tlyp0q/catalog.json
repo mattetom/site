@@ -230,6 +230,15 @@
   "topicDate": "2026-11-12"
  },
  {
+  "id": "geografia-settori-esercizi-1",
+  "subject": "Geography",
+  "kind": "exercise",
+  "ico": "🧑‍🌾",
+  "title": "Economic sectors: more practice 1",
+  "topic": "Economic sectors",
+  "topicDate": "2026-11-12"
+ },
+ {
   "id": "geografia-verifica-2",
   "subject": "Geography",
   "kind": "test",
