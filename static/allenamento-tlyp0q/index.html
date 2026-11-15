@@ -28,6 +28,13 @@
 h2.group { margin: 14px 0 2px; font-family: var(--display); font-weight: 800; font-size: 22px; }
 h2.group.next { color: var(--red); }
 .testhead { margin: 8px 0 0; font-weight: 700; font-size: 16px; }
+details.topic { display: flex; flex-direction: column; }
+details.topic > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 6px 0 2px; padding: 8px 12px; border-radius: 14px; background: var(--blue-bg); font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--blue); }
+details.topic > summary::-webkit-details-marker { display: none; }
+details.topic > summary::before { content: "\25B8"; transition: transform .15s; }
+details.topic[open] > summary::before { transform: rotate(90deg); }
+details.topic > summary small { font-family: var(--body); font-weight: 400; font-size: 14px; color: var(--ink-soft); }
+details.topic .cards { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -82,8 +89,19 @@ fetch("catalog.json").then(r => r.json()).then(items => {
   }
   const rest = items.filter(e => !next.includes(e));
   const others = [...new Set(rest.map(e => e.subject))].filter(s => !SUBJECTS.includes(s));
+  // inside each subject: one block per topic, newest topic on top and open, older ones closed;
+  // inside a topic the cards keep the catalog order (summaries, review sheets, games and exercises, test)
   [...SUBJECTS, ...others].filter(s => rest.some(e => e.subject === s)).forEach(s => {
-    html += `<h2 class="group">${esc(s)}</h2>` + rest.filter(e => e.subject === s).map(e => card(e, best)).join("");
+    const mine = rest.filter(e => e.subject === s);
+    const topics = [...new Set(mine.map(e => e.topic || "Other"))].map(t => {
+      const cards = mine.filter(e => (e.topic || "Other") === t);
+      return { t, date: cards.reduce((m, e) => (e.topicDate || "") > m ? e.topicDate : m, ""), cards };
+    }).sort((a, b) => b.date.localeCompare(a.date));
+    html += `<h2 class="group">${esc(s)}</h2>`;
+    topics.forEach((g, i) => {
+      const when = g.date ? `<small>${MONTHS[Number(g.date.slice(5, 7)) - 1]} &middot; ${g.cards.length} item${g.cards.length > 1 ? "s" : ""}</small>` : "";
+      html += `<details class="topic"${i === 0 ? " open" : ""}><summary>${esc(g.t)} ${when}</summary><div class="cards">${g.cards.map(e => card(e, best)).join("")}</div></details>`;
+    });
   });
   document.getElementById("list").innerHTML = html;
 }).catch(() => { document.getElementById("list").innerHTML = `<p class="note">Oops, the list did not load. Check the internet and reload.</p>`; });

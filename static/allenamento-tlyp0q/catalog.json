@@ -1,21 +1,14 @@
 [
  {
-  "id": "inglese-to-be-have-got-2",
-  "subject": "English",
-  "kind": "exercise",
-  "ico": "🪄",
-  "title": "To be and have got 2",
-  "test": "2026-11-02",
-  "testLabel": "English test"
- },
- {
   "id": "inglese-ripasso-to-be-have-got",
   "subject": "English",
   "kind": "review",
   "ico": "📒",
   "title": "Review: to be and have got",
   "test": "2026-11-02",
-  "testLabel": "English test"
+  "testLabel": "English test",
+  "topic": "To be and have got",
+  "topicDate": "2026-10-23"
  },
  {
   "id": "inglese-to-be-have-got-1",
@@ -24,7 +17,56 @@
   "ico": "🧩",
   "title": "To be and have got 1",
   "test": "2026-11-02",
-  "testLabel": "English test"
+  "testLabel": "English test",
+  "topic": "To be and have got",
+  "topicDate": "2026-10-23"
+ },
+ {
+  "id": "inglese-to-be-have-got-2",
+  "subject": "English",
+  "kind": "exercise",
+  "ico": "🪄",
+  "title": "To be and have got 2",
+  "test": "2026-11-02",
+  "testLabel": "English test",
+  "topic": "To be and have got",
+  "topicDate": "2026-10-23"
+ },
+ {
+  "id": "inglese-peter-pan-storia",
+  "subject": "English",
+  "kind": "summary",
+  "ico": "📖",
+  "title": "Peter Pan: la storia",
+  "topic": "Peter Pan",
+  "topicDate": "2026-10-03"
+ },
+ {
+  "id": "inglese-peter-pan-summary",
+  "subject": "English",
+  "kind": "summary",
+  "ico": "📖",
+  "title": "Peter Pan: summary",
+  "topic": "Peter Pan",
+  "topicDate": "2026-10-03"
+ },
+ {
+  "id": "inglese-peter-pan-ripasso",
+  "subject": "English",
+  "kind": "review",
+  "ico": "🏴‍☠️",
+  "title": "Peter Pan: ripasso",
+  "topic": "Peter Pan",
+  "topicDate": "2026-10-03"
+ },
+ {
+  "id": "inglese-peter-pan-quiz",
+  "subject": "English",
+  "kind": "game",
+  "ico": "🧚",
+  "title": "Peter Pan quiz",
+  "topic": "Peter Pan",
+  "topicDate": "2026-10-03"
  },
  {
   "id": "cambridge-listening-1",
@@ -33,7 +75,9 @@
   "ico": "🎧",
   "title": "Movers Listening 1",
   "test": "2026-11-03",
-  "testLabel": "Cambridge Listening test"
+  "testLabel": "Cambridge Listening test",
+  "topic": "Movers exam practice",
+  "topicDate": "2026-10-30"
  },
  {
   "id": "cambridge-listening-2",
@@ -42,7 +86,9 @@
   "ico": "🎧",
   "title": "Movers Listening 2",
   "test": "2026-11-03",
-  "testLabel": "Cambridge Listening test"
+  "testLabel": "Cambridge Listening test",
+  "topic": "Movers exam practice",
+  "topicDate": "2026-10-30"
  },
  {
   "id": "cambridge-reading-writing-1",
@@ -51,7 +97,9 @@
   "ico": "📝",
   "title": "Movers Reading and Writing 1",
   "test": "2026-11-17",
-  "testLabel": "Cambridge Reading and Writing test"
+  "testLabel": "Cambridge Reading and Writing test",
+  "topic": "Movers exam practice",
+  "topicDate": "2026-10-30"
  },
  {
   "id": "cambridge-speaking-1",
@@ -60,167 +108,179 @@
   "ico": "🗣️",
   "title": "Movers Speaking practice 1",
   "test": "2026-11-24",
-  "testLabel": "Cambridge Speaking test"
- },
- {
-  "id": "inglese-peter-pan-quiz",
-  "subject": "English",
-  "kind": "game",
-  "ico": "🧚",
-  "title": "Peter Pan quiz"
- },
- {
-  "id": "inglese-peter-pan-ripasso",
-  "subject": "English",
-  "kind": "review",
-  "ico": "🏴‍☠️",
-  "title": "Peter Pan: ripasso"
- },
- {
-  "id": "inglese-peter-pan-summary",
-  "subject": "English",
-  "kind": "summary",
-  "ico": "📖",
-  "title": "Peter Pan: summary"
- },
- {
-  "id": "inglese-peter-pan-storia",
-  "subject": "English",
-  "kind": "summary",
-  "ico": "📖",
-  "title": "Peter Pan: la storia"
- },
- {
-  "id": "scienze-ripasso-regni",
-  "subject": "Science",
-  "kind": "review",
-  "ico": "🐢",
-  "title": "Review: kingdoms and animals"
- },
- {
-  "id": "scienze-verifica-2",
-  "subject": "Science",
-  "kind": "test",
-  "ico": "🐸",
-  "title": "Practice test 2: vertebrates, breathing, reproduction"
- },
- {
-  "id": "scienze-verifica-1",
-  "subject": "Science",
-  "kind": "test",
-  "ico": "🌿",
-  "title": "Practice test: ecology and food chains"
- },
- {
-  "id": "scienze-chi-mangia-chi",
-  "subject": "Science",
-  "kind": "game",
-  "ico": "🦊",
-  "title": "Chi mangia chi"
- },
- {
-  "id": "scienze-ocean-ecosystem",
-  "subject": "Science",
-  "kind": "review",
-  "ico": "🐠",
-  "title": "Explore an ecosystem: the ocean"
- },
- {
-  "id": "scienze-ecology-ecosystem",
-  "subject": "Science",
-  "kind": "summary",
-  "ico": "🌍",
-  "title": "Ecology and ecosystem"
- },
- {
-  "id": "scienze-catena-alimentare",
-  "subject": "Science",
-  "kind": "summary",
-  "ico": "🔗",
-  "title": "The food chain"
+  "testLabel": "Cambridge Speaking test",
+  "topic": "Movers exam practice",
+  "topicDate": "2026-10-30"
  },
  {
   "id": "scienze-vertebrati-invertebrati",
   "subject": "Science",
   "kind": "summary",
   "ico": "🦴",
-  "title": "Vertebrates and invertebrates"
+  "title": "Vertebrates and invertebrates",
+  "topic": "Animals",
+  "topicDate": "2026-10-28"
  },
  {
   "id": "scienze-nutrizione",
   "subject": "Science",
   "kind": "summary",
   "ico": "🥕",
-  "title": "Animal nutrition"
+  "title": "Animal nutrition",
+  "topic": "Animals",
+  "topicDate": "2026-10-28"
  },
  {
   "id": "scienze-respirazione-temperatura",
   "subject": "Science",
   "kind": "summary",
   "ico": "🫁",
-  "title": "Respiration and body temperature"
+  "title": "Respiration and body temperature",
+  "topic": "Animals",
+  "topicDate": "2026-10-28"
  },
  {
   "id": "scienze-riproduzione",
   "subject": "Science",
   "kind": "summary",
   "ico": "🥚",
-  "title": "Animal reproduction"
+  "title": "Animal reproduction",
+  "topic": "Animals",
+  "topicDate": "2026-10-28"
  },
  {
   "id": "scienze-schema-vertebrati",
   "subject": "Science",
   "kind": "review",
   "ico": "🐸",
-  "title": "Vertebrates at a glance"
+  "title": "Vertebrates at a glance",
+  "topic": "Animals",
+  "topicDate": "2026-10-28"
  },
  {
-  "id": "geografia-verifica-2",
-  "subject": "Geography",
+  "id": "scienze-ripasso-regni",
+  "subject": "Science",
+  "kind": "review",
+  "ico": "🐢",
+  "title": "Review: kingdoms and animals",
+  "topic": "Animals",
+  "topicDate": "2026-10-28"
+ },
+ {
+  "id": "scienze-verifica-2",
+  "subject": "Science",
   "kind": "test",
-  "ico": "🏭",
-  "title": "Practice test 2: economic sectors"
+  "ico": "🐸",
+  "title": "Practice test 2: vertebrates, breathing, reproduction",
+  "topic": "Animals",
+  "topicDate": "2026-10-28"
  },
  {
-  "id": "geografia-verifica-1",
-  "subject": "Geography",
-  "kind": "test",
-  "ico": "🌐",
-  "title": "Practice test: grid, time zones, climate"
+  "id": "scienze-ecology-ecosystem",
+  "subject": "Science",
+  "kind": "summary",
+  "ico": "🌍",
+  "title": "Ecology and ecosystem",
+  "topic": "Ecology and food chains",
+  "topicDate": "2026-09-30"
  },
  {
-  "id": "geografia-missione-reticolo",
-  "subject": "Geography",
+  "id": "scienze-catena-alimentare",
+  "subject": "Science",
+  "kind": "summary",
+  "ico": "🔗",
+  "title": "The food chain",
+  "topic": "Ecology and food chains",
+  "topicDate": "2026-09-30"
+ },
+ {
+  "id": "scienze-ocean-ecosystem",
+  "subject": "Science",
+  "kind": "review",
+  "ico": "🐠",
+  "title": "Explore an ecosystem: the ocean",
+  "topic": "Ecology and food chains",
+  "topicDate": "2026-09-30"
+ },
+ {
+  "id": "scienze-chi-mangia-chi",
+  "subject": "Science",
   "kind": "game",
-  "ico": "🧭",
-  "title": "Missione Reticolo"
+  "ico": "🦊",
+  "title": "Chi mangia chi",
+  "topic": "Ecology and food chains",
+  "topicDate": "2026-09-30"
  },
  {
-  "id": "geografia-reticolo",
-  "subject": "Geography",
-  "kind": "summary",
-  "ico": "🗺️",
-  "title": "The geographic grid"
- },
- {
-  "id": "geografia-greenwich-fusi",
-  "subject": "Geography",
-  "kind": "summary",
-  "ico": "🕐",
-  "title": "Greenwich and time zones"
- },
- {
-  "id": "geografia-zone-climatiche",
-  "subject": "Geography",
-  "kind": "summary",
-  "ico": "☀️",
-  "title": "Climate zones"
+  "id": "scienze-verifica-1",
+  "subject": "Science",
+  "kind": "test",
+  "ico": "🌿",
+  "title": "Practice test: ecology and food chains",
+  "topic": "Ecology and food chains",
+  "topicDate": "2026-09-30"
  },
  {
   "id": "geografia-settori-economici",
   "subject": "Geography",
   "kind": "summary",
   "ico": "🏭",
-  "title": "Economic sectors"
+  "title": "Economic sectors",
+  "topic": "Economic sectors",
+  "topicDate": "2026-11-12"
+ },
+ {
+  "id": "geografia-verifica-2",
+  "subject": "Geography",
+  "kind": "test",
+  "ico": "🏭",
+  "title": "Practice test 2: economic sectors",
+  "topic": "Economic sectors",
+  "topicDate": "2026-11-12"
+ },
+ {
+  "id": "geografia-reticolo",
+  "subject": "Geography",
+  "kind": "summary",
+  "ico": "🗺️",
+  "title": "The geographic grid",
+  "topic": "Grid, time zones and climate",
+  "topicDate": "2026-10-01"
+ },
+ {
+  "id": "geografia-greenwich-fusi",
+  "subject": "Geography",
+  "kind": "summary",
+  "ico": "🕐",
+  "title": "Greenwich and time zones",
+  "topic": "Grid, time zones and climate",
+  "topicDate": "2026-10-01"
+ },
+ {
+  "id": "geografia-zone-climatiche",
+  "subject": "Geography",
+  "kind": "summary",
+  "ico": "☀️",
+  "title": "Climate zones",
+  "topic": "Grid, time zones and climate",
+  "topicDate": "2026-10-01"
+ },
+ {
+  "id": "geografia-missione-reticolo",
+  "subject": "Geography",
+  "kind": "game",
+  "ico": "🧭",
+  "title": "Missione Reticolo",
+  "topic": "Grid, time zones and climate",
+  "topicDate": "2026-10-01"
+ },
+ {
+  "id": "geografia-verifica-1",
+  "subject": "Geography",
+  "kind": "test",
+  "ico": "🌐",
+  "title": "Practice test: grid, time zones, climate",
+  "topic": "Grid, time zones and climate",
+  "topicDate": "2026-10-01"
  }
 ]
