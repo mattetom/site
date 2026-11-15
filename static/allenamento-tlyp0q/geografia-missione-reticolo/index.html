@@ -10,7 +10,7 @@
 </head>
 <body>
 <a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
-<title>Missione Reticolo</title>
+<title>Grid Mission</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600&family=JetBrains+Mono:wght@500;700&display=swap">
@@ -148,24 +148,24 @@ h1 span { color: var(--buoy); }
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">GEOGRAPHY CLIL · GRADE 4 · 0° N 0° E</div>
-    <h1>Missione <span>Reticolo</span></h1>
-    <p class="sub">Paralleli, meridiani, Greenwich, fusi orari e zone climatiche. Domande in inglese come a scuola, spiegazioni in italiano.</p>
+    <div class="eyebrow">GEOGRAPHY · GRADE 4 · 0° N 0° E</div>
+    <h1>Grid <span>Mission</span></h1>
+    <p class="sub">Parallels, meridians, Greenwich, time zones and climate zones. Read every question carefully and sail on!</p>
   </header>
-  <div class="buoys" id="buoys" aria-label="Avanzamento"></div>
+  <div class="buoys" id="buoys" aria-label="Progress"></div>
   <main class="card" id="card" aria-live="polite"></main>
 </div>
 
 <script>
 const ROUNDS = {
-  map:   { name: "Round 1: Read the map", how: "Guarda la carta: che cos'e la linea (o la zona) colorata?" },
-  words: { name: "Round 2: Words", how: "Scegli il significato giusto." },
-  tf:    { name: "Round 3: True or False", how: "True = vero, False = falso." },
-  time:  { name: "Round 4: Time machine", how: "Scrivi l'ora (per esempio 7:00 o 19:00). Est = +, ovest = -." },
-  zone:  { name: "Round 5: Climate zones", how: "Tropical, Temperate o Polar?" },
-  timeq: { name: "Round 4: Time machine", how: "Scegli la risposta giusta." },
-  zoneq: { name: "Round 5: Climate zones", how: "Scegli la risposta giusta." },
-  hemi:  { name: "Round 6: Coordinates", how: "In quali emisferi si trova?" }
+  map:   { name: "Round 1: Read the map", how: "Look at the map: what is the coloured line (or zone)?" },
+  words: { name: "Round 2: Words", how: "Choose the right meaning." },
+  tf:    { name: "Round 3: True or False", how: "Is it true or false?" },
+  time:  { name: "Round 4: Time machine", how: "Write the time (for example 7:00 or 19:00). East = +, west = -." },
+  zone:  { name: "Round 5: Climate zones", how: "Tropical, Temperate or Polar?" },
+  timeq: { name: "Round 4: Time machine", how: "Choose the right answer." },
+  zoneq: { name: "Round 5: Climate zones", how: "Choose the right answer." },
+  hemi:  { name: "Round 6: Coordinates", how: "Which hemispheres is it in?" }
 };
 const LINES = ["Equator", "Tropic of Cancer", "Tropic of Capricorn", "Arctic Circle", "Antarctic Circle", "Prime Meridian"];
 const ZONES = ["Tropical Zone", "Temperate Zone", "Polar Zone"];
@@ -173,51 +173,51 @@ const HEMIS = ["Northern + Eastern", "Northern + Western", "Southern + Eastern",
 
 // map: hl = line to highlight (lat number, or "pm" for Prime Meridian); band = [lat1, lat2] zone to fill
 const QS = [
-  { r: "map", hl: 0, q: "What is the orange line?", o: LINES, a: "Equator", why: "L'Equatore e il parallelo 0°: divide la Terra in emisfero nord e sud.", src: "Scheda Representing the World" },
-  { r: "map", hl: 23.4, q: "What is the orange line?", o: LINES, a: "Tropic of Cancer", why: "Il Tropico del Cancro sta a 23°26' Nord: e il limite nord della zona tropicale. Cancro = in alto.", src: "Scheda Climate through latitude" },
-  { r: "map", hl: -66.6, q: "What is the orange line?", o: LINES, a: "Antarctic Circle", why: "Il Circolo polare antartico sta a 66°33' Sud: sotto c'e la zona polare sud.", src: "Scheda Climate through latitude" },
-  { r: "map", hl: "pm", q: "What is the orange line?", o: LINES, a: "Prime Meridian", why: "E il meridiano di Greenwich, 0° di longitudine: separa l'emisfero est da quello ovest.", src: "Scheda Fun fact" },
-  { r: "map", hl: -23.4, q: "What is the orange line?", o: LINES, a: "Tropic of Capricorn", why: "Il Tropico del Capricorno sta a 23°26' Sud: e il limite sud della zona tropicale.", src: "Scheda Climate through latitude" },
-  { r: "map", hl: 66.6, q: "What is the orange line?", o: LINES, a: "Arctic Circle", why: "Il Circolo polare artico sta a 66°33' Nord: sopra c'e la zona polare nord.", src: "Scheda Climate through latitude" },
-  { r: "map", band: [23.4, -23.4], q: "What is the coloured zone?", o: ZONES, a: "Tropical Zone", why: "Tra i due Tropici c'e la zona tropicale (o equatoriale): fa caldo tutto l'anno.", src: "Revision, Climate zones" },
-  { r: "map", band: [23.4, 66.6], q: "What is the coloured zone?", o: ZONES, a: "Temperate Zone", why: "Tra Tropico del Cancro e Circolo artico c'e la zona temperata nord, quella dell'Italia: quattro stagioni.", src: "Revision, Climate zones" },
+  { r: "map", hl: 0, q: "What is the orange line?", o: LINES, a: "Equator", why: "The Equator is the parallel at 0°: it divides the Earth into the Northern and Southern Hemispheres.", src: "Worksheet Representing the World" },
+  { r: "map", hl: 23.4, q: "What is the orange line?", o: LINES, a: "Tropic of Cancer", why: "The Tropic of Cancer is at 23°26' North: it is the north limit of the Tropical Zone. Cancer = up.", src: "Worksheet Climate through latitude" },
+  { r: "map", hl: -66.6, q: "What is the orange line?", o: LINES, a: "Antarctic Circle", why: "The Antarctic Circle is at 66°33' South: below it there is the south Polar Zone.", src: "Worksheet Climate through latitude" },
+  { r: "map", hl: "pm", q: "What is the orange line?", o: LINES, a: "Prime Meridian", why: "It is the meridian of Greenwich, 0° longitude: it separates the Eastern and Western Hemispheres.", src: "Worksheet Fun fact" },
+  { r: "map", hl: -23.4, q: "What is the orange line?", o: LINES, a: "Tropic of Capricorn", why: "The Tropic of Capricorn is at 23°26' South: it is the south limit of the Tropical Zone.", src: "Worksheet Climate through latitude" },
+  { r: "map", hl: 66.6, q: "What is the orange line?", o: LINES, a: "Arctic Circle", why: "The Arctic Circle is at 66°33' North: above it there is the north Polar Zone.", src: "Worksheet Climate through latitude" },
+  { r: "map", band: [23.4, -23.4], q: "What is the coloured zone?", o: ZONES, a: "Tropical Zone", why: "Between the two Tropics there is the Tropical (Equatorial) Zone: it is hot all year.", src: "Revision, Climate zones" },
+  { r: "map", band: [23.4, 66.6], q: "What is the coloured zone?", o: ZONES, a: "Temperate Zone", why: "Between the Tropic of Cancer and the Arctic Circle there is the north Temperate Zone, where Italy is: four seasons.", src: "Revision, Climate zones" },
 
-  { r: "words", q: "Parallels are...", o: ["vertical imaginary lines", "horizontal imaginary lines", "real lines painted on the Earth"], a: "horizontal imaginary lines", why: "I paralleli sono orizzontali. Sono immaginari: non esistono davvero sulla Terra.", src: "Revision A" },
-  { r: "words", q: "Meridians go from...", o: ["the North Pole to the South Pole", "east to west", "the Equator to the Tropics"], a: "the North Pole to the South Pole", why: "I meridiani sono mezzi cerchi da polo a polo, e si incontrano ai poli.", src: "Scheda Representing the World" },
-  { r: "words", q: "Latitude tells us how far a place is...", o: ["east or west of Greenwich", "north or south of the Equator", "from the sea"], a: "north or south of the Equator", why: "La latitudine va da 0° all'Equatore a 90° ai poli, verso nord o verso sud.", src: "Revision A" },
-  { r: "words", q: "Longitude tells us how far a place is...", o: ["east or west of the Prime Meridian", "north or south of the Equator", "from the North Pole"], a: "east or west of the Prime Meridian", why: "La longitudine parte da 0° a Greenwich e arriva a 180° Est e 180° Ovest.", src: "Revision A" },
-  { r: "words", q: "How many parallels are there?", o: ["90", "180", "360"], a: "180", why: "I paralleli sono 180, i meridiani 360.", src: "Revision C" },
-  { r: "words", q: "How many meridians are there?", o: ["180", "24", "360"], a: "360", why: "I meridiani sono 360 e sono tutti lunghi uguali.", src: "Revision C" },
-  { r: "words", q: "In which year did the world choose Greenwich for the Prime Meridian?", o: ["1884", "1492", "1984"], a: "1884", why: "Nel 1884 un accordo internazionale scelse il Royal Observatory di Greenwich.", src: "Scheda Fun fact" },
-  { r: "words", q: "Latitude and longitude together are called...", o: ["time zones", "geographic coordinates", "hemispheres"], a: "geographic coordinates", why: "Sono le coordinate geografiche: le usano anche il GPS e le mappe del telefono.", src: "Scheda Representing the World" },
+  { r: "words", q: "Parallels are...", o: ["vertical imaginary lines", "horizontal imaginary lines", "real lines painted on the Earth"], a: "horizontal imaginary lines", why: "Parallels are horizontal. They are imaginary: they are not really on the Earth.", src: "Revision A" },
+  { r: "words", q: "Meridians go from...", o: ["the North Pole to the South Pole", "east to west", "the Equator to the Tropics"], a: "the North Pole to the South Pole", why: "Meridians are half circles from pole to pole, and they meet at the poles.", src: "Worksheet Representing the World" },
+  { r: "words", q: "Latitude tells us how far a place is...", o: ["east or west of Greenwich", "north or south of the Equator", "from the sea"], a: "north or south of the Equator", why: "Latitude goes from 0° at the Equator to 90° at the poles, to the north or to the south.", src: "Revision A" },
+  { r: "words", q: "Longitude tells us how far a place is...", o: ["east or west of the Prime Meridian", "north or south of the Equator", "from the North Pole"], a: "east or west of the Prime Meridian", why: "Longitude starts at 0° in Greenwich and goes to 180° East and 180° West.", src: "Revision A" },
+  { r: "words", q: "How many parallels are there?", o: ["90", "180", "360"], a: "180", why: "There are 180 parallels and 360 meridians.", src: "Revision C" },
+  { r: "words", q: "How many meridians are there?", o: ["180", "24", "360"], a: "360", why: "There are 360 meridians and they are all the same length.", src: "Revision C" },
+  { r: "words", q: "In which year did the world choose Greenwich for the Prime Meridian?", o: ["1884", "1492", "1984"], a: "1884", why: "In 1884 the countries of the world chose the Royal Observatory in Greenwich.", src: "Worksheet Fun fact" },
+  { r: "words", q: "Latitude and longitude together are called...", o: ["time zones", "geographic coordinates", "hemispheres"], a: "geographic coordinates", why: "They are the geographic coordinates: GPS and the maps on a phone use them too.", src: "Worksheet Representing the World" },
 
-  { r: "tf", q: "Parallels get smaller near the poles.", o: ["True", "False"], a: "True", why: "Sono cerchi interi, ma diventano piu piccoli verso i poli.", src: "Scheda Representing the World" },
-  { r: "tf", q: "All meridians have the same length.", o: ["True", "False"], a: "True", why: "Vanno tutti da un polo all'altro, quindi sono lunghi uguali.", src: "Scheda Representing the World" },
-  { r: "tf", q: "Meridians meet at the Equator.", o: ["True", "False"], a: "False", why: "I meridiani si incontrano ai poli, non all'Equatore.", src: "Revision B" },
-  { r: "tf", q: "The Earth has 24 time zones because it rotates once every 24 hours.", o: ["True", "False"], a: "True", why: "Un giro in 24 ore, quindi 24 fusi. Non 12!", src: "Scheda GMT" },
-  { r: "tf", q: "Time zones follow the meridians perfectly.", o: ["True", "False"], a: "False", why: "I paesi adattano i fusi ai loro confini, e alcuni usano l'ora legale.", src: "Scheda GMT" },
-  { r: "tf", q: "At the Royal Observatory you can stand with one foot in the Eastern Hemisphere and one in the Western Hemisphere.", o: ["True", "False"], a: "True", why: "C'e una linea di metallo sul pavimento: un piede di qua, uno di la.", src: "Scheda Fun fact" },
-  { r: "tf", q: "When you move west, you add one hour every 15 degrees.", o: ["True", "False"], a: "False", why: "Verso ovest si toglie (subtract). Verso est si aggiunge (add).", src: "Scheda GMT" },
+  { r: "tf", q: "Parallels get smaller near the poles.", o: ["True", "False"], a: "True", why: "They are full circles, but they get smaller near the poles.", src: "Worksheet Representing the World" },
+  { r: "tf", q: "All meridians have the same length.", o: ["True", "False"], a: "True", why: "They all go from one pole to the other, so they are the same length.", src: "Worksheet Representing the World" },
+  { r: "tf", q: "Meridians meet at the Equator.", o: ["True", "False"], a: "False", why: "Meridians meet at the poles, not at the Equator.", src: "Revision B" },
+  { r: "tf", q: "The Earth has 24 time zones because it rotates once every 24 hours.", o: ["True", "False"], a: "True", why: "One turn in 24 hours, so 24 time zones. Not 12!", src: "Worksheet GMT" },
+  { r: "tf", q: "Time zones follow the meridians perfectly.", o: ["True", "False"], a: "False", why: "Countries change the time zones to follow their borders, and some use daylight saving time.", src: "Worksheet GMT" },
+  { r: "tf", q: "At the Royal Observatory you can stand with one foot in the Eastern Hemisphere and one in the Western Hemisphere.", o: ["True", "False"], a: "True", why: "There is a metal line on the floor: one foot on this side, one foot on the other.", src: "Worksheet Fun fact" },
+  { r: "tf", q: "When you move west, you add one hour every 15 degrees.", o: ["True", "False"], a: "False", why: "Going west you subtract. Going east you add.", src: "Worksheet GMT" },
 
-  { r: "time", gmt: "12:00", place: "Rome", off: 1, a: 13 * 60, why: "Roma e GMT+1: 12 + 1 = 13:00.", src: "Scheda GMT" },
-  { r: "time", gmt: "12:00", place: "New York", off: -5, a: 7 * 60, why: "Attenta al meno! New York e GMT-5: 12 - 5 = 7:00 del mattino. Con il meno si toglie.", src: "Revision D" },
-  { r: "time", gmt: "10:00", place: "Tokyo", off: 9, a: 19 * 60, why: "Tokyo e GMT+9: 10 + 9 = 19:00, cioe le 7 di sera (7 pm).", src: "Scheda GMT" },
-  { r: "time", gmt: "16:00", place: "New York", off: -5, a: 11 * 60, why: "GMT-5: 16 - 5 = 11:00 del mattino.", src: "Scheda GMT" },
-  { r: "time", gmt: "8:00", place: "a city in GMT+4", off: 4, a: 12 * 60, why: "GMT+4: 8 + 4 = 12:00, mezzogiorno.", src: "Scheda GMT" },
-  { r: "time", gmt: "3:00", place: "a city in GMT-3", off: -3, a: 0, why: "GMT-3: 3 - 3 = 0:00, mezzanotte (midnight).", src: "Revision B" },
-  { r: "timeq", q: "In Tokyo it is 21:00. Is it am or pm?", o: ["am (morning)", "pm (afternoon and evening)"], a: "pm (afternoon and evening)", why: "Dopo mezzogiorno e pm: 21:00 = 9 pm, le 9 di sera. Am e solo la mattina.", src: "Revision B" },
+  { r: "time", gmt: "12:00", place: "Rome", off: 1, a: 13 * 60, why: "Rome is GMT+1: 12 + 1 = 13:00.", src: "Worksheet GMT" },
+  { r: "time", gmt: "12:00", place: "New York", off: -5, a: 7 * 60, why: "Careful with the minus! New York is GMT-5: 12 - 5 = 7:00 in the morning. With minus you subtract.", src: "Revision D" },
+  { r: "time", gmt: "10:00", place: "Tokyo", off: 9, a: 19 * 60, why: "Tokyo is GMT+9: 10 + 9 = 19:00, that is 7 in the evening (7 pm).", src: "Worksheet GMT" },
+  { r: "time", gmt: "16:00", place: "New York", off: -5, a: 11 * 60, why: "GMT-5: 16 - 5 = 11:00 in the morning.", src: "Worksheet GMT" },
+  { r: "time", gmt: "8:00", place: "a city in GMT+4", off: 4, a: 12 * 60, why: "GMT+4: 8 + 4 = 12:00, noon.", src: "Worksheet GMT" },
+  { r: "time", gmt: "3:00", place: "a city in GMT-3", off: -3, a: 0, why: "GMT-3: 3 - 3 = 0:00, midnight.", src: "Revision B" },
+  { r: "timeq", q: "In Tokyo it is 21:00. Is it am or pm?", o: ["am (morning)", "pm (afternoon and evening)"], a: "pm (afternoon and evening)", why: "After noon it is pm: 21:00 = 9 pm, 9 in the evening. Am is only for the morning.", src: "Revision B" },
 
-  { r: "zone", q: "A town at 10° North", o: ZONES, a: "Tropical Zone", why: "10° Nord sta tra l'Equatore e il Tropico del Cancro (23°): zona tropicale.", src: "Revision, Climate zones" },
-  { r: "zone", q: "Italy, at about 42° North", o: ZONES, a: "Temperate Zone", why: "L'Italia sta tra il Tropico del Cancro e il Circolo artico: zona temperata, con quattro stagioni.", src: "Scheda Climate through latitude" },
-  { r: "zone", q: "A place at 75° North", o: ZONES, a: "Polar Zone", why: "75° Nord e sopra il Circolo polare artico (66°): zona polare.", src: "Revision, Climate zones" },
-  { r: "zone", q: "A place at 45° South", o: ZONES, a: "Temperate Zone", why: "45° Sud sta tra il Tropico del Capricorno e il Circolo antartico: zona temperata sud.", src: "Revision, Climate zones" },
-  { r: "zoneq", q: "Which climate zone is the hottest?", o: ["the Equator", "the Tropical (Equatorial) Zone", "the Temperate Zone"], a: "the Tropical (Equatorial) Zone", why: "La domanda chiede una ZONA. L'Equatore e una linea, non una zona: la zona piu calda e quella tropicale.", src: "Revision D" },
-  { r: "zoneq", q: "Why do the Temperate Zones have four seasons?", o: ["Because the Earth rotates in 24 hours", "Because the Earth goes around the Sun and its axis is tilted", "Because they are near the poles"], a: "Because the Earth goes around the Sun and its axis is tilted", why: "Servono due cose: la rivoluzione intorno al Sole e l'asse inclinato. La rotazione di 24 ore fa il giorno e la notte.", src: "Revision D" },
+  { r: "zone", q: "A town at 10° North", o: ZONES, a: "Tropical Zone", why: "10° North is between the Equator and the Tropic of Cancer (23°): Tropical Zone.", src: "Revision, Climate zones" },
+  { r: "zone", q: "Italy, at about 42° North", o: ZONES, a: "Temperate Zone", why: "Italy is between the Tropic of Cancer and the Arctic Circle: Temperate Zone, with four seasons.", src: "Worksheet Climate through latitude" },
+  { r: "zone", q: "A place at 75° North", o: ZONES, a: "Polar Zone", why: "75° North is above the Arctic Circle (66°): Polar Zone.", src: "Revision, Climate zones" },
+  { r: "zone", q: "A place at 45° South", o: ZONES, a: "Temperate Zone", why: "45° South is between the Tropic of Capricorn and the Antarctic Circle: south Temperate Zone.", src: "Revision, Climate zones" },
+  { r: "zoneq", q: "Which climate zone is the hottest?", o: ["the Equator", "the Tropical (Equatorial) Zone", "the Temperate Zone"], a: "the Tropical (Equatorial) Zone", why: "The question asks for a ZONE. The Equator is a line, not a zone: the hottest zone is the Tropical Zone.", src: "Revision D" },
+  { r: "zoneq", q: "Why do the Temperate Zones have four seasons?", o: ["Because the Earth rotates in 24 hours", "Because the Earth goes around the Sun and its axis is tilted", "Because they are near the poles"], a: "Because the Earth goes around the Sun and its axis is tilted", why: "You need two things: the revolution round the Sun and the tilted axis. The rotation in 24 hours makes day and night.", src: "Revision D" },
 
-  { r: "hemi", q: "Buenos Aires: 34° S, 58° W", o: HEMIS, a: "Southern + Western", why: "S = sud, W = ovest di Greenwich. E l'esempio della scheda.", src: "Scheda Latitude and longitude" },
-  { r: "hemi", q: "Rome: 42° N, 12° E", o: HEMIS, a: "Northern + Eastern", why: "N = nord dell'Equatore, E = est di Greenwich.", src: "Scheda Representing the World" },
-  { r: "hemi", q: "A boat at 20° S, 40° E", o: HEMIS, a: "Southern + Eastern", why: "20° S e sotto l'Equatore; 40° E e a destra di Greenwich.", src: "Revision C" },
-  { r: "hemi", q: "A plane at 35° N, 80° W", o: HEMIS, a: "Northern + Western", why: "35° N sopra l'Equatore, 80° W a sinistra di Greenwich.", src: "Revision C" }
+  { r: "hemi", q: "Buenos Aires: 34° S, 58° W", o: HEMIS, a: "Southern + Western", why: "S = south, W = west of Greenwich. It is the example on the worksheet.", src: "Worksheet Latitude and longitude" },
+  { r: "hemi", q: "Rome: 42° N, 12° E", o: HEMIS, a: "Northern + Eastern", why: "N = north of the Equator, E = east of Greenwich.", src: "Worksheet Representing the World" },
+  { r: "hemi", q: "A boat at 20° S, 40° E", o: HEMIS, a: "Southern + Eastern", why: "20° S is below the Equator; 40° E is to the right of Greenwich.", src: "Revision C" },
+  { r: "hemi", q: "A plane at 35° N, 80° W", o: HEMIS, a: "Northern + Western", why: "35° N is above the Equator, 80° W is to the left of Greenwich.", src: "Revision C" }
 ];
 
 let order = QS.map((_, i) => i);
@@ -254,7 +254,7 @@ function mapSVG(Q) {
   let hl = "";
   if (Q.hl === "pm") hl = `<line y1="0" y2="180" x1="180" x2="180" class="hl"/>`;
   else if (typeof Q.hl === "number") hl = `<line x1="0" x2="360" y1="${y(Q.hl)}" y2="${y(Q.hl)}" class="hl"/>`;
-  return `<svg viewBox="-28 -12 400 204" role="img" aria-label="Carta con paralleli e meridiani">
+  return `<svg viewBox="-28 -12 400 204" role="img" aria-label="Map with parallels and meridians">
     <style>
       .g{stroke:var(--sea-line);stroke-width:.6}
       .m{stroke:var(--ink-soft);stroke-width:.9;stroke-dasharray:3 2}
@@ -291,7 +291,7 @@ function show() {
   if (Q.r === "time") {
     qtext = `It is <span class="mono">${esc(Q.gmt)}</span> in Greenwich. What time is it in ${esc(Q.place)}?`;
     lead = `<div class="clock"><div><span>Greenwich (GMT)</span><strong>${esc(Q.gmt)}</strong></div><div class="unknown"><span>${esc(Q.place)} (GMT${Q.off > 0 ? "+" : ""}${Q.off})</span><strong>?</strong></div></div>`;
-    body = `<form class="typein" id="f"><input id="ans-${qi}" inputmode="text" autocomplete="off" spellcheck="false" aria-label="L'ora" placeholder="0:00"><button class="btn" type="submit">Controlla</button></form>`;
+    body = `<form class="typein" id="f"><input id="ans-${qi}" inputmode="text" autocomplete="off" spellcheck="false" aria-label="The time" placeholder="0:00"><button class="btn" type="submit">Check</button></form>`;
   } else {
     const two = Q.o.length <= 4 && Q.o.every(o => o.length < 26);
     body = `<div class="opts ${two ? "two" : ""}">${Q.o.map((o, i) => `<button class="opt" data-v="${esc(o)}"><span class="k">${"ABCDEF"[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
@@ -303,7 +303,7 @@ function show() {
     ${lead}
     ${body}
     <div id="fb"></div>
-    <div class="next"><button class="btn" id="nx" hidden>Avanti</button></div>`;
+    <div class="next"><button class="btn" id="nx" hidden>Next</button></div>`;
   card.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => answer(b.dataset.v, b)));
   const f = document.getElementById("f");
   if (f) {
@@ -312,7 +312,7 @@ function show() {
     f.addEventListener("submit", e => {
       e.preventDefault();
       const v = parseTime(inp.value);
-      if (v === null) { document.getElementById("fb").innerHTML = `<div class="fb no"><span>Scrivi l'ora cosi: 7:00, 19:00 oppure 7 pm.</span></div>`; return; }
+      if (v === null) { document.getElementById("fb").innerHTML = `<div class="fb no"><span>Write the time like this: 7:00, 19:00 or 7 pm.</span></div>`; return; }
       answer(v, null);
     });
   }
@@ -330,11 +330,11 @@ function answer(v, btn) {
   if (Q.r === "time") card.querySelector(".clock .unknown strong").textContent = hhmm(Q.a);
   const right = Q.r === "time" ? hhmm(Q.a) : Q.a;
   document.getElementById("fb").innerHTML = ok
-    ? `<div class="fb ok"><strong>Rotta giusta!</strong><span>${esc(Q.why)}</span><span class="src">${esc(Q.src)}</span></div>`
-    : `<div class="fb no"><strong>La risposta giusta e: ${esc(right)}</strong><span>${esc(Q.why)}</span><span class="src">Rileggi: ${esc(Q.src)}</span></div>`;
+    ? `<div class="fb ok"><strong>Right course!</strong><span>${esc(Q.why)}</span><span class="src">${esc(Q.src)}</span></div>`
+    : `<div class="fb no"><strong>The right answer is: ${esc(right)}</strong><span>${esc(Q.why)}</span><span class="src">Read again: ${esc(Q.src)}</span></div>`;
   const nx = document.getElementById("nx");
   nx.hidden = false;
-  nx.textContent = pos === order.length - 1 ? "Vedi il risultato" : "Avanti";
+  nx.textContent = pos === order.length - 1 ? "See the result" : "Next";
   nx.focus();
   drawBuoys();
 }
@@ -348,21 +348,21 @@ function finish() {
     if (order.length === QS.length && good > prev) localStorage.setItem("mr-best", String(good));
     best = Math.max(prev, order.length === QS.length ? good : 0) || null;
   } catch (e) { best = null; }
-  const msg = good === order.length ? "Tutte giuste! Sei una vera navigatrice."
-    : good >= order.length * 0.8 ? "Benissimo! Ripassa solo queste e sei pronta."
-    : "Buon viaggio! Rileggi le schede indicate e riprova.";
+  const msg = good === order.length ? "All right! You are a real navigator."
+    : good >= order.length * 0.8 ? "Very good! Study just these and you are ready."
+    : "Good trip! Read the worksheets below again and try again.";
   card.innerHTML = `
-    <div class="round"><b>Arrivo in porto</b><small>${order.length} domande</small></div>
+    <div class="round"><b>Back in port</b><small>${order.length} questions</small></div>
     <div class="end">
       <div class="big">${good} / ${order.length}</div>
       <p>${msg}</p>
-      ${best ? `<p class="tip">Il tuo record sul giro completo: ${best} su ${QS.length}</p>` : ""}
-      ${missed.length ? `<ul class="miss">${missed.map(qi => { const Q = QS[qi]; const qt = Q.r === "time" ? `${Q.gmt} GMT, ${Q.place}` : Q.q; const r = Q.r === "time" ? hhmm(Q.a) : Q.a; return `<li><b>${esc(qt)}</b>Risposta: ${esc(r)}</li>`; }).join("")}</ul>` : ""}
+      ${best ? `<p class="tip">Your best on the whole game: ${best} out of ${QS.length}</p>` : ""}
+      ${missed.length ? `<ul class="miss">${missed.map(qi => { const Q = QS[qi]; const qt = Q.r === "time" ? `${Q.gmt} GMT, ${Q.place}` : Q.q; const r = Q.r === "time" ? hhmm(Q.a) : Q.a; return `<li><b>${esc(qt)}</b>Answer: ${esc(r)}</li>`; }).join("")}</ul>` : ""}
       <div class="row">
-        ${missed.length ? `<button class="btn" id="again-miss">Rifai le sbagliate</button>` : ""}
-        <button class="btn ghost" id="again-all">Ricomincia da capo</button>
+        ${missed.length ? `<button class="btn" id="again-miss">Redo the wrong ones</button>` : ""}
+        <button class="btn ghost" id="again-all">Start again</button>
       </div>
-      <p class="tip">Trucco per i fusi: est = + (aggiungi), ovest = - (togli). Con GMT-5 si toglie sempre.</p>
+      <p class="tip">Time zone trick: east = + (add), west = - (subtract). With GMT-5 you always subtract.</p>
     </div>`;
   const am = document.getElementById("again-miss");
   if (am) am.addEventListener("click", () => { order = missed.slice(); missed.forEach(qi => delete results[qi]); pos = 0; show(); });

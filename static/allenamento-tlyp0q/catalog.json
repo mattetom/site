@@ -48,7 +48,8 @@
   "ico": "📖",
   "title": "Peter Pan: summary",
   "topic": "Peter Pan",
-  "topicDate": "2026-10-03"
+  "topicDate": "2026-10-03",
+  "lang": "en"
  },
  {
   "id": "inglese-peter-pan-ripasso",
@@ -249,7 +250,8 @@
   "ico": "🏭",
   "title": "Economic sectors",
   "topic": "Economic sectors",
-  "topicDate": "2026-11-12"
+  "topicDate": "2026-11-12",
+  "lang": "en"
  },
  {
   "id": "geografia-settori-esercizi-1",
@@ -276,7 +278,8 @@
   "ico": "🗺️",
   "title": "The geographic grid",
   "topic": "Grid, time zones and climate",
-  "topicDate": "2026-10-01"
+  "topicDate": "2026-10-01",
+  "lang": "en"
  },
  {
   "id": "geografia-greenwich-fusi",
@@ -285,7 +288,8 @@
   "ico": "🕐",
   "title": "Greenwich and time zones",
   "topic": "Grid, time zones and climate",
-  "topicDate": "2026-10-01"
+  "topicDate": "2026-10-01",
+  "lang": "en"
  },
  {
   "id": "geografia-zone-climatiche",
@@ -294,14 +298,15 @@
   "ico": "☀️",
   "title": "Climate zones",
   "topic": "Grid, time zones and climate",
-  "topicDate": "2026-10-01"
+  "topicDate": "2026-10-01",
+  "lang": "en"
  },
  {
   "id": "geografia-missione-reticolo",
   "subject": "Geography",
   "kind": "game",
   "ico": "🧭",
-  "title": "Missione Reticolo",
+  "title": "Grid Mission",
   "topic": "Grid, time zones and climate",
   "topicDate": "2026-10-01"
  },
@@ -310,7 +315,7 @@
   "subject": "Geography",
   "kind": "test",
   "ico": "🌐",
-  "title": "Practice test: grid, time zones, climate",
+  "title": "Practice test 1: grid, time zones, climate",
   "topic": "Grid, time zones and climate",
   "topicDate": "2026-10-01"
  }

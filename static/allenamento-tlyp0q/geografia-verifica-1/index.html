@@ -10,12 +10,12 @@
 </head>
 <body>
 <a id="allen-back" href="../" style="position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;z-index:50;font:600 15px/1 system-ui,sans-serif;background:#fff;color:#2f5fb3;border:2px solid #d3dbeb;border-radius:999px;padding:9px 14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)">&larr; All exercises</a>
-<title>Verifica di Geografia</title>
+<title>Geography practice test 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&family=Lexend:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: the same nautical chart as "Missione Reticolo" (graticule background, buoys); one exercise per logbook card, inline write-in blanks, steps as a strip of buoys */
+/* Layout: the same nautical chart as "Grid Mission" (giochi/missione-reticolo.html) (graticule background, buoys); one exercise per logbook card, inline write-in blanks, steps as a strip of buoys */
 :root {
   --sea: #e4f1f4;
   --sea-line: #c3dde4;
@@ -107,7 +107,7 @@ h1 span { color: var(--buoy); }
 .mrow { font: inherit; text-align: left; cursor: pointer; display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 12px; border: 2px dashed var(--line); background: var(--card); color: var(--ink); min-height: 48px; }
 .mrow .let { font-family: var(--mono); font-weight: 700; color: var(--buoy); font-size: 18px; width: 1.2em; }
 .mrow .nm { font-weight: 700; }
-.mrow .nm:empty::before { content: "tocca un nome qui sotto"; font-weight: 400; color: var(--ink-soft); font-size: 14px; }
+.mrow .nm:empty::before { content: "tap a name below"; font-weight: 400; color: var(--ink-soft); font-size: 14px; }
 .mrow.active { border-style: solid; border-color: var(--buoy); background: var(--buoy-bg); }
 .mrow.filled { border-style: solid; border-color: var(--ink-soft); }
 .mrow.ok { border-style: solid; border-color: var(--land); background: var(--land-bg); }
@@ -156,9 +156,9 @@ table.res td:last-child { text-align: right; font-variant-numeric: tabular-nums;
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">GEOGRAPHY CLIL · GRADE 4 · VERIFICA DI PROVA</div>
-    <h1>Verifica di <span>Geografia</span></h1>
-    <p class="sub">Reticolo geografico, Greenwich e fusi orari, zone climatiche. Sei esercizi, 30 punti. Scrivi le parole con attenzione: conta anche come le scrivi.</p>
+    <div class="eyebrow">GEOGRAPHY · GRADE 4 · PRACTICE TEST 1</div>
+    <h1>Geography <span>test 1</span></h1>
+    <p class="sub">The geographic grid, Greenwich and time zones, climate zones. Six exercises, 30 points. Write the words carefully: spelling counts too.</p>
   </header>
   <div class="tally"><div class="steps" id="steps"></div><div class="pts" id="pts"></div></div>
   <main class="card" id="card" aria-live="polite"></main>
@@ -169,7 +169,7 @@ table.res td:last-child { text-align: right; font-variant-numeric: tabular-nums;
 const LINES = ["Equator", "Prime Meridian", "Tropic of Cancer", "Tropic of Capricorn", "Arctic Circle", "Antarctic Circle"];
 const EX = [
   { id: "e1", type: "cloze", title: "1. The geographic grid", max: 8,
-    how: "Scrivi nei buchi le parole del riquadro. Ogni parola si usa una volta.",
+    how: "Write the words from the box. Use each word once.",
     bank: ["Greenwich", "degrees", "parallels", "hemispheres", "horizontal", "coordinates", "Equator", "meridians"],
     sents: [
       ["The geographic grid is made up of imaginary ", { a: ["horizontal"] }, " and vertical lines."],
@@ -179,18 +179,18 @@ const EX = [
       ["Latitude and longitude are the geographic ", { a: ["coordinates"] }, " of a place. They are measured in ", { a: ["degrees"] }, "."]
     ] },
   { id: "e2", type: "map", title: "2. Name the lines on the map", max: 6,
-    how: "Tocca una lettera, poi il nome giusto. Per cambiare, tocca di nuovo la lettera.",
+    how: "Tap a letter, then the right name. To change it, tap the letter again.",
     // letter -> index in LINES
     rows: [["A", 2], ["B", 5], ["C", 1], ["D", 0], ["E", 4], ["F", 3]] },
   { id: "e3", type: "cloze", title: "3. Greenwich and GMT", max: 5,
-    how: "Qui le parole non ci sono: c'e solo la prima lettera. Scrivi il resto della parola.",
+    how: "There is only the first letter. Write the rest of the word.",
     sents: [
       ["In 1884 the Prime Meridian was fixed at the ", { pre: "R", a: ["royal"] }, " ", { pre: "O", a: ["observatory"] }, " in Greenwich."],
       ["GMT means Greenwich ", { pre: "M", a: ["mean"] }, " Time."],
       ["The Earth is divided into 24 time ", { pre: "z", a: ["zones"] }, " because it ", { pre: "r", a: ["rotates"] }, " once every 24 hours."]
     ] },
   { id: "e4", type: "cloze", title: "4. Climate zones", max: 5,
-    how: "Anche qui c'e solo la prima lettera. Scrivi il resto della parola.",
+    how: "Again, there is only the first letter. Write the rest of the word.",
     sents: [
       ["The area between the Tropic of Cancer and the Tropic of Capricorn is the ", { pre: "T", a: ["tropical"] }, " Zone: it is hot all year."],
       ["Near the poles there are the ", { pre: "P", a: ["polar"] }, " Zones: they are very cold."],
@@ -198,24 +198,24 @@ const EX = [
       ["The seasons change because of the ", { pre: "r", a: ["revolution"] }, " of the Earth around the Sun."]
     ] },
   { id: "e5", type: "pick", title: "5. Circle the correct answer", max: 3,
-    how: "Come nella REVISION: scegli la risposta giusta.",
+    how: "Like the REVISION: choose the right answer.",
     items: [
       { q: "Latitude is measured from the ...", opts: ["Equator", "Prime Meridian"], a: "Equator",
-        why: "La latitudine dice quanto un posto e a nord o a sud dell'Equatore. Dal Prime Meridian si misura la longitudine." },
+        why: "Latitude tells us how far a place is north or south of the Equator. Longitude is measured from the Prime Meridian." },
       { q: "Meridians are ...", opts: ["full circles", "semicircles"], a: "semicircles",
-        why: "I meridiani vanno da un polo all'altro: sono mezze circonferenze. I paralleli invece sono cerchi interi." },
+        why: "Meridians go from one pole to the other: they are semicircles. Parallels are full circles." },
       { q: "It is 10:00 in Greenwich. In New York (GMT-5) it is ...", opts: ["5:00", "15:00"], a: "5:00",
-        why: "GMT-5 vuol dire 5 ore indietro: si toglie. 10 - 5 = 5:00 del mattino." }
+        why: "GMT-5 means 5 hours behind: you subtract. 10 - 5 = 5:00 in the morning." }
     ] },
   { id: "e6", type: "pick", title: "6. True or False", max: 3,
-    how: "Come nella REVISION: T se e vero, F se e falso.",
+    how: "Like the REVISION: T if it is true, F if it is false.",
     items: [
       { q: "All meridians have the same length.", opts: ["T", "F"], a: "T",
-        why: "Vero: vanno tutti dal Polo Nord al Polo Sud, quindi sono lunghi uguali." },
+        why: "True: they all go from the North Pole to the South Pole, so they are the same length." },
       { q: "The Equator is a climate zone.", opts: ["T", "F"], a: "F",
-        why: "Falso: l'Equatore e una linea. La zona intorno all'Equatore si chiama Tropical (Equatorial) Zone." },
+        why: "False: the Equator is a line. The zone around the Equator is the Tropical (Equatorial) Zone." },
       { q: "21:00 is the same as 9 PM.", opts: ["T", "F"], a: "T",
-        why: "Vero: 21:00 e di sera, quindi PM. AM e solo per le ore prima di mezzogiorno." }
+        why: "True: 21:00 is in the evening, so it is PM. AM is only for the hours before noon." }
     ] }
 ];
 
@@ -278,7 +278,7 @@ const MAP_SVG = `<svg class="map" viewBox="-20 -14 400 212" role="img" aria-labe
 
 function drawTally() {
   document.getElementById("steps").innerHTML = RUN.map((e, i) => `<span class="step ${scores[e.id] !== undefined ? "done" : ""} ${i === step ? "now" : ""}">${i + 1}</span>`).join("");
-  document.getElementById("pts").textContent = mode === "redo" ? `${fmt(total())} su ${runMax()} giuste` : `${fmt(total())} punti`;
+  document.getElementById("pts").textContent = mode === "redo" ? `${fmt(total())} of ${runMax()} right` : `${fmt(total())} points`;
 }
 
 function show() {
@@ -298,7 +298,7 @@ function show() {
         const i = k++;
         if (!redoing(E, i)) return `<span class="fill given" data-w="${esc(p.a[0])}">${esc(shownWord(E, p))}</span>`;
         open = true;
-        return `<span class="fill" data-k="${i}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="parola mancante"></span>`;
+        return `<span class="fill" data-k="${i}"><span class="pre">${esc(p.pre || "")}</span><input id="${E.id}-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="missing word"></span>`;
       }).join("");
       return open ? `<p class="sent">${html}</p>` : "";
     }).join("");
@@ -308,11 +308,11 @@ function show() {
     body = `<div class="items">${E.items.map((it, i) => !redoing(E, i) ? "" : `<div class="item" data-i="${i}"><p>${esc(it.q)}</p><div class="tg">${it.opts.map(v => `<button type="button" class="tgb" aria-pressed="false" data-v="${esc(v)}">${esc(v)}</button>`).join("")}</div></div>`).join("")}</div>`;
   }
   card.innerHTML = `
-    <div class="ex-head"><b>${esc(E.title)}</b><small>${mode === "redo" ? `${maxOf(E)} da rifare` : `${E.max} punti`}</small></div>
-    <p class="how">${mode === "redo" ? "Rifai solo quelle sbagliate: le parti in verde erano gia giuste. " : ""}${esc(E.how)}</p>
+    <div class="ex-head"><b>${esc(E.title)}</b><small>${mode === "redo" ? `${maxOf(E)} to redo` : `${E.max} points`}</small></div>
+    <p class="how">${mode === "redo" ? "Redo only the wrong ones: the green parts were already right. " : ""}${esc(E.how)}</p>
     ${body}
     <div id="fb"></div>
-    <div class="row"><button class="btn" id="go" type="button">Controlla</button></div>`;
+    <div class="row"><button class="btn" id="go" type="button">Check</button></div>`;
   wire(E);
   const first = card.querySelector("input"); if (first) first.focus();
 }
@@ -374,7 +374,7 @@ function check(E) {
   if (E.type === "cloze") {
     const blanks = blanksOf(E);
     const empty = [...card.querySelectorAll("input")].some(i => !i.value.trim());
-    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Ci sono ancora buchi vuoti. Se vuoi controllare lo stesso, premi di nuovo Controlla.</span></div>`; return; }
+    if (empty && !fb.dataset.warned) { fb.dataset.warned = "1"; fb.innerHTML = `<div class="fb mid"><span>Some blanks are still empty. To check anyway, press Check again.</span></div>`; return; }
     card.querySelectorAll(".fill:not(.given)").forEach(f => {
       const k = +f.dataset.k, B = blanks[k], inp = f.querySelector("input");
       // she may retype the first letter too: try both "R"+"oyal" and "Royal"
@@ -388,13 +388,13 @@ function check(E) {
       if (g < 1) { miss.add(k); f.insertAdjacentHTML("beforeend", `<span class="fix">${esc(shown)}</span>`); wrongWords.push(shown); }
     });
   } else if (E.type === "map") {
-    if (mapPick.some(v => v === null)) { fb.innerHTML = `<div class="fb mid"><span>Dai un nome a tutte le lettere.</span></div>`; return; }
+    if (mapPick.some(v => v === null)) { fb.innerHTML = `<div class="fb mid"><span>Give a name to every letter.</span></div>`; return; }
     E.rows.forEach(([, right], r) => { if (!redoing(E, r)) return; if (mapPick[r] === right) pts++; else miss.add(r); });
     drawMap(E, true);
-    if (miss.size) notes.push("Dall'alto in basso: Arctic Circle, Tropic of Cancer, Equator, Tropic of Capricorn, Antarctic Circle. La linea verticale e il Prime Meridian.");
+    if (miss.size) notes.push("From top to bottom: Arctic Circle, Tropic of Cancer, Equator, Tropic of Capricorn, Antarctic Circle. The vertical line is the Prime Meridian.");
   } else if (E.type === "pick") {
     const items = [...card.querySelectorAll(".item")];
-    if (items.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Scegli una risposta per ogni frase.</span></div>`; return; }
+    if (items.some(it => !it.querySelector('[aria-pressed="true"]'))) { fb.innerHTML = `<div class="fb mid"><span>Choose an answer for each one.</span></div>`; return; }
     items.forEach(it => {
       const i = +it.dataset.i, I = E.items[i];
       const v = it.querySelector('[aria-pressed="true"]').dataset.v;
@@ -408,10 +408,10 @@ function check(E) {
   misses[E.id] = miss;
   drawTally();
   const max = maxOf(E);
-  const msg = pts === max ? "Perfetto!" : pts >= max * 0.6 ? "Bene!" : E.type === "cloze" ? "Riguarda le parole in verde." : "Leggi le spiegazioni.";
-  fb.innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><strong>${msg} ${fmt(pts)} su ${max}</strong>${E.type === "cloze" ? `<span>Verde = giusta. Giallo = quasi, attenta all'ortografia (mezzo punto). Rosso = sbagliata. Accanto trovi come si scrive.</span>` : ""}${notes.map(n => `<span>${esc(n)}</span>`).join("")}</div>`;
+  const msg = pts === max ? "Perfect!" : pts >= max * 0.6 ? "Well done!" : E.type === "cloze" ? "Look at the green words." : "Read the explanations.";
+  fb.innerHTML = `<div class="fb ${pts >= max * 0.6 ? "good" : "mid"}"><strong>${msg} ${fmt(pts)} out of ${max}</strong>${E.type === "cloze" ? `<span>Green = right. Yellow = almost, check the spelling (half a point). Red = wrong. Next to it you find how to write it.</span>` : ""}${notes.map(n => `<span>${esc(n)}</span>`).join("")}</div>`;
   const go = document.getElementById("go");
-  go.textContent = step === RUN.length - 1 ? "Vedi il risultato" : "Esercizio successivo";
+  go.textContent = step === RUN.length - 1 ? "See the result" : "Next exercise";
   go.onclick = () => { step++; show(); window.scrollTo({ top: 0 }); };
   go.focus();
 }
@@ -426,26 +426,26 @@ function finish() {
     const voto = Math.round((t / 3) * 2) / 2;
     let best = null;
     try { const prev = Number(localStorage.getItem("ver-geo-1-best") || 0); if (t > prev) localStorage.setItem("ver-geo-1-best", String(t)); best = Math.max(prev, t); } catch (e) { best = null; }
-    const msg = t >= 27 ? "Bravissima! Sei pronta per la verifica vera." : t >= 21 ? "Bene! Ripassa le parole qui sotto e riprova." : "Rileggi i riassunti, rifai il gioco Missione Reticolo e poi riprova.";
-    top = `<div class="ex-head"><b>Risultato</b><small>30 punti in tutto</small></div>
+    const msg = t >= 27 ? "Excellent! You are ready for the real test." : t >= 21 ? "Well done! Study the words below and try again." : "Read the summaries again, play Grid Mission and then try again.";
+    top = `<div class="ex-head"><b>Result</b><small>30 points in all</small></div>
       <div class="big">${fmt(t)} / 30</div>
-      <div class="grade">Voto: ${fmt(voto)}</div>
+      <div class="grade">Grade: ${fmt(voto)}</div>
       <p>${msg}</p>
-      ${best ? `<p class="tip">Il tuo record: ${fmt(best)} su 30</p>` : ""}`;
+      ${best ? `<p class="tip">Your best: ${fmt(best)} out of 30</p>` : ""}`;
   } else {
     const m = runMax();
-    top = `<div class="ex-head"><b>Ripasso delle sbagliate</b><small>${m} da rifare</small></div>
+    top = `<div class="ex-head"><b>Redo of the wrong ones</b><small>${m} to redo</small></div>
       <div class="big">${fmt(t)} / ${m}</div>
-      <p>${nLeft ? "Ancora qualcuna da sistemare: rifai solo quelle." : "Adesso sono tutte giuste. Bravissima!"}</p>`;
+      <p>${nLeft ? "Some are still wrong: redo only those." : "Now they are all right. Excellent!"}</p>`;
   }
   card.innerHTML = `
     <div class="end">
       ${top}
       <table class="res">${RUN.map(e => `<tr><td>${esc(e.title)}</td><td>${fmt(scores[e.id] ?? 0)} / ${maxOf(e)}</td></tr>`).join("")}</table>
-      ${words.length ? `<p class="tip">Parole da ricopiare tre volte sul quaderno:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="tip">Nessuna parola sbagliata: ortografia perfetta!</p>`}
+      ${words.length ? `<p class="tip">Words to copy three times in your notebook:</p><div class="copy">${words.map(w => `<span>${esc(w)}</span>`).join("")}</div>` : `<p class="tip">No wrong words: perfect spelling!</p>`}
       <div class="row">
-        ${nLeft ? `<button class="btn" id="redo" type="button">Rifai solo le sbagliate (${nLeft})</button>` : ""}
-        <button class="btn ${nLeft ? "ghost" : ""}" id="again" type="button">Rifai tutta la verifica</button>
+        ${nLeft ? `<button class="btn" id="redo" type="button">Redo only the wrong ones (${nLeft})</button>` : ""}
+        <button class="btn ${nLeft ? "ghost" : ""}" id="again" type="button">Do the whole test again</button>
       </div>
     </div>`;
   const redo = document.getElementById("redo");
