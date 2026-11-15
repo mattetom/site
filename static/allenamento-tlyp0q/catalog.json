@@ -98,6 +98,13 @@
   "title": "Review: kingdoms and animals"
  },
  {
+  "id": "scienze-verifica-2",
+  "subject": "Science",
+  "kind": "test",
+  "ico": "🐸",
+  "title": "Practice test 2: vertebrates, breathing, reproduction"
+ },
+ {
   "id": "scienze-verifica-1",
   "subject": "Science",
   "kind": "test",
