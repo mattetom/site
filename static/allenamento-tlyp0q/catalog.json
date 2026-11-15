@@ -208,5 +208,12 @@
   "kind": "summary",
   "ico": "☀️",
   "title": "Climate zones"
+ },
+ {
+  "id": "geografia-settori-economici",
+  "subject": "Geography",
+  "kind": "summary",
+  "ico": "🏭",
+  "title": "Economic sectors"
  }
 ]
