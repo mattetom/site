@@ -175,6 +175,13 @@
   "title": "Vertebrates at a glance"
  },
  {
+  "id": "geografia-verifica-2",
+  "subject": "Geography",
+  "kind": "test",
+  "ico": "🏭",
+  "title": "Practice test 2: economic sectors"
+ },
+ {
   "id": "geografia-verifica-1",
   "subject": "Geography",
   "kind": "test",
