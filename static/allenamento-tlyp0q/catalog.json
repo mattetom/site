@@ -102,6 +102,17 @@
   "topicDate": "2026-10-30"
  },
  {
+  "id": "cambridge-movers-focus-1",
+  "subject": "Cambridge",
+  "kind": "exercise",
+  "ico": "🎯",
+  "title": "Movers: tricky answers",
+  "test": "2026-11-17",
+  "testLabel": "Cambridge Reading and Writing test",
+  "topic": "Movers exam practice",
+  "topicDate": "2026-10-30"
+ },
+ {
   "id": "cambridge-reading-writing-2",
   "subject": "Cambridge",
   "kind": "exercise",
