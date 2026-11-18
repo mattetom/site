@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#14213d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Calendario dell'Avvento</title>
+<!-- Family advent calendar (not linked anywhere). The page is an empty shell: story and puzzles
+     come from /api/avvento (netlify/functions/avvento.mjs) only with the key in the link hash. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Painted look: the illustrations live in img/ (WebP). Every image is optional: if a file is
+     missing the page falls back to the gradients below. */
+  :root {
+    --night: #0e1a2e; --night2: #16304a; --pine: #173d33;
+    --paper: #fbf6ea; --paper2: #f3ead6; --ink: #2d2620; --muted: #7d7062; --line: #e4d6b8;
+    --gold: #c9a24d; --gold2: #e6c873; --gold-ink: #8a6a22; --red: #a3262a; --red2: #c0392b;
+    --green: #2f6b4f; --green-soft: #e4efe7; --blue: #2d5592; --blue-soft: #e9eff8; --red-soft: #f8e5e3;
+    --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  [hidden] { display: none !important; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh; color: var(--paper); font: 500 18px/1.6 var(--sans); -webkit-text-size-adjust: 100%;
+    background: radial-gradient(ellipse at 50% 0%, #22446a 0%, var(--night2) 35%, var(--night) 75%) fixed, var(--night);
+  }
+  .snow { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .snow i { position: absolute; top: -10px; border-radius: 50%; background: #fff; animation: fall linear infinite; filter: blur(.4px); }
+  @keyframes fall { to { transform: translate3d(30px, 105vh, 0); } }
+  @media (prefers-reduced-motion: reduce) { .snow { display: none; } .win.today { animation: none !important; } }
+  main { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; padding: 14px 16px 60px; }
+
+  .hero { margin: 0 -16px 0; position: relative; }
+  .hero img { display: block; width: 100%; max-height: 300px; object-fit: cover; border-radius: 0 0 26px 26px;
+    -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
+  @media (min-width: 852px) { .hero { margin: 0; } .hero img { border-radius: 26px; } }
+  h1 { font-family: var(--serif); font-weight: 700; font-size: 2rem; line-height: 1.15; text-align: center; margin: 10px 0 4px;
+    color: #fbefd2; text-shadow: 0 2px 12px rgba(0,0,0,.45); letter-spacing: .01em; }
+  .flourish { display: block; text-align: center; color: var(--gold2); letter-spacing: .6em; font-size: .8rem; margin: 0 0 4px; opacity: .9; }
+  .sub { text-align: center; color: #e9dcc0; margin: 0 0 16px; font-size: 1rem; font-style: italic; font-family: var(--serif); }
+  /* Title written on the header picture, like a book cover, so the calendar fits an upright
+     iPad: the header block (about 104 px) overlaps the faded bottom of the picture. Without the
+     picture (missing file, day pages) the title stays in its own place. */
+  .head { position: relative; padding-top: 1px; }
+  .hero:not([hidden]) + .head { margin-top: -118px; }
+  .hero:not([hidden]) + .head h1, .hero:not([hidden]) + .head .sub { text-shadow: 0 1px 3px rgba(0,0,0,.8), 0 2px 14px rgba(0,0,0,.7); }
+  body.home .hero img { max-height: 270px; }
+  /* left-aligned on the picture: the inspector stands on the right of the header */
+  .hero:not([hidden]) + .head { padding-left: 28px; }
+  .hero:not([hidden]) + .head h1, .hero:not([hidden]) + .head .flourish, .hero:not([hidden]) + .head .sub { text-align: left; }
+  .hero:not([hidden]) + .head .flourish { letter-spacing: .6em; padding-left: 4px; }
+  .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, transparent 30%, rgba(10,18,32,.6) 75%, rgba(10,18,32,.25)); }
+
+  .top { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center; margin: 0 0 16px; }
+  .badge { font-family: var(--serif); font-style: italic; font-weight: 600; color: #fbefd2; border: 1px solid rgba(230,200,115,.7);
+    border-radius: 99px; padding: 6px 16px; background: rgba(14,26,46,.45); }
+  .btn { appearance: none; border: 0; border-radius: 12px; padding: 12px 20px; font: 800 1rem/1.2 var(--sans); cursor: pointer;
+    touch-action: manipulation; color: #fff; background: linear-gradient(180deg, var(--red2), var(--red));
+    box-shadow: 0 2px 0 #6e1719, 0 6px 14px rgba(0,0,0,.18); }
+  .btn:active { transform: translateY(1px); }
+  .btn.ghost { color: #fbefd2; background: rgba(14,26,46,.45); border: 1px solid rgba(230,200,115,.7); box-shadow: none; }
+  .btn.light { color: var(--blue); background: var(--blue-soft); box-shadow: 0 2px 0 #cdd9ec; }
+  .btn.green { background: linear-gradient(180deg, #3b8462, var(--green)); box-shadow: 0 2px 0 #1d4634, 0 6px 14px rgba(0,0,0,.18); }
+  .btn:disabled { opacity: .5; }
+
+  /* the calendar: a painting with 24 paper windows on top */
+  .board { position: relative; border-radius: 22px; padding: 16px; overflow: hidden;
+    background: linear-gradient(160deg, #24496e 0%, #1b3a52 45%, var(--pine) 100%);
+    box-shadow: 0 0 0 2px rgba(201,162,77,.9), 0 0 0 7px rgba(14,26,46,.85), 0 0 0 8px rgba(201,162,77,.6), 0 20px 40px rgba(0,0,0,.45); }
+  .board .paint { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .board .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(10,18,32,.35)); }
+  .grid { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (min-width: 600px) { .grid { grid-template-columns: repeat(6, 1fr); gap: 14px; } .board { padding: 22px; } }
+  .win { position: relative; aspect-ratio: 3 / 4; border-radius: 10px; border: 1px solid rgba(201,162,77,.95); padding: 0; cursor: pointer;
+    font: inherit; color: var(--gold-ink); display: flex; align-items: center; justify-content: center;
+    background: rgba(251,246,234,.82); -webkit-backdrop-filter: blur(5px) saturate(1.1); backdrop-filter: blur(5px) saturate(1.1);
+    box-shadow: inset 0 0 0 4px rgba(251,246,234,.5), inset 0 0 0 5px rgba(201,162,77,.45), 0 4px 10px rgba(0,0,0,.25); }
+  .win .n { font-family: var(--serif); font-weight: 700; font-size: 1.9rem; line-height: 1; }
+  .win.locked { cursor: default; background: rgba(240,236,226,.5); color: rgba(138,106,34,.75); }
+  .win.open { background: rgba(251,246,234,.9); }
+  .win.open .n { width: 2.3em; height: 2.3em; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; color: #fbefd2;
+    background: radial-gradient(circle at 35% 30%, #d0463c, #8e1d20 70%); box-shadow: 0 2px 4px rgba(0,0,0,.35), inset 0 0 0 3px rgba(0,0,0,.12), inset 0 0 0 5px rgba(255,255,255,.08); }
+  .win.done { background: rgba(251,246,234,.06); -webkit-backdrop-filter: none; backdrop-filter: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 4px 10px rgba(0,0,0,.2); align-items: flex-start; justify-content: flex-start; }
+  .win.done .n { font-size: 1rem; margin: 6px; padding: 2px 7px; border-radius: 99px; background: rgba(251,246,234,.92); color: var(--green); }
+  .win.done::after { content: "✓"; position: absolute; right: 6px; bottom: 4px; color: #fbefd2; font-weight: 800; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+  .win.gift::before { content: ""; position: absolute; top: -1px; right: -1px; width: 26px; height: 26px; border-top-right-radius: 10px;
+    background: linear-gradient(225deg, var(--red2) 0 50%, transparent 50%); }
+  .win.today { animation: glow 2.2s ease-in-out infinite; }
+  /* Tablet held sideways: the calendar fits one screen. No header picture on the home, the two
+     buttons move beside the calendar and the board is sized on the screen height:
+     board height = 86 + (width - 114) * 8/9 (22 px padding, 14 px gaps, 6 x 4 windows at 3:4),
+     so width = (available height - 86) * 9/8 + 114. 160 px = title, subtitle and margins. */
+  @media (orientation: landscape) and (min-width: 900px) {
+    body.home main { max-width: 1240px; }
+    body.home .hero { display: none; }
+    body.home .hero + .head { margin-top: 0; }
+    .homeview { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: start; }
+    .homeview .top { display: contents; }
+    .homeview .top .badge { grid-column: 1; grid-row: 1; justify-self: end; margin-top: 10px; }
+    .homeview .top .btn { grid-column: 3; grid-row: 1; justify-self: start; margin-top: 10px; }
+    .homeview .board { grid-column: 2; grid-row: 1;
+      width: min(820px, calc((100vh - 160px - 86px) * 1.125 + 114px));
+      width: min(820px, calc((100dvh - 160px - 86px) * 1.125 + 114px)); }
+  }
+  @keyframes glow { 0%, 100% { box-shadow: 0 0 0 2px var(--gold2), 0 0 14px 2px rgba(230,200,115,.5); } 50% { box-shadow: 0 0 0 2px var(--gold2), 0 0 28px 8px rgba(230,200,115,.75); } }
+
+  /* paper cards */
+  .card { position: relative; color: var(--ink); border-radius: 18px; padding: 22px 20px 20px; margin: 0 0 16px; overflow: hidden;
+    background: radial-gradient(ellipse at 20% 0%, #fffdf6, transparent 60%), radial-gradient(ellipse at 100% 100%, var(--paper2), transparent 55%), var(--paper);
+    box-shadow: 0 0 0 1px rgba(201,162,77,.55), 0 14px 30px rgba(0,0,0,.35); }
+  .card .pic { display: block; width: calc(100% + 40px); margin: -22px -20px 16px; aspect-ratio: 4 / 3; max-height: 380px; object-fit: cover; }
+  .card.portrait .pic { width: 150px; height: 150px; aspect-ratio: auto; margin: 0 auto 10px; border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px var(--gold); }
+  .case { color: var(--red); font: 800 .78rem/1.3 var(--sans); text-transform: uppercase; letter-spacing: .12em; }
+  .card h2 { font-family: var(--serif); font-weight: 700; margin: 4px 0 12px; font-size: 1.6rem; line-height: 1.2; color: var(--pine); }
+  .card h2::after { content: ""; display: block; width: 64px; height: 2px; margin-top: 10px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .center h2::after { margin-left: auto; margin-right: auto; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .card p { margin: 0 0 12px; }
+  .story p:first-of-type::first-letter { font-family: var(--serif); font-weight: 700; float: left; font-size: 3.1em; line-height: .9; margin: 4px 8px 0 0; color: var(--red); }
+  .q { font-weight: 800; margin-bottom: 10px; font-size: 1.05rem; }
+  .note { background: var(--blue-soft); color: #22427d; border-radius: 10px; padding: 8px 12px; font-size: .95rem; margin: 0 0 10px; }
+  .clues { margin: 0 0 12px; padding-left: 0; list-style: none; }
+  .clues li { margin: 6px 0; padding-left: 22px; position: relative; }
+  .clues li::before { content: "✦"; position: absolute; left: 2px; top: 0; color: var(--gold); }
+  input[type=text], select { font: 700 1rem/1.3 var(--sans); width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: #fffdf8; color: var(--ink); }
+  input[type=text]:focus, select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,162,77,.25); }
+  .row { display: flex; gap: 10px; align-items: center; margin: 0 0 10px; flex-wrap: wrap; }
+  .row label { min-width: 150px; font-weight: 800; }
+  .row select { flex: 1; min-width: 160px; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .msg { margin-top: 10px; font-weight: 800; }
+  .msg.ok { color: var(--green); }
+  .msg.no { color: var(--red); }
+  .hint { background: #fbf0d4; border-left: 3px solid var(--gold); border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: .95rem; }
+  .choices { display: flex; flex-direction: column; gap: 10px; }
+  .choices .btn { text-align: left; background: #fffdf8; color: var(--ink); border: 1.5px solid var(--line); box-shadow: none; font-weight: 700; }
+  .choices .btn.wrong { background: var(--red-soft); color: var(--red); border-color: #e9b9b4; }
+  .pieces, .line { display: flex; flex-wrap: wrap; gap: 8px; min-height: 54px; }
+  .line { border: 1.5px dashed var(--gold); border-radius: 12px; padding: 8px; margin-bottom: 10px; background: #fffdf8; }
+  .piece { border: 1px solid #b78f3d; border-radius: 8px; padding: 8px 14px; font: 700 1.05rem/1.2 var(--serif); letter-spacing: .04em; cursor: pointer;
+    color: #4a3410; background: linear-gradient(180deg, #f3dc9c, #e2c071); box-shadow: 0 2px 0 #b78f3d; }
+  .line .piece { color: var(--green); background: var(--green-soft); border-color: #a9cbb6; box-shadow: 0 2px 0 #a9cbb6; }
+  .word { text-align: center; border: 1.5px solid var(--gold); border-radius: 14px; padding: 14px; margin: 12px 0 0;
+    background: linear-gradient(180deg, #fff8e4, #f6e7bf); color: var(--muted); }
+  .word b { display: block; font: 700 1.7rem/1.3 var(--serif); letter-spacing: .08em; color: var(--gold-ink); }
+  .hunt { text-align: center; background: var(--green-soft); color: var(--green); border-radius: 14px; padding: 16px; margin-top: 12px; border: 1px solid #a9cbb6; }
+  .hunt .big { font: 700 1.35rem/1.3 var(--serif); display: block; margin-bottom: 8px; }
+  .solved-mark { color: var(--green); font-weight: 800; }
+  .notebook h3 { font: 700 1.05rem/1.3 var(--serif); margin: 14px 0 6px; color: var(--red); }
+  .notebook .w { display: inline-block; font: 700 1rem/1.3 var(--serif); letter-spacing: .05em; color: var(--gold-ink); background: #f6e7bf; border-radius: 6px; padding: 3px 10px; margin: 3px; }
+  .preview { background: var(--gold2); color: #3a2a00; border-radius: 12px; padding: 8px 12px; margin: 0 0 10px; font-size: .9rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .preview input { width: auto; padding: 4px 8px; font-size: .9rem; }
+  .center { text-align: center; }
+</style>
+</head>
+<body>
+<div class="snow" id="snow" aria-hidden="true"></div>
+<main>
+  <div id="preview" class="preview" hidden>
+    <b>Anteprima genitore</b> · data finta:
+    <input type="date" id="previewDate"> <button class="btn ghost" id="previewGo" style="padding:4px 10px;color:#3a2a00">Vai</button>
+    <span>(le tue prove non vengono registrate)</span>
+  </div>
+  <div class="hero" id="hero"><img src="img/testata.webp" alt="" onerror="this.parentNode.remove()"></div>
+  <header class="head">
+    <h1 id="title">Calendario dell'Avvento</h1>
+    <span class="flourish" aria-hidden="true">✦ ✦ ✦</span>
+    <p class="sub" id="sub">Caricamento…</p>
+  </header>
+  <div id="view"></div>
+</main>
+<script>
+(function () {
+  'use strict';
+  var LS_KEY = 'avvento-k', LS_STATE = 'avvento-stato';
+  var key = null;
+  var where = location.hash + '&' + location.search;
+  try { where = decodeURIComponent(decodeURIComponent(where)); } catch (e) {}
+  var m = where.match(/(?:^|[#&?])k=([A-Za-z0-9_-]{16,})/);
+  if (m) {
+    key = m[1];
+    try { localStorage.setItem(LS_KEY, key); } catch (e) {}
+    try { window.history.replaceState(null, '', location.pathname + location.search.replace(/[?&]k=[^&]*/, '')); } catch (e) {}
+  } else {
+    try { key = localStorage.getItem(LS_KEY); } catch (e) {}
+  }
+
+  var state = { nickname: '', solved: {}, found: {}, step: {} };
+  try { var saved = JSON.parse(localStorage.getItem(LS_STATE) || 'null'); if (saved) state = Object.assign(state, saved); } catch (e) {}
+  function save() { try { localStorage.setItem(LS_STATE, JSON.stringify(state)); } catch (e) {} }
+
+  var DATA = null;
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function btn(text, cls, onClick) {
+    var b = el('button', 'btn' + (cls ? ' ' + cls : ''), text);
+    b.type = 'button';
+    b.addEventListener('click', onClick);
+    return b;
+  }
+  // Optional painted image: removes itself if the file is not there.
+  function pic(src, cls) {
+    var i = document.createElement('img');
+    i.className = cls || 'pic'; i.alt = ''; i.src = src; i.decoding = 'async';
+    i.addEventListener('error', function () { i.remove(); });
+    return i;
+  }
+  function inspector(card) { card.classList.add('portrait'); card.appendChild(pic('img/ispettore.webp')); }
+  function agent() { return 'Agente ' + (state.nickname || 'M.'); }
+  function sub(s) { return String(s == null ? '' : s).split('{agente}').join(agent()); }
+  function norm(s) {
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+  }
+  // Shuffled copy, never left in the right order.
+  function shuffle(orig) {
+    var a = orig.slice();
+    for (var tries = 0; tries < 20; tries++) {
+      for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+      if (a.length < 2 || a.some(function (x, k) { return x !== orig[k]; })) break;
+    }
+    return a;
+  }
+
+  // ---- snow ----
+  (function () {
+    var s = $('snow');
+    for (var i = 0; i < 40; i++) {
+      var f = document.createElement('i');
+      var size = 2 + Math.random() * 5;
+      f.style.left = (Math.random() * 100) + 'vw';
+      f.style.width = f.style.height = size + 'px';
+      f.style.opacity = (0.3 + Math.random() * 0.6).toFixed(2);
+      f.style.animationDuration = (8 + Math.random() * 12) + 's';
+      f.style.animationDelay = (-Math.random() * 20) + 's';
+      s.appendChild(f);
+    }
+  })();
+
+  // ---- API ----
+  var previewDate = null;
+  function api(method, body) {
+    var url = '/api/avvento' + (method === 'GET' && previewDate ? '?oggi=' + previewDate : '');
+    return fetch(url, {
+      method: method, cache: 'no-store',
+      headers: Object.assign({ 'x-avvento-key': key }, body ? { 'Content-Type': 'application/json' } : {}),
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function (r) {
+      if (r.status === 403) throw new Error('forbidden');
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    });
+  }
+  function record(day, event) {
+    api('POST', { day: day, event: event, nickname: state.nickname || undefined }).catch(function () {});
+  }
+
+  function load() {
+    if (!key) { fatal('Manca la chiave nel link. Chiedi il link giusto al papà.'); return; }
+    api('GET').then(function (d) {
+      DATA = d;
+      Object.keys(d.progress || {}).forEach(function (n) {
+        var p = d.progress[n] || {};
+        if (!d.parent) {
+          if (p.solvedAt) state.solved[n] = true;
+          if (p.foundAt) state.found[n] = true;
+          if (p.nickname && !state.nickname) state.nickname = p.nickname;
+        }
+      });
+      save();
+      if (d.parent) {
+        $('preview').hidden = false;
+        $('previewDate').value = d.today;
+      }
+      $('title').textContent = d.title || 'Calendario dell’Avvento';
+      route();
+    }).catch(function (e) {
+      if (e.message === 'forbidden') fatal('Questo link non funziona. Chiedi il link giusto al papà.');
+      else fatal('Non riesco a collegarmi. Controlla il WiFi e ricarica la pagina.');
+    });
+  }
+  function fatal(text) {
+    $('sub').textContent = '';
+    var v = $('view'); v.textContent = '';
+    var c = el('div', 'card center');
+    inspector(c);
+    c.appendChild(el('p', null, text));
+    v.appendChild(c);
+  }
+  $('previewGo').addEventListener('click', function () {
+    previewDate = $('previewDate').value || null;
+    state = { nickname: state.nickname, solved: {}, found: {}, step: {} };
+    load();
+  });
+
+  // ---- routing ----
+  window.addEventListener('hashchange', route);
+  function route() {
+    if (!DATA) return;
+    var h = location.hash.replace('#', '');
+    window.scrollTo(0, 0);
+    var hero = document.getElementById('hero');
+    if (hero) hero.hidden = /^g\d/.test(h);
+    var home = !(/^g\d{1,2}$/.test(h) && DATA.days[h.slice(1)]) && h !== 'taccuino';
+    document.body.classList.toggle('home', home);
+    $('view').className = home ? 'homeview' : '';
+    if (/^g\d{1,2}$/.test(h) && DATA.days[h.slice(1)]) showDay(Number(h.slice(1)));
+    else if (h === 'taccuino') showNotebook();
+    else showHome();
+  }
+  function go(h) { if (location.hash === '#' + h) route(); else location.hash = h; }
+
+  // ---- home ----
+  var ORDER = [7, 15, 2, 20, 11, 24, 4, 18, 9, 1, 22, 13, 16, 6, 23, 3, 12, 19, 21, 10, 5, 14, 8, 17];
+  var MONTHS = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
+  function showHome() {
+    var v = $('view'); v.textContent = '';
+    var open = Object.keys(DATA.days).length;
+    var todayN = Number(DATA.today.slice(8, 10));
+    var isDec = DATA.today.slice(0, 7) === DATA.start.slice(0, 7);
+    if (!open) {
+      var ms = new Date(DATA.start + 'T00:00:00') - new Date(DATA.today + 'T00:00:00');
+      var left = Math.round(ms / 86400000);
+      $('sub').textContent = left === 1 ? 'Manca 1 giorno al 1° dicembre!' : 'Mancano ' + left + ' giorni al 1° dicembre!';
+    } else if (open >= 24) {
+      $('sub').textContent = 'Tutte le caselle sono aperte. Buon Natale!';
+    } else {
+      $('sub').textContent = 'Oggi è il ' + todayN + ' ' + MONTHS[11] + '. Apri la casella di oggi!';
+    }
+    var top = el('div', 'top');
+    if (state.nickname) top.appendChild(el('span', 'badge', agent()));
+    if (open) top.appendChild(btn('Il taccuino', 'ghost', function () { go('taccuino'); }));
+    v.appendChild(top);
+
+    var board = el('div', 'board');
+    board.appendChild(pic('img/calendario.webp', 'paint'));
+    board.appendChild(el('div', 'shade'));
+    var grid = el('div', 'grid');
+    // the windows are not in date order, like a real advent calendar
+    ORDER.forEach(function (n) {
+      var day = DATA.days[n];
+      var d = el('button', 'win');
+      d.type = 'button';
+      d.appendChild(el('span', 'n', String(n)));
+      if (!day) {
+        d.className += ' locked';
+        d.disabled = true;
+        d.setAttribute('aria-label', n + ' dicembre, ancora chiusa');
+      } else {
+        var done = isDone(n);
+        d.className += done ? ' done' : ' open';
+        if (day.gift) d.className += ' gift';
+        if (isDec && n === todayN) d.className += ' today';
+        d.setAttribute('aria-label', n + ' dicembre' + (done ? ', risolta' : ', da aprire'));
+        d.addEventListener('click', function () { go('g' + n); });
+      }
+      grid.appendChild(d);
+    });
+    board.appendChild(grid);
+    v.appendChild(board);
+  }
+  function isDone(n) {
+    var day = DATA.days[n];
+    if (!day || !state.solved[n]) return false;
+    return !day.gift || day.final ? true : !!state.found[n];
+  }
+
+  // ---- notebook ----
+  function showNotebook() {
+    var v = $('view'); v.textContent = '';
+    $('sub').textContent = 'Le parole che hai trovato';
+    var c = el('div', 'card notebook');
+    c.appendChild(el('h2', null, '📒 Il taccuino di ' + agent()));
+    var any = false, lastCase = null;
+    Object.keys(DATA.days).map(Number).sort(function (a, b) { return a - b; }).forEach(function (n) {
+      var day = DATA.days[n];
+      if (!day.word || !state.solved[n]) return;
+      if (day.case !== lastCase) { c.appendChild(el('h3', null, sub(DATA.cases[day.case] || ''))); lastCase = day.case; }
+      c.appendChild(el('span', 'w', day.word));
+      any = true;
+    });
+    if (!any) c.appendChild(el('p', null, 'Ancora vuoto: risolvi gli enigmi per trovare le parole.'));
+    v.appendChild(c);
+    v.appendChild(btn('← Torna al calendario', 'ghost', function () { go(''); }));
+  }
+
+  // ---- day ----
+  function showDay(n) {
+    var day = DATA.days[n];
+    var v = $('view'); v.textContent = '';
+    $('sub').textContent = n + ' dicembre';
+    v.appendChild(btn('← Calendario', 'ghost', function () { go(''); }));
+    v.appendChild(el('div', null)).style.height = '12px';
+
+    if (day.askNickname && !state.nickname) { askNickname(v, n); return; }
+
+    var story = el('div', 'card story');
+    story.appendChild(pic('img/caso-' + day.case + '.webp'));
+    story.appendChild(el('div', 'case', sub(DATA.cases[day.case] || '')));
+    story.appendChild(el('h2', null, sub(day.title)));
+    (day.chapter || []).forEach(function (p) { story.appendChild(el('p', null, sub(p))); });
+    v.appendChild(story);
+
+    var box = el('div');
+    v.appendChild(box);
+    renderEnigmas(n, day, box);
+  }
+
+  function askNickname(v, n) {
+    var c = el('div', 'card center');
+    inspector(c);
+    c.appendChild(el('h2', null, 'Benvenuta, agente!'));
+    c.appendChild(el('p', null, 'Ogni detective ha un nome in codice. Il tuo comincerà con "Agente". Scegli il resto!'));
+    var inp = el('input'); inp.type = 'text'; inp.maxLength = 20; inp.placeholder = 'es. Stella, Lampo, Volpe Bianca…';
+    c.appendChild(inp);
+    var msg = el('div', 'msg no');
+    var a = el('div', 'actions'); a.style.justifyContent = 'center';
+    a.appendChild(btn('Questo è il mio nome!', '', function () {
+      var name = inp.value.trim().replace(/^agente\s+/i, '');
+      if (!name) { msg.textContent = 'Scrivi un nome!'; return; }
+      state.nickname = name.charAt(0).toUpperCase() + name.slice(1);
+      save();
+      showDay(n);
+    }));
+    c.appendChild(a); c.appendChild(msg);
+    v.appendChild(c);
+  }
+
+  function renderEnigmas(n, day, box) {
+    box.textContent = '';
+    var list = day.enigmas || [];
+    var step = state.solved[n] ? list.length : (state.step[n] || 0);
+    for (var i = 0; i < list.length; i++) {
+      if (i < step) box.appendChild(solvedCard(list[i], i, list.length));
+      else { box.appendChild(enigmaCard(list[i], i, list.length, function () {
+        state.step[n] = (state.step[n] || 0) + 1;
+        if (state.step[n] >= list.length) {
+          state.solved[n] = true; record(n, 'solved');
+          // last box: the final button means the box is open, so the gift is found too
+          if (day.final) { state.found[n] = true; record(n, 'found'); }
+        }
+        save();
+        renderEnigmas(n, day, box);
+      })); break; }
+    }
+    if (step >= list.length) box.appendChild(afterCard(n, day));
+  }
+
+  function title(i, total) { return total > 1 ? 'Enigma ' + (i + 1) + ' di ' + total : 'Enigma'; }
+  function solvedCard(e, i, total) {
+    var c = el('div', 'card');
+    c.appendChild(el('div', 'case', title(i, total)));
+    c.appendChild(el('div', 'q', sub(e.question)));
+    c.appendChild(el('div', 'solved-mark', '✓ Risolto!'));
+    return c;
+  }
+
+  function enigmaCard(e, i, total, onSolved) {
+    var c = el('div', 'card');
+    c.appendChild(el('div', 'case', '🔍 ' + title(i, total)));
+    c.appendChild(el('div', 'q', sub(e.question)));
+    if (e.note) c.appendChild(el('div', 'note', sub(e.note)));
+    if (e.clues) {
+      var ul = el('ul', 'clues');
+      e.clues.forEach(function (t) { ul.appendChild(el('li', null, sub(t))); });
+      c.appendChild(ul);
+    }
+    var msg = el('div', 'msg');
+    var hints = el('div');
+    var shown = 0;
+    function ok() { msg.className = 'msg ok'; msg.textContent = 'Esatto! 🎉'; setTimeout(onSolved, 700); }
+    function no(t) { msg.className = 'msg no'; msg.textContent = t || 'Non ancora... riprova!'; }
+    var actions = el('div', 'actions');
+
+    if (e.type === 'text' || e.type === 'number') {
+      var inp = el('input'); inp.type = 'text';
+      inp.setAttribute('autocomplete', 'off'); inp.setAttribute('autocapitalize', 'off'); inp.setAttribute('spellcheck', 'false');
+      if (e.type === 'number') inp.inputMode = 'numeric';
+      c.appendChild(inp);
+      var check = function () {
+        var val = norm(inp.value);
+        if (!val) return no('Scrivi la risposta!');
+        if (e.answers.some(function (a) { return norm(a) === val; })) ok(); else no();
+      };
+      inp.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') check(); });
+      actions.appendChild(btn('Controlla', '', check));
+    } else if (e.type === 'choice') {
+      var ch = el('div', 'choices');
+      e.options.forEach(function (o, k) {
+        var b = btn(sub(o), '', function () { if (k === e.answer) ok(); else { b.className = 'btn wrong'; no(); } });
+        ch.appendChild(b);
+      });
+      c.appendChild(ch);
+    } else if (e.type === 'match') {
+      var sels = e.rows.map(function (r) {
+        var row = el('div', 'row');
+        row.appendChild(el('label', null, sub(r.label)));
+        var s = el('select');
+        s.appendChild(el('option', null, 'scegli…')).value = '';
+        e.options.forEach(function (o) { var op = el('option', null, sub(o)); op.value = o; s.appendChild(op); });
+        row.appendChild(s); c.appendChild(row);
+        return s;
+      });
+      actions.appendChild(btn('Controlla', '', function () {
+        if (sels.some(function (s) { return !s.value; })) return no('Completa tutte le righe!');
+        var wrong = e.rows.filter(function (r, k) { return sels[k].value !== r.answer; }).length;
+        if (!wrong) ok(); else no(wrong === 1 ? 'Una riga non è giusta. Rileggi gli indizi!' : wrong + ' righe non sono giuste. Rileggi gli indizi!');
+      }));
+    } else if (e.type === 'order') {
+      // placed holds indexes into the shuffled pool
+      var line = el('div', 'line'), pool = el('div', 'pieces');
+      var order = shuffle(e.pieces), placed = [];
+      var draw = function () {
+        line.textContent = ''; pool.textContent = '';
+        placed.forEach(function (idx, k) {
+          var b = el('button', 'piece', order[idx]); b.type = 'button';
+          b.addEventListener('click', function () { placed.splice(k, 1); draw(); });
+          line.appendChild(b);
+        });
+        order.forEach(function (p, idx) {
+          if (placed.indexOf(idx) >= 0) return;
+          var b = el('button', 'piece', p); b.type = 'button';
+          b.addEventListener('click', function () { placed.push(idx); draw(); });
+          pool.appendChild(b);
+        });
+        if (!placed.length) line.appendChild(el('span', null, 'Tocca le parole qui sotto nell’ordine giusto')).style.color = '#9aa3b2';
+      };
+      c.appendChild(line); c.appendChild(pool);
+      draw();
+      actions.appendChild(btn('Controlla', '', function () {
+        if (placed.length < e.pieces.length) return no('Usa tutte le parole!');
+        var got = placed.map(function (idx) { return order[idx]; }).join(' ');
+        if (got === e.pieces.join(' ')) ok(); else no('L’ordine non è giusto... riprova!');
+      }));
+      actions.appendChild(btn('Ricomincia', 'light', function () { placed = []; draw(); msg.textContent = ''; }));
+    } else if (e.type === 'done') {
+      actions.appendChild(btn(sub(e.button || 'Fatto!'), 'green', function () { ok(); }));
+    }
+
+    if (e.hints && e.hints.length) {
+      var hb = btn('💡 Aiutino', 'light', function () {
+        if (shown < e.hints.length) { hints.appendChild(el('div', 'hint', sub(e.hints[shown]))); shown++; }
+        if (shown >= e.hints.length) hb.disabled = true;
+      });
+      actions.appendChild(hb);
+    }
+    c.appendChild(actions);
+    c.appendChild(hints);
+    c.appendChild(msg);
+    return c;
+  }
+
+  function afterCard(n, day) {
+    var c = el('div', 'card');
+    if (day.after && !day.final) c.appendChild(el('p', null, sub(day.after)));
+    if (day.word) {
+      var w = el('div', 'word');
+      w.appendChild(el('span', null, 'Nuova parola per il taccuino:'));
+      w.appendChild(el('b', null, day.word));
+      c.appendChild(w);
+    }
+    if (day.gift) {
+      var h = el('div', 'hunt');
+      if (day.hunt) h.appendChild(el('span', 'big', '🎁 ' + sub(day.hunt)));
+      if (state.found[n]) {
+        h.appendChild(el('p', null, sub(day.found)));
+        if (day.final && day.after) h.appendChild(el('p', 'big', sub(day.after)));
+      } else {
+        h.appendChild(btn('L’ho trovato!', 'green', function () {
+          state.found[n] = true; save(); record(n, 'found');
+          var p = c.parentNode; p.replaceChild(afterCard(n, day), c);
+        }));
+      }
+      c.appendChild(h);
+    }
+    c.appendChild(el('div', 'actions')).appendChild(btn('← Torna al calendario', 'light', function () { go(''); }));
+    return c;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>
