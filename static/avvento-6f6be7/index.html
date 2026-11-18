@@ -46,6 +46,15 @@
     color: #fbefd2; text-shadow: 0 2px 12px rgba(0,0,0,.45); letter-spacing: .01em; }
   .flourish { display: block; text-align: center; color: var(--gold2); letter-spacing: .6em; font-size: .8rem; margin: 0 0 4px; opacity: .9; }
   .sub { text-align: center; color: #e9dcc0; margin: 0 0 16px; font-size: 1rem; font-style: italic; font-family: var(--serif); }
+  /* Title written on the header picture, like a book cover, so the calendar fits an upright
+     iPad: the header block (about 104 px) overlaps the faded bottom of the picture. Without the
+     picture (missing file, day pages) the title stays in its own place. */
+  .head { position: relative; padding-top: 1px; }
+  .hero:not([hidden]) + .head { margin-top: -118px; }
+  .hero:not([hidden]) + .head h1, .hero:not([hidden]) + .head .sub { text-shadow: 0 1px 3px rgba(0,0,0,.8), 0 2px 14px rgba(0,0,0,.7); }
+  body.home .hero img { max-height: 270px; }
+  .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, transparent 30%, rgba(10,18,32,.6) 75%, rgba(10,18,32,.25)); }
 
   .top { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center; margin: 0 0 16px; }
   .badge { font-family: var(--serif); font-style: italic; font-weight: 600; color: #fbefd2; border: 1px solid rgba(230,200,115,.7);
@@ -90,6 +99,7 @@
   @media (orientation: landscape) and (min-width: 900px) {
     body.home main { max-width: 1240px; }
     body.home .hero { display: none; }
+    body.home .hero + .head { margin-top: 0; }
     .homeview { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: start; }
     .homeview .top { display: contents; }
     .homeview .top .badge { grid-column: 1; grid-row: 1; justify-self: end; margin-top: 10px; }
@@ -158,9 +168,11 @@
     <span>(le tue prove non vengono registrate)</span>
   </div>
   <div class="hero" id="hero"><img src="img/testata.webp" alt="" onerror="this.parentNode.remove()"></div>
-  <h1 id="title">Calendario dell'Avvento</h1>
-  <span class="flourish" aria-hidden="true">✦ ✦ ✦</span>
-  <p class="sub" id="sub">Caricamento…</p>
+  <header class="head">
+    <h1 id="title">Calendario dell'Avvento</h1>
+    <span class="flourish" aria-hidden="true">✦ ✦ ✦</span>
+    <p class="sub" id="sub">Caricamento…</p>
+  </header>
   <div id="view"></div>
 </main>
 <script>
