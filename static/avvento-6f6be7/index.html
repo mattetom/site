@@ -83,6 +83,21 @@
   .win.gift::before { content: ""; position: absolute; top: -1px; right: -1px; width: 26px; height: 26px; border-top-right-radius: 10px;
     background: linear-gradient(225deg, var(--red2) 0 50%, transparent 50%); }
   .win.today { animation: glow 2.2s ease-in-out infinite; }
+  /* Tablet held sideways: the calendar fits one screen. No header picture on the home, the two
+     buttons move beside the calendar and the board is sized on the screen height:
+     board height = 86 + (width - 114) * 8/9 (22 px padding, 14 px gaps, 6 x 4 windows at 3:4),
+     so width = (available height - 86) * 9/8 + 114. 160 px = title, subtitle and margins. */
+  @media (orientation: landscape) and (min-width: 900px) {
+    body.home main { max-width: 1240px; }
+    body.home .hero { display: none; }
+    .homeview { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: start; }
+    .homeview .top { display: contents; }
+    .homeview .top .badge { grid-column: 1; grid-row: 1; justify-self: end; margin-top: 10px; }
+    .homeview .top .btn { grid-column: 3; grid-row: 1; justify-self: start; margin-top: 10px; }
+    .homeview .board { grid-column: 2; grid-row: 1;
+      width: min(820px, calc((100vh - 160px - 86px) * 1.125 + 114px));
+      width: min(820px, calc((100dvh - 160px - 86px) * 1.125 + 114px)); }
+  }
   @keyframes glow { 0%, 100% { box-shadow: 0 0 0 2px var(--gold2), 0 0 14px 2px rgba(230,200,115,.5); } 50% { box-shadow: 0 0 0 2px var(--gold2), 0 0 28px 8px rgba(230,200,115,.75); } }
 
   /* paper cards */
@@ -284,6 +299,9 @@
     window.scrollTo(0, 0);
     var hero = document.getElementById('hero');
     if (hero) hero.hidden = /^g\d/.test(h);
+    var home = !(/^g\d{1,2}$/.test(h) && DATA.days[h.slice(1)]) && h !== 'taccuino';
+    document.body.classList.toggle('home', home);
+    $('view').className = home ? 'homeview' : '';
     if (/^g\d{1,2}$/.test(h) && DATA.days[h.slice(1)]) showDay(Number(h.slice(1)));
     else if (h === 'taccuino') showNotebook();
     else showHome();
