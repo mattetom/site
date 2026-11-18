@@ -53,6 +53,10 @@
   .hero:not([hidden]) + .head { margin-top: -118px; }
   .hero:not([hidden]) + .head h1, .hero:not([hidden]) + .head .sub { text-shadow: 0 1px 3px rgba(0,0,0,.8), 0 2px 14px rgba(0,0,0,.7); }
   body.home .hero img { max-height: 270px; }
+  /* left-aligned on the picture: the inspector stands on the right of the header */
+  .hero:not([hidden]) + .head { padding-left: 28px; }
+  .hero:not([hidden]) + .head h1, .hero:not([hidden]) + .head .flourish, .hero:not([hidden]) + .head .sub { text-align: left; }
+  .hero:not([hidden]) + .head .flourish { letter-spacing: .6em; padding-left: 4px; }
   .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
     background: linear-gradient(180deg, transparent 30%, rgba(10,18,32,.6) 75%, rgba(10,18,32,.25)); }
 
