@@ -182,22 +182,28 @@
 <script>
 (function () {
   'use strict';
-  var LS_KEY = 'avvento-k', LS_STATE = 'avvento-stato';
-  var key = null;
+  // Margherita's progress lives in LS_STATE, the parent's previews in LS_PARENT: they never mix.
+  var LS_KEY = 'avvento-k', LS_STATE = 'avvento-stato', LS_PARENT = 'avvento-stato-genitore';
+  var key = null, storedKey = null, fromLink = false;
+  try { storedKey = localStorage.getItem(LS_KEY); } catch (e) {}
   var where = location.hash + '&' + location.search;
   try { where = decodeURIComponent(decodeURIComponent(where)); } catch (e) {}
   var m = where.match(/(?:^|[#&?])k=([A-Za-z0-9_-]{16,})/);
   if (m) {
-    key = m[1];
-    try { localStorage.setItem(LS_KEY, key); } catch (e) {}
+    key = m[1]; fromLink = true;   // stored only once the server has accepted it (see load)
     try { window.history.replaceState(null, '', location.pathname + location.search.replace(/[?&]k=[^&]*/, '')); } catch (e) {}
   } else {
-    try { key = localStorage.getItem(LS_KEY); } catch (e) {}
+    key = storedKey;
   }
 
-  var state = { nickname: '', solved: {}, found: {}, step: {} };
-  try { var saved = JSON.parse(localStorage.getItem(LS_STATE) || 'null'); if (saved) state = Object.assign(state, saved); } catch (e) {}
-  function save() { try { localStorage.setItem(LS_STATE, JSON.stringify(state)); } catch (e) {} }
+  function readState(k) {
+    var s = { nickname: '', solved: {}, found: {}, step: {} };
+    try { var saved = JSON.parse(localStorage.getItem(k) || 'null'); if (saved) s = Object.assign(s, saved); } catch (e) {}
+    return s;
+  }
+  var stateKey = LS_STATE;
+  var state = readState(LS_STATE);
+  function save() { try { localStorage.setItem(stateKey, JSON.stringify(state)); } catch (e) {} }
 
   var DATA = null;
   var $ = function (id) { return document.getElementById(id); };
@@ -273,6 +279,13 @@
     if (!key) { fatal('Manca la chiave nel link. Chiedi il link giusto al papà.'); return; }
     api('GET').then(function (d) {
       DATA = d;
+      if (d.parent && stateKey !== LS_PARENT) { stateKey = LS_PARENT; state = readState(LS_PARENT); }
+      // Remember the key of the link, except a parent link opened on a device that already keeps
+      // another key: Margherita's iPad must stay on hers.
+      if (fromLink && !(d.parent && storedKey && storedKey !== key)) {
+        try { localStorage.setItem(LS_KEY, key); } catch (e) {}
+      }
+      fromLink = false;
       Object.keys(d.progress || {}).forEach(function (n) {
         var p = d.progress[n] || {};
         if (!d.parent) {
